@@ -3,10 +3,10 @@ package ru.dgrew.yaghgp.abilities;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import ru.dgrew.yaghgp.Main;
 import ru.dgrew.yaghgp.managers.PlayerManager;
-import ru.dgrew.yaghgp.tribute.Tribute;
 
 import java.util.NoSuchElementException;
 
@@ -20,10 +20,18 @@ public class AbilityListener implements Listener {
 
     private boolean tryPreconditionSafely(Ability ability, Event event) {
         try {
-            return ability.isPreconditionMet(event);
+            return ability.precondition(event);
         } catch (ClassCastException e) {
             return false;
         }
+    }
+
+    private void notifyOnCooldown(PlayerEvent event, Ability ability) {
+        event.getPlayer().sendTitle("", "§c" + ability.getName() + " is on cooldown for " + ability.getCurrentCooldown() + " more seconds!", 5, 20, 5);
+    }
+
+    private void notifyOnDisabled(PlayerEvent event, Ability ability) {
+        event.getPlayer().sendTitle("", "§c" + ability.getName() + " has been disabled!!", 5, 20, 5);
     }
 
     @EventHandler
@@ -34,8 +42,14 @@ public class AbilityListener implements Listener {
                         Ability selectedAbility = t.getAbilities().stream().parallel()
                                 .filter(ability -> tryPreconditionSafely(ability, event))
                                 .findFirst().get();
-                        selectedAbility.getCallable().execute(event);
-                    } catch (NoSuchElementException e) { }
+                        if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
+                            selectedAbility.getCallable().execute(event);
+                        } else if (selectedAbility.isDisabled()) {
+                            notifyOnDisabled(event, selectedAbility);
+                        } else if (selectedAbility.isOnCooldown()) {
+                            notifyOnCooldown(event, selectedAbility);
+                        }
+                    } catch (NoSuchElementException ignored) { }
                 }
         );
     }

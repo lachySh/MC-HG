@@ -11,8 +11,8 @@ public class SoupHeal extends Ability<PlayerInteractEvent> {
     }
 
     @Override
-    public boolean isPreconditionMet(PlayerInteractEvent event) {
-        return event.getItem() != null && event.getItem().getType() == Material.MUSHROOM_STEW;
+    public boolean precondition(PlayerInteractEvent event) {
+        return event.getItem() != null && event.getItem().getType() == Material.MUSHROOM_STEW && event.getPlayer().getHealth() < 20.0;
     }
 
     @Override
@@ -22,6 +22,7 @@ public class SoupHeal extends Ability<PlayerInteractEvent> {
             player.setHealth(Math.min((player.getHealth() + 7.0), 20));
             event.getItem().setType(Material.BOWL);
             player.updateInventory();
+            cooldown();
         };
     }
 }

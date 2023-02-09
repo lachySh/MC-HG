@@ -13,8 +13,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import ru.dgrew.yaghgp.Main;
-import ru.dgrew.yaghgp.Phase;
 import ru.dgrew.yaghgp.managers.ChatManager;
+import ru.dgrew.yaghgp.managers.PlayerManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
 
 public class Lobby extends Phase {
@@ -52,6 +52,7 @@ public class Lobby extends Phase {
         p.getInventory().clear();
         p.getInventory().setArmorContents(new ItemStack[]{null, null, null, null});
         p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
+
     }
     @EventHandler
     public void onLeave(PlayerQuitEvent e){

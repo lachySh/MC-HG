@@ -1,4 +1,4 @@
-package ru.dgrew.yaghgp;
+package ru.dgrew.yaghgp.phases;
 
 import org.bukkit.event.Listener;
 

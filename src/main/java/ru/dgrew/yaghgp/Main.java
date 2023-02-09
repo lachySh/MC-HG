@@ -4,6 +4,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import ru.dgrew.yaghgp.abilities.AbilityListener;
 import ru.dgrew.yaghgp.commands.Start;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.PhaseManager;
@@ -42,7 +43,6 @@ public class Main extends JavaPlugin implements Listener {
         arena.setTime(500);
         arena.setDifficulty(Difficulty.NORMAL);
         arena.getWorldBorder().setSize(sm.getBorderRadius());
-        for(Entity e : lobby.getEntities()) e.remove();
         this.getCommand("start").setExecutor(new Start());
         int pluginId = 17670;
         Metrics metrics = new Metrics(this, pluginId);
@@ -50,6 +50,9 @@ public class Main extends JavaPlugin implements Listener {
             UpdateChecker uc = new UpdateChecker(getDescription().getVersion());
             uc.checkForUpdates();
         }
+
+        // temp
+        Bukkit.getPluginManager().registerEvents(new AbilityListener(),Main.getInstance());
     }
 
     private void deleteArena() {

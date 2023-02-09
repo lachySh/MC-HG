@@ -17,8 +17,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import ru.dgrew.yaghgp.Main;
-import ru.dgrew.yaghgp.Phase;
 import ru.dgrew.yaghgp.managers.ChatManager;
+import ru.dgrew.yaghgp.managers.PlayerManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
 import java.util.List;
 import java.util.Random;
@@ -27,16 +27,20 @@ public class PreGame extends Phase {
     private int timer;
     private ChatManager cm;
     private SettingsManager sm;
+    private PlayerManager pm;
     private BukkitTask countdown;
     //region Phase Methods
     @Override
     public void onEnable() {
         sm = Main.getSm();
         cm = Main.getCm();
+        pm = Main.getPlm();
         timer = 10;
         startCountdown();
         scatterPlayers();
         sm.getArenaobj().setAutoSave(false);
+        pm.updateTributesList();
+        pm.giveIntrinsicAbilitiesToAllTributes();
         Bukkit.getLogger().info("PreGame phase has started successfully!");
     }
     @Override
@@ -57,7 +61,7 @@ public class PreGame extends Phase {
     @EventHandler
     public void onLeave(PlayerQuitEvent e){
         e.setQuitMessage(ChatColor.YELLOW + e.getPlayer().getName() + " has left!");
-        Main.getPlm().removeOnDC(e.getPlayer());
+        pm.removeOnDC(e.getPlayer());
     }
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) { e.setCancelled(true); }

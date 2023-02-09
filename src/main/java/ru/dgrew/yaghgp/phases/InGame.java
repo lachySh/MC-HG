@@ -1,23 +1,15 @@
 package ru.dgrew.yaghgp.phases;
 
 import org.bukkit.*;
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.*;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.hanging.HangingBreakByEntityEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import ru.dgrew.yaghgp.Main;
-import ru.dgrew.yaghgp.Phase;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.LootManager;
 import ru.dgrew.yaghgp.managers.PlayerManager;
@@ -63,49 +55,49 @@ public class InGame extends Phase {
         Main.getPlm().removeOnDC(e.getPlayer());
         checkForPlayerCount();
     }
-    @EventHandler
-    public void onChestOpen(InventoryOpenEvent e) {
-        if(e.getInventory().getHolder() instanceof Chest){
-            Chest c = (Chest)e.getInventory().getHolder();
-            if (lm.getChestContents(c.getLocation()) == null) {
-                c.getInventory().clear();
-                lm.createRandomChest(c.getInventory());
-                lm.storeChestContents(c.getLocation(), c.getInventory());
-            }
-        }
-        if(e.getInventory().getHolder() instanceof DoubleChest){
-            DoubleChest c = (DoubleChest)e.getInventory().getHolder();
-            Chest left = (Chest)c.getLeftSide();
-            Chest right = (Chest)c.getRightSide();
-            if (lm.getChestContents(c.getLocation()) == null &&
-                    (lm.getChestContents(left.getLocation()) == null || lm.getChestContents(right.getLocation()) == null)) {
-                c.getInventory().clear();
-                left.getInventory().clear();
-                right.getInventory().clear();
-                lm.createRandomChest(c.getInventory());
-                lm.createRandomChest(left.getInventory());
-                lm.createRandomChest(right.getInventory());
-                lm.storeChestContents(c.getLocation(), c.getInventory());
-                lm.storeChestContents(left.getLocation(), left.getInventory());
-                lm.storeChestContents(right.getLocation(), right.getInventory());
-            }
-        }
-    }
-    @EventHandler
-    public void onChestClose(InventoryCloseEvent e){
-        if(e.getInventory().getHolder() instanceof Chest){
-            Chest c = (Chest)e.getInventory().getHolder();
-            lm.storeChestContents(c.getLocation(), c.getInventory());
-        }
-        if(e.getInventory().getHolder() instanceof DoubleChest){
-            DoubleChest c = (DoubleChest)e.getInventory().getHolder();
-            Chest left = (Chest)c.getLeftSide();
-            Chest right = (Chest)c.getRightSide();
-            lm.storeChestContents(c.getLocation(), c.getInventory());
-            lm.storeChestContents(left.getLocation(), left.getInventory());
-            lm.storeChestContents(right.getLocation(), right.getInventory());
-        }
-    }
+//    @EventHandler
+//    public void onChestOpen(InventoryOpenEvent e) {
+//        if(e.getInventory().getHolder() instanceof Chest){
+//            Chest c = (Chest)e.getInventory().getHolder();
+//            if (lm.getChestContents(c.getLocation()) == null) {
+//                c.getInventory().clear();
+//                lm.createRandomChest(c.getInventory());
+//                lm.storeChestContents(c.getLocation(), c.getInventory());
+//            }
+//        }
+//        if(e.getInventory().getHolder() instanceof DoubleChest){
+//            DoubleChest c = (DoubleChest)e.getInventory().getHolder();
+//            Chest left = (Chest)c.getLeftSide();
+//            Chest right = (Chest)c.getRightSide();
+//            if (lm.getChestContents(c.getLocation()) == null &&
+//                    (lm.getChestContents(left.getLocation()) == null || lm.getChestContents(right.getLocation()) == null)) {
+//                c.getInventory().clear();
+//                left.getInventory().clear();
+//                right.getInventory().clear();
+//                lm.createRandomChest(c.getInventory());
+//                lm.createRandomChest(left.getInventory());
+//                lm.createRandomChest(right.getInventory());
+//                lm.storeChestContents(c.getLocation(), c.getInventory());
+//                lm.storeChestContents(left.getLocation(), left.getInventory());
+//                lm.storeChestContents(right.getLocation(), right.getInventory());
+//            }
+//        }
+//    }
+//    @EventHandler
+//    public void onChestClose(InventoryCloseEvent e){
+//        if(e.getInventory().getHolder() instanceof Chest){
+//            Chest c = (Chest)e.getInventory().getHolder();
+//            lm.storeChestContents(c.getLocation(), c.getInventory());
+//        }
+//        if(e.getInventory().getHolder() instanceof DoubleChest){
+//            DoubleChest c = (DoubleChest)e.getInventory().getHolder();
+//            Chest left = (Chest)c.getLeftSide();
+//            Chest right = (Chest)c.getRightSide();
+//            lm.storeChestContents(c.getLocation(), c.getInventory());
+//            lm.storeChestContents(left.getLocation(), left.getInventory());
+//            lm.storeChestContents(right.getLocation(), right.getInventory());
+//        }
+//    }
     @EventHandler
     public void onDeath(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player) {
@@ -165,15 +157,15 @@ public class InGame extends Phase {
     }
     //endregion
     void checkForPlayerCount() {
-        if (pm.getRemainingPlayersList().size() == 1) {
+        if (pm.getRemainingTributesList().size() == 1) {
             timer = 0;
             return;
         }
-        if (pm.getRemainingPlayersList().size() <= 3 && timer >= 30) {
+        if (pm.getRemainingTributesList().size() <= 3 && timer >= 30) {
             timer = 60;
             return;
         }
-        if (pm.getRemainingPlayersList().size() <= 7) {
+        if (pm.getRemainingTributesList().size() <= 7) {
             timer = 480;
         }
     }
@@ -198,7 +190,7 @@ public class InGame extends Phase {
         killed.setHealth(20);
         killed.getWorld().strikeLightningEffect(killed.getLocation());
         pm.transferToSpectators(killed);
-        Bukkit.broadcastMessage(cm.getGlobalkill().replace("{players}", String.valueOf(pm.getRemainingPlayersList().size())));
+        Bukkit.broadcastMessage(cm.getGlobalkill().replace("{players}", String.valueOf(pm.getRemainingTributesList().size())));
         checkForPlayerCount();
     }
 }

@@ -10,10 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import ru.dgrew.yaghgp.Main;
-import ru.dgrew.yaghgp.Phase;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.PlayerManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
+import ru.dgrew.yaghgp.tribute.Tribute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,16 +117,16 @@ public class Deathmatch extends Phase {
         Random random = new Random();
         List<Location> list = sm.fetchSpawnLocations();
         int var;
-        for (Player player : pm.getRemainingPlayersList()) {
+        for (Tribute tribute : pm.getRemainingTributesList()) {
             var = random.nextInt(list.size());
-            player.teleport(list.get(var));
+            tribute.getPlayerObject().teleport(list.get(var));
             list.remove(var);
         }
         Bukkit.getLogger().info("All players should now be scattered!");
     }
     void checkForPlayerCount() {
-        if (pm.getRemainingPlayersList().size() == 1) Main.getPm().nextPhase();
-        else Bukkit.broadcastMessage(cm.getGlobalkill().replace("{players}", String.valueOf(pm.getRemainingPlayersList().size())));
+        if (pm.getRemainingTributesList().size() == 1) Main.getPm().nextPhase();
+        else Bukkit.broadcastMessage(cm.getGlobalkill().replace("{players}", String.valueOf(pm.getRemainingTributesList().size())));
     }
     void onDeath(Player killed, Entity killerent) {
         Player killer;

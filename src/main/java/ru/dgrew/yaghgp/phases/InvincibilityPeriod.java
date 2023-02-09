@@ -13,10 +13,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import ru.dgrew.yaghgp.Main;
-import ru.dgrew.yaghgp.Phase;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.PlayerManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
+import ru.dgrew.yaghgp.tribute.Tribute;
 
 public class InvincibilityPeriod extends Phase {
     private int timer;
@@ -31,8 +31,7 @@ public class InvincibilityPeriod extends Phase {
         cm = Main.getCm();
         pm = Main.getPlm();
         timer = 120;
-        pm.updatePlayersList();
-        for (Player p : pm.getRemainingPlayersList()) p.setGameMode(GameMode.SURVIVAL);
+        for (Tribute tribute : pm.getRemainingTributesList()) tribute.getPlayerObject().setGameMode(GameMode.SURVIVAL);
         startCountdown();
         sm.getArenaobj().setAutoSave(false);
         Bukkit.getLogger().info("InvincibilityPeriod phase has started successfully!");

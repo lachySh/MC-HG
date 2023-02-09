@@ -3,30 +3,72 @@ package ru.dgrew.yaghgp.managers;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import ru.dgrew.yaghgp.tribute.Tribute;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class PlayerManager {
-    final private List<Player> tributes = new ArrayList<>();
+    final private List<Tribute> tributes = new ArrayList<>();
     final private List<Player> spectators = new ArrayList<>();
+
     public PlayerManager() {
-        tributes.addAll(Bukkit.getOnlinePlayers());
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            tributes.add(new Tribute(p));
+        }
     }
-    public void transferToSpectators(Player p) {
-        tributes.remove(p);
-        spectators.add(p);
-        p.setGameMode(GameMode.SPECTATOR);
+
+    public void transferToSpectators(Tribute tribute) {
+        tributes.remove(tribute);
+        Player player = tribute.getPlayerObject();
+        spectators.add(player);
+        player.setGameMode(GameMode.SPECTATOR);
     }
-    public List<Player> getRemainingPlayersList() {
+
+    public void transferToSpectators(Player player) {
+        tributes.removeIf(tribute -> tribute.getPlayerObject().equals(player));
+        spectators.add(player);
+        player.setGameMode(GameMode.SPECTATOR);
+    }
+
+    public List<Tribute> getRemainingTributesList() {
         return tributes;
     }
-    public void updatePlayersList() {
+
+    public Optional<Tribute> findTribute(Player player) {
+        return tributes.stream()
+                .filter(tribute -> tribute.getPlayerObject().equals(player))
+                .findFirst();
+    }
+
+    public void updateTributesList() {
         spectators.clear();
         tributes.clear();
-        tributes.addAll(Bukkit.getOnlinePlayers());
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            tributes.add(new Tribute(p));
+        }
+        Bukkit.getLogger().info("Tributes list after update: " + tributes.toString());
     }
-    public void removeOnDC(Player p){
-        tributes.remove(p);
+
+    public void addTribute(Player player) {
+        tributes.add(new Tribute(player));
+    }
+
+    public void removeTribute(Player player) {
+        tributes.removeIf(tribute -> tribute.getPlayerObject().equals(player));
+    }
+
+    public void removeOnDC(Player p) {
+        tributes.removeIf(tribute -> tribute.getPlayerObject().equals(p));
+    }
+
+    public void giveIntrinsicAbilitiesToAllTributes() {
+        tributes.stream()
+                .forEach(tribute -> {
+                    Bukkit.getLogger().info("Giving " + tribute.getPlayerObject().getDisplayName() + " intrinsic abilities...");
+                    tribute.giveIntrinsicAbilities();
+                });
     }
 }

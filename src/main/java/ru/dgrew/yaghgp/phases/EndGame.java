@@ -5,35 +5,31 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.*;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import ru.dgrew.yaghgp.Main;
-import ru.dgrew.yaghgp.Phase;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
+import ru.dgrew.yaghgp.tribute.Tribute;
 
 public class EndGame extends Phase {
     private int timer;
     private SettingsManager sm;
     private ChatManager cm;
-    private Player victor;
+    private Tribute victor;
     //region Phase Methods
     @Override
     public void onEnable() {
         timer = 15;
         sm = Main.getSm();
         cm = Main.getCm();
-        victor = Main.getPlm().getRemainingPlayersList().get(0);
-        victor.sendTitle(cm.getVictorytitle(), cm.getVictory(), 20, 40, 20);
-        victor.playSound(victor.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
-        Bukkit.broadcastMessage(cm.getPrefix() + cm.getGlobalvictory().replace("{player}", victor.getName()));
+        victor = Main.getPlm().getRemainingTributesList().get(0);
+        victor.getPlayerObject().sendTitle(cm.getVictorytitle(), cm.getVictory(), 20, 40, 20);
+        victor.getPlayerObject().playSound(victor.getPlayerObject().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+        Bukkit.broadcastMessage(cm.getPrefix() + cm.getGlobalvictory().replace("{player}", victor.getPlayerObject().getName()));
         startTimer();
         Bukkit.getLogger().info("EndGame phase has started successfully!");
     }
@@ -67,7 +63,7 @@ public class EndGame extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    Firework fw = (Firework)victor.getWorld().spawnEntity(victor.getLocation(), EntityType.FIREWORK);
+                    Firework fw = (Firework)victor.getPlayerObject().getWorld().spawnEntity(victor.getPlayerObject().getLocation(), EntityType.FIREWORK);
                     FireworkMeta fwm = fw.getFireworkMeta();
                     FireworkEffect effect = FireworkEffect.builder().flicker(true).withColor(Color.RED).withFade(Color.FUCHSIA).with(FireworkEffect.Type.BALL).trail(true).build();
                     fwm.addEffect(effect);

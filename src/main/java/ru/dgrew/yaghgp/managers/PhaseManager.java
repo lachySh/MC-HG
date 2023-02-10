@@ -23,4 +23,7 @@ public class PhaseManager {
         Bukkit.getPluginManager().registerEvents(currentPhase,Main.getInstance());
         currentPhase.onEnable();
     }
+    public Phase getCurrentPhase() {
+        return currentPhase;
+    }
 }

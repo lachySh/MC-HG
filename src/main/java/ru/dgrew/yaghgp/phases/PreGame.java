@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitTask;
 import ru.dgrew.yaghgp.Main;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.PlayerManager;
+import ru.dgrew.yaghgp.managers.ScoreboardManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
 import java.util.List;
 import java.util.Random;
@@ -41,6 +42,7 @@ public class PreGame extends Phase {
         sm.getArenaobj().setAutoSave(false);
         pm.updateTributesList();
         pm.giveIntrinsicAbilitiesToAllTributes();
+        pm.clearAllPlayerScoreboards();
         Bukkit.getLogger().info("PreGame phase has started successfully!");
     }
     @Override

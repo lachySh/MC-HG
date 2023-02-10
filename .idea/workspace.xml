@@ -7,11 +7,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3784dd68-6b9e-4920-8eca-4aeee6c7ee2c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/cooldown/Cooldown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupCrafting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/VoteGUICommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gamemap/Gamemap.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/GamemapManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/ScoreboardManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/VotingManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/voting/VoteGUIListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/arenas/samplearena.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/Ability.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/Ability.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/AbilityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/AbilityListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupHeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupHeal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/Start.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/Start.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/AbilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/AbilityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/ChatManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/ChatManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PhaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PhaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/Lobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/PreGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/PreGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,6 +40,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -37,7 +55,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">

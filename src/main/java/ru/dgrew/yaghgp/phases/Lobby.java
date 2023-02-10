@@ -15,16 +15,19 @@ import org.bukkit.inventory.ItemStack;
 import ru.dgrew.yaghgp.Main;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.PlayerManager;
+import ru.dgrew.yaghgp.managers.ScoreboardManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
 
 public class Lobby extends Phase {
     private SettingsManager sm;
     private ChatManager cm;
+    private ScoreboardManager sbm;
     //region Phase Methods
     @Override
     public void onEnable() {
-        sm = new SettingsManager(Main.getInstance().getConfig());
+        sm = Main.getSm();
         cm = Main.getCm();
+        sbm = Main.getSbm();
         Bukkit.getLogger().info("Lobby phase has started successfully!");
     }
     @Override
@@ -40,7 +43,6 @@ public class Lobby extends Phase {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         e.setJoinMessage(ChatColor.YELLOW + e.getPlayer().getName() + " has joined!");
-        Bukkit.broadcastMessage(cm.getPrefix() + cm.getLobbyPlayerCounter(Bukkit.getOnlinePlayers().size()));
         p.teleport(sm.fetchLobbySpawn());
         p.setGameMode(GameMode.ADVENTURE);
         p.setExp(0);
@@ -52,6 +54,9 @@ public class Lobby extends Phase {
         p.getInventory().clear();
         p.getInventory().setArmorContents(new ItemStack[]{null, null, null, null});
         p.getActivePotionEffects().forEach(effect -> p.removePotionEffect(effect.getType()));
+        p.sendTitle(ChatColor.GOLD + "Welcome to the Hunger Games", ChatColor.GRAY + "Please use the command " + ChatColor.AQUA + "/vote" + ChatColor.GRAY + " to vote on what map should be played", 20, 200, 40);
+        p.setScoreboard(sbm.getMapVoteBoard());
+        Bukkit.broadcastMessage(cm.getPrefix() + cm.getLobbyPlayerCounter(Bukkit.getOnlinePlayers().size()));
 
     }
     @EventHandler

@@ -10,12 +10,13 @@ There's not much of this scene left, but I look back fondly on this era of Minec
 
 ### Development roadmap:
  * [x] Basic functionality for hosting a randomly generated world-type hunger games game
- * [ ] Soup PvP
- * [ ] Soup custom crafting recipes
- * [ ] Better UI for lobby and announcements
- * [ ] Lobby voting between random map and pre-made map selections
+ * [x] Soup PvP
+ * [x] Soup custom crafting recipes
+ * [x] Better UI for lobby
+ * [ ] Lobby voting between random map and pre-made map selections (WIP)
  * [ ] Feasts
  * [ ] Kits
+ * [ ] Better UI for in-game (?)
  
 #Original README:
 

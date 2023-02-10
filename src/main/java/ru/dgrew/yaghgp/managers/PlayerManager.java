@@ -2,6 +2,7 @@ package ru.dgrew.yaghgp.managers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import ru.dgrew.yaghgp.tribute.Tribute;
 
@@ -38,8 +39,14 @@ public class PlayerManager {
     }
 
     public Optional<Tribute> findTribute(Player player) {
-        return tributes.stream()
+        return tributes.stream().parallel()
                 .filter(tribute -> tribute.getPlayerObject().equals(player))
+                .findFirst();
+    }
+
+    public Optional<Tribute> findTribute(HumanEntity humanEntity) {
+        return tributes.stream().parallel()
+                .filter(tribute -> tribute.getPlayerObject().getName().equals(humanEntity.getName()))
                 .findFirst();
     }
 
@@ -70,5 +77,11 @@ public class PlayerManager {
                     Bukkit.getLogger().info("Giving " + tribute.getPlayerObject().getDisplayName() + " intrinsic abilities...");
                     tribute.giveIntrinsicAbilities();
                 });
+    }
+
+    public void clearAllPlayerScoreboards() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        }
     }
 }

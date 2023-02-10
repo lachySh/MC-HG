@@ -1,36 +1,46 @@
 package ru.dgrew.yaghgp;
 
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.dgrew.yaghgp.abilities.AbilityListener;
 import ru.dgrew.yaghgp.commands.Start;
-import ru.dgrew.yaghgp.managers.ChatManager;
-import ru.dgrew.yaghgp.managers.PhaseManager;
-import ru.dgrew.yaghgp.managers.PlayerManager;
-import ru.dgrew.yaghgp.managers.SettingsManager;
+import ru.dgrew.yaghgp.managers.*;
+import ru.dgrew.yaghgp.commands.VoteGUICommand;
+import ru.dgrew.yaghgp.voting.VoteGUIListener;
 
 import java.io.File;
-import java.io.IOException;
 
 public class Main extends JavaPlugin implements Listener {
     private static Main instance;
     private static ChatManager cm;
     private static PhaseManager pm;
+    private static VotingManager vm;
     private static PlayerManager plm;
     private static SettingsManager sm;
+    private static GamemapManager gm;
+    private static ScoreboardManager sbm;
     World lobby;
     World arena;
+
+    @Override
+    public void onLoad() {
+
+    }
+
+    @Override
     public void onEnable() {
         this.saveDefaultConfig();
         instance = this;
         plm = new PlayerManager();
         cm = new ChatManager(this.getConfig());
-        pm = new PhaseManager();
         sm = new SettingsManager(this.getConfig());
+        sbm = new ScoreboardManager();
+        vm = new VotingManager();
+        gm = new GamemapManager();
+        pm = new PhaseManager();
+        gm.getCustomGamemaps();
         lobby = Bukkit.createWorld(WorldCreator.name(this.getConfig().getString("settings.lobby", "arena")));
-        arena = Bukkit.createWorld(WorldCreator.name(this.getConfig().getString("settings.arena", "arena")));
         deleteArena();
         arena = Bukkit.createWorld(WorldCreator.name(this.getConfig().getString("settings.arena", "arena")));
         lobby.setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
@@ -44,23 +54,29 @@ public class Main extends JavaPlugin implements Listener {
         arena.setDifficulty(Difficulty.NORMAL);
         arena.getWorldBorder().setSize(sm.getBorderRadius());
         this.getCommand("start").setExecutor(new Start());
+        this.getCommand("vote").setExecutor(new VoteGUICommand());
         int pluginId = 17670;
         Metrics metrics = new Metrics(this, pluginId);
         if (sm.getUpdateCheck()) {
             UpdateChecker uc = new UpdateChecker(getDescription().getVersion());
             uc.checkForUpdates();
         }
+        Bukkit.getPluginManager().registerEvents(new AbilityListener(), Main.getInstance());
+        Bukkit.getPluginManager().registerEvents(new VoteGUIListener(), Main.getInstance());
+    }
 
-        // temp
-        Bukkit.getPluginManager().registerEvents(new AbilityListener(),Main.getInstance());
+    @Override
+    public void onDisable() {
+        lobby.save();
+        arena.save();
     }
 
     private void deleteArena() {
         try {
             Bukkit.getLogger().info("Deleting current arena world...");
-            World lobby = Bukkit.getWorld(this.getConfig().getString("settings.arena", "arena"));
-            File deleteFolder = lobby.getWorldFolder();
-            Bukkit.unloadWorld(lobby, false);
+            World arena = new WorldCreator(this.getConfig().getString("settings.arena", "arena")).createWorld();
+            File deleteFolder = arena.getWorldFolder();
+            Bukkit.unloadWorld(arena, false);
 
             deleteWorld(deleteFolder);
             Bukkit.getLogger().info("Arena deleted successfully!");
@@ -70,7 +86,7 @@ public class Main extends JavaPlugin implements Listener {
         }
     }
 
-    public boolean deleteWorld(File path) {
+    private boolean deleteWorld(File path) {
         if(path.exists()) {
             File files[] = path.listFiles();
             for(int i=0; i<files.length; i++) {
@@ -84,9 +100,6 @@ public class Main extends JavaPlugin implements Listener {
         return(path.delete());
     }
 
-    public void onDisable() {
-
-    }
     public static Main getInstance() {
         return instance;
     }
@@ -94,4 +107,7 @@ public class Main extends JavaPlugin implements Listener {
     public static PhaseManager getPm() { return pm; }
     public static PlayerManager getPlm() {return plm; }
     public static SettingsManager getSm() { return sm; }
+    public static VotingManager getVm() { return vm; }
+    public static GamemapManager getGm() { return gm; }
+    public static ScoreboardManager getSbm() { return sbm; }
 }

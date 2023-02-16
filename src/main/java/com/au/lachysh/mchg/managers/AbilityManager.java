@@ -1,8 +1,8 @@
 package com.au.lachysh.mchg.managers;
 
 import com.au.lachysh.mchg.abilities.Ability;
-import com.au.lachysh.mchg.abilities.SoupCrafting;
-import com.au.lachysh.mchg.abilities.SoupHeal;
+import com.au.lachysh.mchg.abilities.intrinsic.SoupCrafting;
+import com.au.lachysh.mchg.abilities.intrinsic.SoupHeal;
 
 import java.util.ArrayList;
 import java.util.List;

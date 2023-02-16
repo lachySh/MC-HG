@@ -1,5 +1,7 @@
-package com.au.lachysh.mchg.abilities;
+package com.au.lachysh.mchg.abilities.intrinsic;
 
+import com.au.lachysh.mchg.abilities.Ability;
+import com.au.lachysh.mchg.abilities.AbilityCallable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

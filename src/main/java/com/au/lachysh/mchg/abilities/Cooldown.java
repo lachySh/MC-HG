@@ -1,4 +1,4 @@
-package com.au.lachysh.mchg.abilities.cooldown;
+package com.au.lachysh.mchg.abilities;
 
 public class Cooldown {
     private long durationMillis;

@@ -4,6 +4,7 @@ package com.au.lachysh.mchg.managers;
 import com.au.lachysh.mchg.kits.Apparition;
 import com.au.lachysh.mchg.kits.Cultivator;
 import com.au.lachysh.mchg.kits.Stomper;
+import com.au.lachysh.mchg.kits.Switcher;
 import com.au.lachysh.mchg.kits.Kit;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class KitManager {
         kits.add(new Cultivator());
         kits.add(new Stomper());
         kits.add(new Apparition());
+        kits.add(new Switcher());
 
         Collections.sort(kits);
 

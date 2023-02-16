@@ -1,5 +1,7 @@
-package com.au.lachysh.mchg.abilities;
+package com.au.lachysh.mchg.abilities.intrinsic;
 
+import com.au.lachysh.mchg.abilities.Ability;
+import com.au.lachysh.mchg.abilities.AbilityCallable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,7 +12,7 @@ import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import com.au.lachysh.mchg.Main;
 
-public class SoupCrafting extends Ability<PrepareItemCraftEvent>  {
+public class SoupCrafting extends Ability<PrepareItemCraftEvent> {
 
     private static final NamespacedKey SEED_SOUP_KEY = new NamespacedKey(Main.getInstance(), "seed_soup");
     private static final NamespacedKey CACTI_SOUP_KEY = new NamespacedKey(Main.getInstance(), "cacti_soup");

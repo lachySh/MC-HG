@@ -28,11 +28,6 @@ public class Main extends JavaPlugin implements Listener {
     World arena;
 
     @Override
-    public void onLoad() {
-
-    }
-
-    @Override
     public void onEnable() {
         this.saveDefaultConfig();
         instance = this;
@@ -72,7 +67,14 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new AbilityListener(), Main.getInstance());
         Bukkit.getPluginManager().registerEvents(new VoteGUIListener(), Main.getInstance());
         Bukkit.getPluginManager().registerEvents(new KitsGUIListener(), Main.getInstance());
-        Bukkit.getPluginManager().registerEvents(new WorldInitEventListener(), Main.getInstance());
+        if (sm.getUseCustomWorldGen()) {
+            Bukkit.getPluginManager().registerEvents(new WorldInitEventListener(), Main.getInstance());
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        Bukkit.unloadWorld("random", false);
     }
 
     private void deleteArenas() {

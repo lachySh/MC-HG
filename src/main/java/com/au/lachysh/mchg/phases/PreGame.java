@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import com.au.lachysh.mchg.Main;
-import ru.dgrew.yaghgp.managers.*;
 import com.au.lachysh.mchg.tribute.Tribute;
 
 import java.util.List;

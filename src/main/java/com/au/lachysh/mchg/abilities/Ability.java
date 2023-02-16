@@ -1,7 +1,6 @@
 package com.au.lachysh.mchg.abilities;
 
 import org.bukkit.event.Event;
-import com.au.lachysh.mchg.abilities.cooldown.Cooldown;
 
 public abstract class Ability<E extends Event> {
 

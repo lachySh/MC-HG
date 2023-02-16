@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import ru.dgrew.yaghgp.managers.*;
 
 public class Lobby extends Phase {
     private SettingsManager sm;

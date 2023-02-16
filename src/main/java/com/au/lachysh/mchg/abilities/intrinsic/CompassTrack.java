@@ -1,6 +1,8 @@
-package com.au.lachysh.mchg.abilities;
+package com.au.lachysh.mchg.abilities.intrinsic;
 
 import com.au.lachysh.mchg.Main;
+import com.au.lachysh.mchg.abilities.Ability;
+import com.au.lachysh.mchg.abilities.AbilityCallable;
 import com.au.lachysh.mchg.managers.PlayerManager;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;

@@ -10,7 +10,7 @@ public class Cultivator extends Kit {
         super(
                 "cultivator",
                 "Cultivator",
-                "Instantly grow crops and trees.\nGreat for surviving above the ground with nothing but saplings, dirt and seeds.",
+                "The ol' green thumb.\nInstantly grow crops and trees.\nGreat for surviving with nothing but saplings, dirt and seeds.",
                 KitType.UTILITY,
                 Material.OAK_SAPLING,
                 List.of(),

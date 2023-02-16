@@ -9,7 +9,7 @@ settings:
   lobby-spawn: "100.0:64.0:100.0:0.0f:0.0f" #Example coordinates
   #Controls the range (in blocks from the player) that the tracking compass should track.
   compass-track-range: 200
-  #Requires WorldGeneratorApi to be installed in ./plugins. This sets the random world to be generated using the custom defined world generator
+  #This sets the random world to be generated using the custom defined world generator
   use-custom-world-generator: true
 #Controls messages output by the plugin.
 #Placeholders provided in existing messages only work with these messages.

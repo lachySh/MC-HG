@@ -1,7 +1,7 @@
 package com.au.lachysh.mchg.phases;
 
 import com.au.lachysh.mchg.Main;
-import com.au.lachysh.mchg.abilities.CompassTrack;
+import com.au.lachysh.mchg.abilities.intrinsic.CompassTrack;
 import com.au.lachysh.mchg.managers.ChatManager;
 import com.au.lachysh.mchg.managers.GamemapManager;
 import com.au.lachysh.mchg.managers.LootManager;

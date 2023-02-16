@@ -7,8 +7,6 @@ settings:
   world-border-radius: 250 # Radius from the world centre that the border should be placed at
   deathmatch-border-radius: 25 # Radius from the world centre that the border should be placed at during deathmatch time
   allow-world-breaking: true # If true, players can break the world. When false, players can only interact with chests, buttons etc.
-  # IMPORTANT: datapack field is only required for random.yml arena type!
-  datapack: "vanilla_worldgen_1.19" # The name of the directory in plugins/{plugin_name}/arenas/random/datapacks/{name_of_datapack}
   spawn:
     # If true: Players will be randomly spread around the world centre location
     # If false: Players will be assigned the starting positions which are specified in

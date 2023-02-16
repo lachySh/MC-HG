@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -156,6 +157,27 @@ public class AbilityListener implements Listener {
                             notifyOnDisabled(((Player) event.getEntity()), selectedAbility);
                         } else if (selectedAbility.isOnCooldown()) {
                             notifyOnCooldown(((Player) event.getEntity()), selectedAbility);
+                        }
+                    } catch (NoSuchElementException ignored) {
+                    }
+                }
+        );
+    }
+
+    @EventHandler
+    public void onProjectileHitShooter(ProjectileHitEvent event) {
+        pm.findTribute((Player) event.getEntity().getShooter()).ifPresent(
+                (t) -> {
+                    try {
+                        Ability selectedAbility = t.getAbilities().stream().parallel()
+                                .filter(ability -> tryPreconditionSafely(ability, event))
+                                .findFirst().get();
+                        if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
+                            selectedAbility.getCallable().execute(event);
+                        } else if (selectedAbility.isDisabled()) {
+                            notifyOnDisabled(((Player) event.getEntity().getShooter()), selectedAbility);
+                        } else if (selectedAbility.isOnCooldown()) {
+                            notifyOnCooldown(((Player) event.getEntity().getShooter()), selectedAbility);
                         }
                     } catch (NoSuchElementException ignored) {
                     }

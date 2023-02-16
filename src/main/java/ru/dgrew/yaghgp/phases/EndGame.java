@@ -9,9 +9,12 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import ru.dgrew.yaghgp.Main;
 import ru.dgrew.yaghgp.managers.ChatManager;
+import ru.dgrew.yaghgp.managers.GamemapManager;
 import ru.dgrew.yaghgp.managers.SettingsManager;
 import ru.dgrew.yaghgp.tribute.Tribute;
 
@@ -19,29 +22,41 @@ public class EndGame extends Phase {
     private int timer;
     private SettingsManager sm;
     private ChatManager cm;
+    private GamemapManager gm;
     private Tribute victor;
+
     //region Phase Methods
     @Override
     public void onEnable() {
         timer = 15;
         sm = Main.getSm();
         cm = Main.getCm();
+        gm = Main.getGm();
         victor = Main.getPlm().getRemainingTributesList().get(0);
         victor.getPlayerObject().sendTitle(cm.getVictorytitle(), cm.getVictory(), 20, 40, 20);
         victor.getPlayerObject().playSound(victor.getPlayerObject().getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 1, 1);
+
+        victor.getPlayerObject().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 600, 10));
+        victor.getPlayerObject().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 600, 10));
+        victor.getPlayerObject().addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 600, 10));
+        victor.getPlayerObject().addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 600, 1));
+
         Bukkit.broadcastMessage(cm.getPrefix() + cm.getGlobalvictory().replace("{player}", victor.getPlayerObject().getName()));
         startTimer();
         Bukkit.getLogger().info("EndGame phase has started successfully!");
     }
+
     @Override
     public void onDisable() {
-        Bukkit.getServer().unloadWorld(sm.getArenaobj(), true);
+        Bukkit.getServer().unloadWorld(gm.getArenaWorld(), true);
         Bukkit.getServer().reload();
     }
+
     @Override
     public Phase next() {
         return null;
     }
+
     //endregion
     //region Phase Listeners
     @EventHandler
@@ -49,13 +64,18 @@ public class EndGame extends Phase {
         e.setJoinMessage(null);
         e.getPlayer().kickPlayer("Game already started!");
     }
+
     @EventHandler
-    public void onLeave(PlayerQuitEvent e){
+    public void onLeave(PlayerQuitEvent e) {
         e.setQuitMessage(ChatColor.YELLOW + e.getPlayer().getName() + " has left!");
         Main.getPlm().removeOnDC(e.getPlayer());
     }
+
     @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) { e.setCancelled(true); }
+    public void onCommand(PlayerCommandPreprocessEvent e) {
+        e.setCancelled(true);
+    }
+
     //endregion
     //region Runnables
     void startTimer() {
@@ -63,7 +83,7 @@ public class EndGame extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    Firework fw = (Firework)victor.getPlayerObject().getWorld().spawnEntity(victor.getPlayerObject().getLocation(), EntityType.FIREWORK);
+                    Firework fw = (Firework) victor.getPlayerObject().getWorld().spawnEntity(victor.getPlayerObject().getLocation(), EntityType.FIREWORK);
                     FireworkMeta fwm = fw.getFireworkMeta();
                     FireworkEffect effect = FireworkEffect.builder().flicker(true).withColor(Color.RED).withFade(Color.FUCHSIA).with(FireworkEffect.Type.BALL).trail(true).build();
                     fwm.addEffect(effect);
@@ -75,12 +95,12 @@ public class EndGame extends Phase {
                     if (timer <= 5) Bukkit.broadcastMessage(cm.getPrefix() + cm.getEndgame(timer));
                     timer--;
                 } else {
-                    for(Player p : Bukkit.getOnlinePlayers()) p.kickPlayer("Game ended! Restarting server...");
-                    Bukkit.getServer().unloadWorld(sm.getArenaobj(), false);
+                    for (Player p : Bukkit.getOnlinePlayers()) p.kickPlayer("Game ended! Restarting server...");
+                    Bukkit.getServer().unloadWorld(gm.getArenaWorld(), false);
                     Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> Bukkit.getServer().shutdown(), 60);
                 }
             }
-        }.runTaskTimer(Main.getInstance(),20L, 20L);
+        }.runTaskTimer(Main.getInstance(), 20L, 20L);
     }
     //endregion
 }

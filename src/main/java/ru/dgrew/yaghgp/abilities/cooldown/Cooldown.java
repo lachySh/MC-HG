@@ -8,6 +8,11 @@ public class Cooldown {
         this.durationMillis = durationSeconds * 1000;
     }
 
+    public Cooldown(long durationSeconds, long currentCooldownSeconds) {
+        this.durationMillis = durationSeconds * 1000;
+        this.lastUsedMillis = System.currentTimeMillis() - durationMillis + (currentCooldownSeconds * 1000);
+    }
+
     public void cooldown() {
         lastUsedMillis = System.currentTimeMillis();
     }

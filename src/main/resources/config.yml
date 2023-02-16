@@ -7,12 +7,10 @@ settings:
   #Controls the coordinates of a universal spawn point of the lobby world.
   #Coordinates are strings written like this: X:Y:Z:pitch:yaw, where : is the separator which should be included between values.
   lobby-spawn: "100.0:64.0:100.0:0.0f:0.0f" #Example coordinates
-  #Controls the name of the world you wish to use as a Hunger Games arena.
-  arena: "arena"
-  #Controls the radius of the world border.
-  world-border-radius: 500
-  #Controls the radius of the deathmatch world border.
-  deathmatch-border-radius: 50
+  #Controls the range (in blocks from the player) that the tracking compass should track.
+  compass-track-range: 200
+  #Requires WorldGeneratorApi to be installed in ./plugins. This sets the random world to be generated using the custom defined world generator
+  use-custom-world-generator: true
 #Controls messages output by the plugin.
 #Placeholders provided in existing messages only work with these messages.
 messages:
@@ -21,8 +19,11 @@ messages:
   game-started: "&fGame has successfully started!"
   already-started: "&fGame has already started!"
   lobby-timer-notifications: "&fVoting concludes in {timer} {m}!"
+  lobby-map-selection: "&fThe map with the highest votes is {map}! Now loading map..."
+  lobby-map-loaded: "&fLoading complete! Preparing to start the game..."
   launch-cancelled: "&fNot enough players for the game to start! Timer aborted."
   start-timer-notifications: "&fThe game will commence in {timer} {m}!"
+  movement-timer-notifications: "&fPlayers can move in {timer} {m}!"
   invincibility-timer-notifications: "&fInvincibility will wear off in {timer} {m}!"
   global-game-started: "&fGame is now commencing!"
   grace-period: "&fGrace period will end in {timer} {m}!"
@@ -48,6 +49,11 @@ messages:
   vote-custom-subtitle: "Select from custom pre-made maps with loot filled chests.\nMore akin to the classic survival games experience."
   vote-custom-map-title: "&8Vote for a custom map"
   vote-message: "&fYou have voted for {map}"
+  compass-timer-notifications: "&fCompasses will be handed out in {timer} {m}!"
+  compass-time: "&fCompasses have been handed out! If you didn't have inventory space, it will be dropped at your feet. Use this to track other players!"
+  kits-too-late: "&fIt's too late to choose a kit!"
+  kits-menu-title: "&8Select a kit"
+  kits-selection: "&fYou have selected {kit}!"
   summary:
     - "Game summary is coming soon!"
     - "It will be broadcasted once the game is over"

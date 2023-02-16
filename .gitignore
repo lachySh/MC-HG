@@ -41,3 +41,14 @@ build/
 ### Project exclude paths ###
 /target/
 /out/
+
+### BuildTools stuff ###
+BuildTools.jar
+BuildTools.log.txt
+spigot-**.jar
+/Bukkit/
+/BuildData/
+/Spigot/
+/CraftBukkit/
+/apache-maven-**/
+/work

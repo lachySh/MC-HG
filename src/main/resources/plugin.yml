@@ -9,3 +9,9 @@ commands:
     description: "/start - Starts a Hunger Games session for all online players."
   vote:
     description: "/vote - Vote on random map or custom map."
+  endvote:
+    description: "/endvote - End voting time and start game shortly after."
+  nextphase:
+    description: "/nextphase - For admin / debug use only. Force the next phase of the match."
+  kits:
+    description: "/kits - Opens the kit selection UI"

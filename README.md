@@ -13,12 +13,20 @@ There's not much of this scene left, but I look back fondly on this era of Minec
  * [x] Soup PvP
  * [x] Soup custom crafting recipes
  * [x] Better UI for lobby
- * [ ] Lobby voting between random map and pre-made map selections (WIP)
+ * [x] Lobby voting between random map and pre-made map selections
+ * [ ] Random world generation modification
+ * [x] Kits
+ * [ ] Loot management for custom maps
  * [ ] Feasts
- * [ ] Kits
+ * [ ] Allow users to join during a game in progress and be sent to lobby, with option to spectate
  * [ ] Better UI for in-game (?)
+
+### Development notes
+
+This plugin uses NMS to modify the default terrain generation in Minecraft, please see [here](https://www.spigotmc.org/threads/spigot-bungeecord-1-17-1-17-1.510208/#post-4184317) for info on how to set this up for development.
  
-#Original README:
+
+## Original README:
 
 ## YAGHGP - Yet Another Generic Hunger Games Plugin
 ### What is YAGHGP?

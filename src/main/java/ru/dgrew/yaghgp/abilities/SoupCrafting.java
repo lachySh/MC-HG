@@ -1,6 +1,7 @@
 package ru.dgrew.yaghgp.abilities;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -19,7 +20,7 @@ public class SoupCrafting extends Ability<PrepareItemCraftEvent>  {
     private static ItemStack getCustomSoupItem(String name) {
         ItemStack cactiSoupItem = new ItemStack(Material.MUSHROOM_STEW, 1);
         ItemMeta itemMeta = cactiSoupItem.getItemMeta();
-        itemMeta.setDisplayName(name);
+        itemMeta.setDisplayName(ChatColor.RESET + name);
         cactiSoupItem.setItemMeta(itemMeta);
         return cactiSoupItem;
     }
@@ -33,7 +34,7 @@ public class SoupCrafting extends Ability<PrepareItemCraftEvent>  {
     private static ShapelessRecipe cocoaSoupRecipe;
 
     public SoupCrafting() {
-        super("Soup crafting", 0, false);
+        super("Soup crafting", PrepareItemCraftEvent.class, 0, false);
         getSeedSoupRecipe();
         getCactiSoupRecipe();
         getCocoaSoupRecipe();

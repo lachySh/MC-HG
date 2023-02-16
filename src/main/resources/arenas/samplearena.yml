@@ -1,4 +1,17 @@
 details:
-  name: "Classic Survival Games"
-  description: "The Classic Survival Games Experience!"
-  display-item: "DIAMOND_SWORD"
+  name: "Classic Survival Games" # Display name for voting and notifications
+  description: "The Classic Survival Games Experience!" # Display description for voting
+  display-item: "DIAMOND_SWORD" # Display item for the voting GUI
+settings:
+  world-centre: "0.0:64.0:0.0:0.0f:0.0f" # Centre point for the world, which the radius will surround. Also spawn point during spectator-at-start mode
+  world-border-radius: 250 # Radius from the world centre that the border should be placed at
+  deathmatch-border-radius: 25 # Radius from the world centre that the border should be placed at during deathmatch time
+  allow-world-breaking: false # If true, players can break the world. When false, players can only interact with chests, buttons etc.
+  spawn:
+    # If true: Players will be randomly spread around the world centre location
+    # If false: Players will be assigned the starting positions which are specified in
+    randomize-spawn-locations: false
+    spawn-locations: # If randomize-spawn-locations is false, this value is required: Players will be placed at these locations
+      - "1.0:64.0:1.0:0.0f:0.0f"
+      - "2.0:64.0:2.0:0.0f:0.0f"
+      - "3.0:64.0:3.0:0.0f:0.0f"

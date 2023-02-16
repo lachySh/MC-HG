@@ -8,6 +8,7 @@ import java.util.*;
 
 public class VotingManager {
     private ScoreboardManager sbm;
+    private GamemapManager gm;
     private HashMap<Gamemap, Integer> mapVotes;
     private List<String> playersVotedMap;
 
@@ -15,6 +16,7 @@ public class VotingManager {
         mapVotes = new HashMap<>();
         playersVotedMap = new ArrayList<>();
         sbm = Main.getSbm();
+        gm = Main.getGm();
     }
 
     public void addMapVote(Gamemap gamemap, Player player) {
@@ -31,7 +33,12 @@ public class VotingManager {
         return !playersVotedMap.contains(player.getName());
     }
 
+    // Defaults to random world
     public Gamemap getHighestMapVote() {
-        return Collections.max(mapVotes.entrySet(), Map.Entry.comparingByValue()).getKey();
+        try {
+            return Collections.max(mapVotes.entrySet(), Map.Entry.comparingByValue()).getKey();
+        } catch (NoSuchElementException e) {
+            return gm.getRandomWorld();
+        }
     }
 }

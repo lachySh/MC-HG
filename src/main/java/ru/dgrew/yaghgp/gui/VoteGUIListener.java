@@ -1,4 +1,4 @@
-package ru.dgrew.yaghgp.voting;
+package ru.dgrew.yaghgp.gui;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.dgrew.yaghgp.Main;
+import ru.dgrew.yaghgp.commands.VoteGUICommand;
 import ru.dgrew.yaghgp.gamemap.Gamemap;
 import ru.dgrew.yaghgp.managers.ChatManager;
 import ru.dgrew.yaghgp.managers.GamemapManager;
@@ -68,17 +69,23 @@ public class VoteGUIListener implements Listener {
                 return;
             }
 
-            gm.getGamemapOptions().stream()
-                    .filter(g -> g.equalsItemStack(e.getCurrentItem()))
-                    .findAny()
-                    .ifPresent(
-                            (g) ->
-                            {
-                                vm.addMapVote(g, player);
-                                sendVoteMessage(player, e.getCurrentItem().getItemMeta().getDisplayName());
-                                player.closeInventory();
-                            }
-                    );
+            if (e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE
+                    && e.getCurrentItem().getItemMeta().getDisplayName().contains("Back")) {
+                player.closeInventory();
+                VoteGUICommand.openMapVoteMainMenu(player);
+            } else {
+                gm.getCustomGamemapOptions().stream()
+                        .filter(g -> g.equalsItemStack(e.getCurrentItem()))
+                        .findAny()
+                        .ifPresent(
+                                (g) ->
+                                {
+                                    vm.addMapVote(g, player);
+                                    sendVoteMessage(player, e.getCurrentItem().getItemMeta().getDisplayName());
+                                    player.closeInventory();
+                                }
+                        );
+            }
             e.setCancelled(true);
             return;
         }
@@ -89,12 +96,14 @@ public class VoteGUIListener implements Listener {
     }
 
     private Inventory customGamemapSelector(Player player) {
-        Inventory gui = Bukkit.createInventory(player, 9, cm.getVoteCustomMapTitle());
+        Inventory gui = Bukkit.createInventory(player,
+                (gm.getCustomGamemapOptions().size()+1) + (9 - (gm.getCustomGamemapOptions().size()+1) % 9),
+                cm.getVoteCustomMapTitle());
 
-        for (Gamemap g : gm.getGamemapOptions()) {
+        for (Gamemap g : gm.getCustomGamemapOptions()) {
             ItemStack newItem = new ItemStack(g.getDisplayMaterial());
             ItemMeta newItemMeta = newItem.getItemMeta();
-            newItemMeta.setDisplayName(ChatColor.GOLD + g.getTitle());
+            newItemMeta.setDisplayName(g.getTitle());
             ArrayList<String> newItemLore = new ArrayList<>();
             newItemLore.addAll(formatLore(new ArrayList<String>(Arrays.asList(g.getDescription().split("\n")))));
             newItemMeta.setLore(newItemLore);
@@ -102,6 +111,13 @@ public class VoteGUIListener implements Listener {
 
             gui.addItem(newItem);
         }
+
+        ItemStack backButton = new ItemStack(Material.RED_STAINED_GLASS_PANE);
+        ItemMeta newItemMeta = backButton.getItemMeta();
+        newItemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.RED + "Back");
+        backButton.setItemMeta(newItemMeta);
+
+        gui.setItem(gui.getSize()-1, backButton);
 
         return gui;
     }

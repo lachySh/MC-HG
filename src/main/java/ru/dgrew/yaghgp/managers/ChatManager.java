@@ -222,6 +222,54 @@ public class ChatManager {
         return formatEmbeddedString(voteMessage, "map", mapName);
     }
 
+    private String lobbyMapSelection;
+
+    public String getLobbyMapSelection(String mapName) {
+        return formatEmbeddedString(lobbyMapSelection, "map", mapName + ChatColor.RESET + ChatColor.WHITE);
+    }
+
+    private String lobbyMapLoaded;
+
+    public String getLobbyMapLoaded() {
+        return lobbyMapLoaded;
+    }
+
+    private String compassTimerNotification;
+
+    public String getCompassTimerNotification(int timer) {
+        return formatTime(this.compassTimerNotification, timer);
+    }
+
+    private String compassTime;
+
+    public String getCompassTime() {
+        return compassTime;
+    }
+
+    private String movementTimeNotification;
+
+    public String getMovementTimeNotification(int timer) {
+        return formatTime(this.movementTimeNotification, timer);
+    }
+
+    private String kitsTooLate;
+
+    public String getKitsTooLate() {
+        return kitsTooLate;
+    }
+
+    private String kitsMenuTitle;
+
+    public String getKitsMenuTitle() {
+        return kitsMenuTitle;
+    }
+
+    private String kitsSelection;
+
+    public String getKitsSelection(String kitName) {
+        return formatEmbeddedString(kitsSelection, "kit", kitName);
+    }
+
     private void setUpEntries() {
         prefix = format(config.getString("messages.prefix"));
         perm = format(config.getString("messages.no-permission"));
@@ -254,5 +302,13 @@ public class ChatManager {
         voteCustomSubtitle = format(config.getString("messages.vote-custom-subtitle"));
         voteCustomMapTitle = format(config.getString("messages.vote-custom-map-title"));
         voteMessage = format(config.getString("messages.vote-message"));
+        lobbyMapSelection = format(config.getString("messages.lobby-map-selection"));
+        lobbyMapLoaded = format(config.getString("messages.lobby-map-loaded"));
+        compassTimerNotification = format(config.getString("messages.compass-timer-notifications"));
+        compassTime = format(config.getString("messages.compass-time"));
+        movementTimeNotification = format(config.getString("messages.movement-timer-notifications"));
+        kitsTooLate = format(config.getString("messages.kits-too-late"));
+        kitsMenuTitle = format(config.getString("messages.kits-menu-title"));
+        kitsSelection = format(config.getString("messages.kits-selection"));
     }
 }

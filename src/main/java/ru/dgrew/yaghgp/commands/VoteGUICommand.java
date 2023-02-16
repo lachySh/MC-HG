@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.dgrew.yaghgp.Main;
@@ -22,10 +23,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class VoteGUICommand implements CommandExecutor {
-    ChatManager cm;
-    PhaseManager pm;
-    GamemapManager gm;
-    VotingManager vm;
+    private static ChatManager cm;
+    private static PhaseManager pm;
+    private static GamemapManager gm;
+    private static VotingManager vm;
 
     public VoteGUICommand() {
         cm = Main.getCm();
@@ -37,33 +38,11 @@ public class VoteGUICommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player){
+        if (sender instanceof Player) {
             if (pm.getCurrentPhase() instanceof Lobby) {
                 if (vm.canPlayerVoteMap((Player) sender)) {
                     Player player = (Player) sender;
-                    Inventory gui = Bukkit.createInventory(player, 9, cm.getVoteTitle());
-
-                    ItemStack randomMap = new ItemStack(Material.GRASS_BLOCK);
-                    ItemStack customMap = new ItemStack(Material.STONE_BRICKS);
-
-                    ItemMeta randomMapMeta = randomMap.getItemMeta();
-                    randomMapMeta.setDisplayName(gm.getRandomWorld().getTitle());
-                    ArrayList<String> randomMapLore = new ArrayList<>();
-                    randomMapLore.addAll(formatLore(new ArrayList<String>(Arrays.asList(gm.getRandomWorld().getDescription().split("\n")))));
-                    randomMapMeta.setLore(randomMapLore);
-                    randomMap.setItemMeta(randomMapMeta);
-
-                    ItemMeta customMapMeta = customMap.getItemMeta();
-                    customMapMeta.setDisplayName(cm.getVoteCustom());
-                    ArrayList<String> customMapLore = new ArrayList<>();
-                    customMapLore.addAll(formatLore(new ArrayList<String>(Arrays.asList(cm.getVoteCustomSubtitle().split("\n")))));
-                    customMapMeta.setLore(customMapLore);
-                    customMap.setItemMeta(customMapMeta);
-
-                    //Put the items in the inventory
-                    ItemStack[] menuItems = {randomMap, customMap};
-                    gui.setContents(menuItems);
-                    player.openInventory(gui);
+                    openMapVoteMainMenu(player);
                 } else {
                     sender.sendMessage(cm.getPrefix() + ChatColor.WHITE + "You have already voted!");
                 }
@@ -74,7 +53,38 @@ public class VoteGUICommand implements CommandExecutor {
         return true;
     }
 
-    private List<String> formatLore(List<String> lore) {
+    public static void openMapVoteMainMenu(Player player) {
+        Inventory gui = Bukkit.createInventory(player, 9, cm.getVoteTitle());
+        ItemStack[] menuItems;
+
+        ItemStack customMap = new ItemStack(Material.STONE_BRICKS);
+        ItemMeta customMapMeta = customMap.getItemMeta();
+        customMapMeta.setDisplayName(cm.getVoteCustom());
+        ArrayList<String> customMapLore = new ArrayList<>();
+        customMapLore.addAll(formatLore(new ArrayList<>(Arrays.asList(cm.getVoteCustomSubtitle().split("\n")))));
+        customMapMeta.setLore(customMapLore);
+        customMap.setItemMeta(customMapMeta);
+
+        if (gm.getRandomWorld() == null) {
+            menuItems = new ItemStack[]{customMap};
+        } else {
+            ItemStack randomMap = new ItemStack(Material.GRASS_BLOCK);
+            ItemMeta randomMapMeta = randomMap.getItemMeta();
+            randomMapMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
+            randomMapMeta.setDisplayName(gm.getRandomWorld().getTitle());
+            ArrayList<String> randomMapLore = new ArrayList<>();
+            randomMapLore.addAll(formatLore(new ArrayList<>(Arrays.asList(gm.getRandomWorld().getDescription().split("\n")))));
+            randomMapMeta.setLore(randomMapLore);
+            randomMap.setItemMeta(randomMapMeta);
+
+            menuItems = new ItemStack[]{randomMap, customMap};
+        }
+        //Put the items in the inventory
+        gui.setContents(menuItems);
+        player.openInventory(gui);
+    }
+
+    private static List<String> formatLore(List<String> lore) {
         var newList = new ArrayList<String>();
         for (String s : lore) {
             newList.add(ChatColor.GRAY + s);

@@ -8,17 +8,20 @@ public abstract class Ability<E extends Event> {
     private Cooldown cooldown;
     private String name;
     private boolean disabled;
+    private final Class<E> type;
 
-    public Ability(String name, long standardCooldown, boolean disabled) {
+    public Ability(String name, Class<E> type, long standardCooldown, boolean disabled) {
         this.name = name;
         this.cooldown = new Cooldown(standardCooldown);
         this.disabled = disabled;
+        this.type = type;
     }
 
-    public Ability(String name, long standardCooldown, boolean disabled, long currentCooldown) {
+    public Ability(String name, Class<E> type, long standardCooldown, long currentCooldown, boolean disabled) {
         this.name = name;
-        this.cooldown = new Cooldown(standardCooldown);
+        this.cooldown = new Cooldown(standardCooldown, currentCooldown);
         this.disabled = disabled;
+        this.type = type;
     }
 
     public abstract AbilityCallable<E> getCallable();
@@ -47,5 +50,9 @@ public abstract class Ability<E extends Event> {
 
     public String getName() {
         return this.name;
+    }
+
+    public Class<E> getType() {
+        return type;
     }
 }

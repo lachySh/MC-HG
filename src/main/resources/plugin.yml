@@ -1,9 +1,9 @@
-name: YAGHGP
-main: ru.dgrew.yaghgp.Main
+name: MC-HG
+main: com.au.lachysh.mchg.Main
 version: '${project.version}'
 api-version: 1.13
 authors: [ DGrew, rodent567 ]
-description: Yet Another Generic Hunger Games Plugin
+description: MC-HG
 commands:
   start:
     description: "/start - Starts a Hunger Games session for all online players."

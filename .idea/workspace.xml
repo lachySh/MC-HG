@@ -10,51 +10,62 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3784dd68-6b9e-4920-8eca-4aeee6c7ee2c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/apparition/Invisibility.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/cultivator/InstantGrow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/stomper/TransferFallDamage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/biome/DefaultBiomeProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/biome/OceanlessBiomeGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/biome/ReflectionUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/KitGUICommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gamemap/RandomGamemap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gui/KitsGUIListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Apparition.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Cultivator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Kit.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/KitType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Stomper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/KitManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/shared/BiomeChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/biome/WorldInitEventListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/Ability.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/Ability.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/AbilityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/AbilityListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/CompassTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/CompassTrack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupCrafting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupCrafting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupHeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupHeal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/cooldown/Cooldown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/cooldown/Cooldown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/VoteGUICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/VoteGUICommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gamemap/Gamemap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gamemap/Gamemap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/ChatManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/ChatManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/GamemapManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/GamemapManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/SettingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/SettingsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/EndGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/EndGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/GameStart.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/InvincibilityPeriod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/InvincibilityPeriod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/Lobby.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/PreGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/PreGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/tribute/Tribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/tribute/Tribute.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/voting/VoteGUIListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gui/VoteGUIListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/arenas/random.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/arenas/random.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/Metrics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/UpdateChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/Ability.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/Ability.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/AbilityCallable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/AbilityCallable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/AbilityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/AbilityListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/CompassTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/CompassTrack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupCrafting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/SoupCrafting.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/SoupHeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/SoupHeal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/apparition/Invisibility.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/apparition/Invisibility.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/cooldown/Cooldown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/cooldown/Cooldown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/cultivator/InstantGrow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/cultivator/InstantGrow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/abilities/stomper/TransferFallDamage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/stomper/TransferFallDamage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/biome/DefaultBiomeProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/biome/DefaultBiomeProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/biome/OceanlessBiomeGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/biome/OceanlessBiomeGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/biome/ReflectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/biome/ReflectionUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/EndVoteCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/EndVoteCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/KitGUICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/KitGUICommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/NextPhaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/NextPhaseCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/StartCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/StartCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/commands/VoteGUICommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/VoteGUICommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gamemap/Coordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/Coordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gamemap/Gamemap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/Gamemap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gamemap/RandomGamemap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/RandomGamemap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gui/KitsGUIListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gui/KitsGUIListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/gui/VoteGUIListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gui/VoteGUIListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Apparition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Apparition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Cultivator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Cultivator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Kit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Kit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/KitType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/KitType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/kits/Stomper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Stomper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/AbilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/AbilityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/ChatManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/ChatManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/GamemapManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/GamemapManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/KitManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/KitManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/LootManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/LootManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PhaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/PhaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/ScoreboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/ScoreboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/SettingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/SettingsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/managers/VotingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/VotingManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/CompassHandout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/CompassHandout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/Deathmatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Deathmatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/EndGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/EndGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/FightPeriodStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/FightPeriodStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/GameStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/InvincibilityPeriod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/InvincibilityPeriod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Lobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/Phase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Phase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/PreGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/PreGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/phases/SharedPhaseLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/SharedPhaseLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/shared/BiomeChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/shared/BiomeChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/dgrew/yaghgp/tribute/Tribute.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/tribute/Tribute.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

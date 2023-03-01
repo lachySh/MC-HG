@@ -50,7 +50,7 @@ public class GameStart extends Phase {
                 tribute.getPlayerObject().getInventory().addItem(startingItem);
             }
         }
-        Bukkit.getLogger().info("PreGame phase has started successfully!");
+        Main.getInstance().getLogger().info("PreGame phase has started successfully!");
     }
     @Override
     public void onDisable() {
@@ -113,7 +113,7 @@ public class GameStart extends Phase {
     }
     //endregion
     void scatterPlayers() {
-        Bukkit.getLogger().info("Scattering players...");
+        Main.getInstance().getLogger().info("Scattering players...");
         Random random = new Random();
         List<Location> list = gm.getSpawnLocations(pm.getRemainingTributesList().size());
         int var;
@@ -122,6 +122,6 @@ public class GameStart extends Phase {
             player.teleport(list.get(var));
             list.remove(var);
         }
-        Bukkit.getLogger().info("All online players should now be scattered!");
+        Main.getInstance().getLogger().info("All online players should now be scattered!");
     }
 }

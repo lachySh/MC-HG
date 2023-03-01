@@ -10,25 +10,71 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3784dd68-6b9e-4920-8eca-4aeee6c7ee2c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/switcher/SwapEntityLocations.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Switcher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/chameleon/MobDisguise.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/chameleon/OnDamageRemoveDisguise.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/endermage/TeleportEntities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Chameleon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Endermage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/loot/LootEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/LootRefill.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/arenas/samplearena/README.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bukkit/src/main/java/org/bukkit/configuration/file/YamlConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Bukkit/src/main/java/org/bukkit/configuration/file/YamlConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftIpBanEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftIpBanEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftIpBanList.java" beforeDir="false" afterPath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftIpBanList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftProfileBanEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftProfileBanEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftProfileBanList.java" beforeDir="false" afterPath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/CraftProfileBanList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/conversations/ConversationTracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/conversations/ConversationTracker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/map/CraftMapView.java" beforeDir="false" afterPath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/map/CraftMapView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java" beforeDir="false" afterPath="$PROJECT_DIR$/CraftBukkit/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0003-Spigot-Configuration.patch" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0003-Spigot-Configuration.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0013-Metrics.patch" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0013-Metrics.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0032-Configurable-Amount-of-Netty-Threads.patch" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0032-Configurable-Amount-of-Netty-Threads.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0037-Allow-statistics-to-be-disabled-forced.patch" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0037-Allow-statistics-to-be-disabled-forced.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0065-Safer-JSON-Loading.patch" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0065-Safer-JSON-Loading.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0076-Make-debug-logging-togglable.patch" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0076-Make-debug-logging-togglable.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0084-Configurable-Advancement-Disabling.patch" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/CraftBukkit-Patches/0084-Configurable-Advancement-Disabling.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-API/src/main/java/org/bukkit/configuration/file/YamlConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-API/src/main/java/org/bukkit/configuration/file/YamlConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/net/minecraft/server/players/JsonList.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/net/minecraft/server/players/JsonList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftIpBanEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftIpBanEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftIpBanList.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftIpBanList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftProfileBanEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftProfileBanEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftProfileBanList.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/CraftProfileBanList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/conversations/ConversationTracker.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/conversations/ConversationTracker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/map/CraftMapView.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/map/CraftMapView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/bukkit/craftbukkit/util/CraftMagicNumbers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/spigotmc/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/spigotmc/Metrics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/spigotmc/SpigotConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/spigotmc/SpigotConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/spigotmc/SpigotWorldConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Spigot/Spigot-Server/src/main/java/org/spigotmc/SpigotWorldConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/Ability.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/Ability.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/UpdateChecker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/AbilityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/AbilityListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/CompassTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/intrinsic/CompassTrack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/SoupCrafting.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/intrinsic/SoupCrafting.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/SoupHeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/intrinsic/SoupHeal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/cooldown/Cooldown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/Cooldown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Cultivator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Cultivator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/AbilityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/AbilityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/EndVoteCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/EndVoteCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/NextPhaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/commands/NextPhaseCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/Gamemap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/Gamemap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/RandomGamemap.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Kit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Kit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/ChatManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/ChatManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/GamemapManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/GamemapManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/KitManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/KitManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/LootManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/LootManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/ScoreboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/ScoreboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/SettingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/SettingsManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/CompassHandout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/CompassHandout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Deathmatch.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Deathmatch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/EndGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/EndGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/FightPeriodStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/FightPeriodStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/GameStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/InvincibilityPeriod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/InvincibilityPeriod.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Lobby.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/PreGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/PreGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/arenas/random.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/arenas/random.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/SharedPhaseLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/SharedPhaseLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/arenas/samplearena.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/arenas/samplearena.yml" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,16 +100,9 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/roden/Documents/MC-HG&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\roden\Documents\YAGHGP\src\main\resources\arenas" />
@@ -78,7 +117,19 @@
       <recent name="ru.dgrew.yaghgp.phases" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -97,10 +148,16 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

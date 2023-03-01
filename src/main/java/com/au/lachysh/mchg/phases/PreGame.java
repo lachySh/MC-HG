@@ -2,13 +2,16 @@ package com.au.lachysh.mchg.phases;
 
 import com.au.lachysh.mchg.managers.ChatManager;
 import com.au.lachysh.mchg.managers.GamemapManager;
+import com.au.lachysh.mchg.managers.LootManager;
 import com.au.lachysh.mchg.managers.PlayerManager;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +29,7 @@ public class PreGame extends Phase {
     private PlayerManager plm;
     private GamemapManager gm;
     private SharedPhaseLogic spl;
+    private LootManager lm;
     private BukkitTask countdown;
 
     //region Phase Methods
@@ -35,6 +39,7 @@ public class PreGame extends Phase {
         plm = Main.getPlm();
         gm = Main.getGm();
         spl = Main.getSpl();
+        lm = Main.getLm();
         timer = 30;
         plm.updateTributesList();
         plm.giveIntrinsicAbilitiesToAllTributes();
@@ -44,7 +49,15 @@ public class PreGame extends Phase {
         for (Tribute tribute : plm.getRemainingTributesList()) {
             tribute.getPlayerObject().setGameMode(GameMode.SPECTATOR);
         }
-        Bukkit.getLogger().info("PreGame phase has started successfully!");
+        Main.registerAbilityListener();
+
+        if (gm.getArenaGamemap().getLootEnabled()) {
+            Main.getInstance().getLogger().info("Loot is enabled for this gamemap. Filling chests...");
+            lm.enableLootChestListener();
+            Main.registerLootManagerListeners();
+        }
+
+        Main.getInstance().getLogger().info("PreGame phase has started successfully!");
     }
 
     @Override
@@ -99,6 +112,11 @@ public class PreGame extends Phase {
         e.setCancelled(true);
     }
 
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerInteract(PlayerInteractEvent e) {
+        e.setCancelled(true);
+    }
+
     //endregion
     //region Runnables
     void startCountdown() {
@@ -127,7 +145,7 @@ public class PreGame extends Phase {
 
     //endregion
     void scatterPlayers() {
-        Bukkit.getLogger().info("Scattering players...");
+        Main.getInstance().getLogger().info("Scattering players...");
         Random random = new Random();
         List<Location> list = gm.getSpawnLocations(plm.getRemainingTributesList().size());
         int var;
@@ -136,6 +154,6 @@ public class PreGame extends Phase {
             player.teleport(list.get(var));
             list.remove(var);
         }
-        Bukkit.getLogger().info("All online players should now be scattered!");
+        Main.getInstance().getLogger().info("All online players should now be scattered!");
     }
 }

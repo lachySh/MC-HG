@@ -84,6 +84,10 @@ public abstract class Kit implements Comparable<Kit> {
         return kitAbilities;
     }
 
+    public void setKitAbilities(List<Ability> abilities) {
+        this.kitAbilities = abilities;
+    }
+
     public String getKitName() {
         return title;
     }

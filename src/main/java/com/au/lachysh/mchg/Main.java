@@ -21,6 +21,7 @@ public class Main extends JavaPlugin implements Listener {
     private static PlayerManager plm;
     private static SettingsManager sm;
     private static GamemapManager gm;
+    private static LootManager lm;
     private static ScoreboardManager sbm;
     private static SharedPhaseLogic spl;
     private static KitManager km;
@@ -36,11 +37,12 @@ public class Main extends JavaPlugin implements Listener {
         sm = new SettingsManager(this.getConfig());
         sbm = new ScoreboardManager();
         gm = new GamemapManager();
+        lm = new LootManager();
         vm = new VotingManager();
         spl = new SharedPhaseLogic();
         pm = new PhaseManager();
         km = new KitManager();
-        gm.getCustomGamemaps();
+        gm.getGamemaps();
 
         lobby = Bukkit.createWorld(WorldCreator.name(this.getConfig().getString("settings.lobby", "arena")));
         deleteArenas();
@@ -64,7 +66,6 @@ public class Main extends JavaPlugin implements Listener {
 //            UpdateChecker uc = new UpdateChecker(getDescription().getVersion());
 //            uc.checkForUpdates();
 //        }
-        Bukkit.getPluginManager().registerEvents(new AbilityListener(), Main.getInstance());
         Bukkit.getPluginManager().registerEvents(new VoteGUIListener(), Main.getInstance());
         Bukkit.getPluginManager().registerEvents(new KitsGUIListener(), Main.getInstance());
         if (sm.getUseCustomWorldGen()) {
@@ -79,19 +80,19 @@ public class Main extends JavaPlugin implements Listener {
 
     private void deleteArenas() {
         try {
-            Bukkit.getLogger().info("Deleting current random arena world...");
+            Main.getInstance().getLogger().info("Deleting current random arena world...");
             Bukkit.unloadWorld("random", false);
             File deleteFolder = new File("./random");
             deleteWorld(deleteFolder);
-            Bukkit.getLogger().info("random deleted successfully!");
+            Main.getInstance().getLogger().info("random deleted successfully!");
 
-            Bukkit.getLogger().info("Deleting current customarena world...");
+            Main.getInstance().getLogger().info("Deleting current customarena world...");
             Bukkit.unloadWorld("customarena", false);
             deleteFolder = new File("./customarena");
             deleteWorld(deleteFolder);
-            Bukkit.getLogger().info("customarena deleted successfully!");
+            Main.getInstance().getLogger().info("customarena deleted successfully!");
         } catch (Exception ex) {
-            Bukkit.getLogger().severe("Could not delete world! See error trace for details");
+            Main.getInstance().getLogger().severe("Could not delete world! See error trace for details");
             ex.printStackTrace();
         }
     }
@@ -110,6 +111,14 @@ public class Main extends JavaPlugin implements Listener {
         return(path.delete());
     }
 
+    public static void registerAbilityListener() {
+        Bukkit.getPluginManager().registerEvents(new AbilityListener(), Main.getInstance());
+    }
+
+    public static void registerLootManagerListeners() {
+        Bukkit.getPluginManager().registerEvents(getLm(), Main.getInstance());
+    }
+
     public static Main getInstance() {
         return instance;
     }
@@ -122,4 +131,5 @@ public class Main extends JavaPlugin implements Listener {
     public static ScoreboardManager getSbm() { return sbm; }
     public static SharedPhaseLogic getSpl() { return spl; }
     public static KitManager getKm() { return km; }
+    public static LootManager getLm() { return lm; }
 }

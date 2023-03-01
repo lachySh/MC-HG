@@ -41,7 +41,7 @@ public class Deathmatch extends Phase {
         arena.getWorldBorder().setSize(gm.getArenaGamemap().getDeathmatchBorderRadius()*2);
         arena.setTime(18000L);
         startTimer();
-        Bukkit.getLogger().info("Deathmatch phase has started successfully!");
+        Main.getInstance().getLogger().info("Deathmatch phase has started successfully!");
         checkForLastPlayer();
     }
     @Override
@@ -111,7 +111,7 @@ public class Deathmatch extends Phase {
 
     //endregion
     void scatterPlayers() {
-        Bukkit.getLogger().info("Scattering players for deathmatch...");
+        Main.getInstance().getLogger().info("Scattering players for deathmatch...");
         Random random = new Random();
         List<Location> list = gm.getDeathmatchLocations(pm.getRemainingTributesList().size());
         int var;
@@ -120,7 +120,7 @@ public class Deathmatch extends Phase {
             t.getPlayerObject().teleport(list.get(var));
             list.remove(var);
         }
-        Bukkit.getLogger().info("All online players should now be scattered!");
+        Main.getInstance().getLogger().info("All online players should now be scattered!");
     }
 
     void checkForLastPlayer() {

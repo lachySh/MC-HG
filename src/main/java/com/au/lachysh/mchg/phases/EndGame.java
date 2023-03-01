@@ -43,7 +43,7 @@ public class EndGame extends Phase {
 
         Bukkit.broadcastMessage(cm.getPrefix() + cm.getGlobalvictory().replace("{player}", victor.getPlayerObject().getName()));
         startTimer();
-        Bukkit.getLogger().info("EndGame phase has started successfully!");
+        Main.getInstance().getLogger().info("EndGame phase has started successfully!");
     }
 
     @Override

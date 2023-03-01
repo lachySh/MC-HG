@@ -4,6 +4,10 @@ Note: This is a fork of Spigot plugin YAGHGP, which I am using as the basis of a
 
 This plugin hosts a randomly generated world as a hunger games game (WIP)
 
+## Dependencies
+
+- Lib's Disguises (& ProtocolLib) for Kit Chameleon
+
 ## What is MC-HG?
 MC-HG was a gamemode hosted by MCPVP which peaked in popularity back in 2011-2013. Back then, 120 player servers would be filled up in a matter of minutes to play this gamemode.
 There's not much of this scene left, but I look back fondly on this era of Minecraft, which is why I decided to make a plugin which emulates (and improves upon) what was done back then.

@@ -11,6 +11,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -34,7 +35,7 @@ public class AbilityListener implements Listener {
 
     private boolean tryPreconditionSafely(Ability ability, Event event) {
         try {
-            if (ability.getType() == event.getClass()) return ability.precondition(event);
+            if (ability.getType().isInstance(event)) return ability.precondition(event);
         } catch (Exception e) {
             return false;
         }
@@ -66,7 +67,7 @@ public class AbilityListener implements Listener {
         pm.findTribute(event.getPlayer()).ifPresent(
                 (t) -> {
                     try {
-                        Ability selectedAbility = t.getAbilities().stream().parallel()
+                        Ability selectedAbility = t.getAbilities().stream()
                                 .filter(ability -> tryPreconditionSafely(ability, event))
                                 .findFirst().get();
                         if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
@@ -88,7 +89,7 @@ public class AbilityListener implements Listener {
         pm.findTribute(event.getViewers().get(0)).ifPresent(
                 (t) -> {
                     try {
-                        Ability selectedAbility = t.getAbilities().stream().parallel()
+                        Ability selectedAbility = t.getAbilities().stream()
                                 .filter(ability -> tryPreconditionSafely(ability, event))
                                 .findFirst().get();
                         if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
@@ -126,14 +127,16 @@ public class AbilityListener implements Listener {
         pm.findTribute(event.getPlayer()).ifPresent(
                 (t) -> {
                     try {
-                        Ability selectedAbility = t.getAbilities().stream().parallel()
+                        Ability selectedAbility = t.getAbilities().stream()
                                 .filter(ability -> tryPreconditionSafely(ability, event))
                                 .findFirst().get();
                         if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
                             selectedAbility.getCallable().execute(event);
                         } else if (selectedAbility.isDisabled()) {
+                            event.setCancelled(true);
                             notifyOnDisabled(event.getPlayer(), selectedAbility);
                         } else if (selectedAbility.isOnCooldown()) {
+                            event.setCancelled(true);
                             notifyOnCooldown(event.getPlayer(), selectedAbility);
                         }
                     } catch (NoSuchElementException ignored) {
@@ -148,7 +151,7 @@ public class AbilityListener implements Listener {
         pm.findTribute((Player) event.getEntity()).ifPresent(
                 (t) -> {
                     try {
-                        Ability selectedAbility = t.getAbilities().stream().parallel()
+                        Ability selectedAbility = t.getAbilities().stream()
                                 .filter(ability -> tryPreconditionSafely(ability, event))
                                 .findFirst().get();
                         if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
@@ -169,7 +172,7 @@ public class AbilityListener implements Listener {
         pm.findTribute((Player) event.getEntity().getShooter()).ifPresent(
                 (t) -> {
                     try {
-                        Ability selectedAbility = t.getAbilities().stream().parallel()
+                        Ability selectedAbility = t.getAbilities().stream()
                                 .filter(ability -> tryPreconditionSafely(ability, event))
                                 .findFirst().get();
                         if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
@@ -178,6 +181,28 @@ public class AbilityListener implements Listener {
                             notifyOnDisabled(((Player) event.getEntity().getShooter()), selectedAbility);
                         } else if (selectedAbility.isOnCooldown()) {
                             notifyOnCooldown(((Player) event.getEntity().getShooter()), selectedAbility);
+                        }
+                    } catch (NoSuchElementException ignored) {
+                    }
+                }
+        );
+    }
+
+    @EventHandler
+    public void onPlayerDealsDamage(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Player)) return;
+        pm.findTribute((Player) event.getDamager()).ifPresent(
+                (t) -> {
+                    try {
+                        Ability selectedAbility = t.getAbilities().stream()
+                                .filter(ability -> tryPreconditionSafely(ability, event))
+                                .findFirst().get();
+                        if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
+                            selectedAbility.getCallable().execute(event);
+                        } else if (selectedAbility.isDisabled()) {
+                            notifyOnDisabled(((Player) event.getDamager()), selectedAbility);
+                        } else if (selectedAbility.isOnCooldown()) {
+                            notifyOnCooldown(((Player) event.getDamager()), selectedAbility);
                         }
                     } catch (NoSuchElementException ignored) {
                     }

@@ -1,0 +1,1 @@
+This folder would be the world folder for the map that relates to config file 'samplearena.yml'

@@ -37,6 +37,7 @@ public class SharedPhaseLogic {
         plm.removeOnDC(e.getPlayer());
     }
 
+    // TODO: Fix these when not testing
     public int setTimerBasedOnPlayerCount(int currentTimer) {
         if (plm.getRemainingTributesList().size() == 1) {
             return 60;
@@ -44,8 +45,8 @@ public class SharedPhaseLogic {
         if (plm.getRemainingTributesList().size() <= 3 && currentTimer >= 60) {
             return 60;
         }
-        if (plm.getRemainingTributesList().size() <= 7) {
-            return 60;
+        if (plm.getRemainingTributesList().size() <= 7 && currentTimer >= 120) {
+            return 120;
         }
         return currentTimer;
     }

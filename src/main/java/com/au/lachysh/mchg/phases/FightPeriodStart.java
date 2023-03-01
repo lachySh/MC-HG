@@ -33,7 +33,7 @@ public class FightPeriodStart extends Phase {
         gm = Main.getGm();
         spl = Main.getSpl();
         startTimer();
-        Bukkit.getLogger().info("FightPeriodStart phase has started successfully!");
+        Main.getInstance().getLogger().info("FightPeriodStart phase has started successfully!");
     }
 
     @Override

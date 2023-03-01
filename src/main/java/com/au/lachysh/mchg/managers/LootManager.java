@@ -1,165 +1,204 @@
 package com.au.lachysh.mchg.managers;
 
+import com.au.lachysh.mchg.Main;
+import com.au.lachysh.mchg.loot.LootEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
 
-public class LootManager {
+public class LootManager implements Listener {
+
+    private Random rand;
+    private GamemapManager gm;
+    private Map<LootEntry, Integer> lootWeightings;
+    private HashMap<Block, Boolean> playerPlacedChests;
+    private List<Location> openedChests;
+    private List<Location> refillOpenedChests;
+
+    private Boolean lootChestsEnabled;
+    private Boolean refillLootChestsEnabled;
+
     public LootManager() {
-        fillFood();
-        fillEFood();
-        fillWeapons();
-        fillEWeapons();
-        fillArmor();
-        fillEArmor();
-        fillOther();
-        fillEOther();
-        Bukkit.getLogger().info("Loot tables filled!");
+        rand = new Random();
+        gm = Main.getGm();
+        playerPlacedChests = new HashMap<>();
+        openedChests = new ArrayList<>();
+        refillOpenedChests = new ArrayList<>();
+        lootChestsEnabled = false;
+        refillLootChestsEnabled = false;
     }
-    List<ItemStack> food = new ArrayList<>();
-    List<ItemStack> efood = new ArrayList<>();
-    List<ItemStack> weapons = new ArrayList<>();
-    List<ItemStack> eweapons = new ArrayList<>();
-    List<ItemStack> armor = new ArrayList<>();
-    List<ItemStack> earmor = new ArrayList<>();
-    List<ItemStack> other = new ArrayList<>();
-    List<ItemStack> eother = new ArrayList<>();
-    void fillFood() {
-        food.add(new ItemStack(Material.BREAD, 1));
-        food.add(new ItemStack(Material.APPLE, 1));
-        food.add(new ItemStack(Material.CARROT, 1));
-        food.add(new ItemStack(Material.POTATO, 1));
-        food.add(new ItemStack(Material.MELON_SLICE, 1));
-        food.add(new ItemStack(Material.COOKIE, 1));
-        food.add(new ItemStack(Material.BEEF, 1));
-        food.add(new ItemStack(Material.PORKCHOP, 1));
-        food.add(new ItemStack(Material.CHICKEN, 1));
-        food.add(new ItemStack(Material.MUTTON, 1));
-        food.add(new ItemStack(Material.COD, 1));
-        food.add(new ItemStack(Material.SALMON, 1));
+
+    public void enableLootChestListener() {
+        if (lootWeightings == null) {
+            lootWeightings = Main.getGm().getArenaGamemap().getLootTable();
+            Main.getInstance().getLogger().info("Loot table loaded: " + lootWeightings);
+        }
+        lootChestsEnabled = true;
+        refillLootChestsEnabled = false;
     }
-    void fillEFood(){
-        efood.add(new ItemStack(Material.APPLE, 1));
-        efood.add(new ItemStack(Material.GOLDEN_APPLE, 1));
-        efood.add(new ItemStack(Material.GOLDEN_CARROT, 1));
-        efood.add(new ItemStack(Material.BAKED_POTATO, 1));
-        efood.add(new ItemStack(Material.PUMPKIN_PIE, 1));
-        efood.add(new ItemStack(Material.BREAD, 1));
-        efood.add(new ItemStack(Material.COOKED_BEEF, 1));
-        efood.add(new ItemStack(Material.COOKED_PORKCHOP, 1));
-        efood.add(new ItemStack(Material.COOKED_CHICKEN, 1));
-        efood.add(new ItemStack(Material.COOKED_MUTTON, 1));
-        efood.add(new ItemStack(Material.COOKED_COD, 1));
-        efood.add(new ItemStack(Material.COOKED_SALMON, 1));
+
+    public void enableRefillLootChestListener() {
+        lootChestsEnabled = false;
+        refillLootChestsEnabled = true;
     }
-    void fillWeapons(){
-        weapons.add(new ItemStack(Material.FISHING_ROD,1));
-        weapons.add(new ItemStack(Material.WOODEN_SWORD,1));
-        weapons.add(new ItemStack(Material.WOODEN_AXE,1));
-        weapons.add(new ItemStack(Material.STONE_SWORD,1));
-        weapons.add(new ItemStack(Material.STONE_AXE,1));
-        weapons.add(new ItemStack(Material.BOW,1));
-    }
-    void fillEWeapons(){
-        eweapons.add(new ItemStack(Material.STONE_SWORD,1));
-        eweapons.add(new ItemStack(Material.STONE_AXE,1));
-        eweapons.add(new ItemStack(Material.BOW,1));
-    }
-    void fillArmor(){
-        armor.add(new ItemStack(Material.LEATHER_HELMET,1));
-        armor.add(new ItemStack(Material.LEATHER_CHESTPLATE,1));
-        armor.add(new ItemStack(Material.LEATHER_LEGGINGS,1));
-        armor.add(new ItemStack(Material.LEATHER_BOOTS,1));
-        armor.add(new ItemStack(Material.GOLDEN_HELMET,1));
-        armor.add(new ItemStack(Material.GOLDEN_LEGGINGS,1));
-        armor.add(new ItemStack(Material.GOLDEN_BOOTS,1));
-        armor.add(new ItemStack(Material.CHAINMAIL_HELMET,1));
-        armor.add(new ItemStack(Material.CHAINMAIL_BOOTS,1));
-    }
-    void fillEArmor(){
-        earmor.add(new ItemStack(Material.GOLDEN_CHESTPLATE,1));
-        earmor.add(new ItemStack(Material.GOLDEN_LEGGINGS,1));
-        earmor.add(new ItemStack(Material.CHAINMAIL_HELMET,1));
-        earmor.add(new ItemStack(Material.CHAINMAIL_CHESTPLATE,1));
-        earmor.add(new ItemStack(Material.CHAINMAIL_LEGGINGS,1));
-        earmor.add(new ItemStack(Material.CHAINMAIL_BOOTS,1));
-        earmor.add(new ItemStack(Material.IRON_HELMET,1));
-        earmor.add(new ItemStack(Material.IRON_CHESTPLATE,1));
-        earmor.add(new ItemStack(Material.IRON_LEGGINGS,1));
-        earmor.add(new ItemStack(Material.IRON_BOOTS,1));
-    }
-    void fillOther(){
-        other.add(new ItemStack(Material.BOWL,1));
-        other.add(new ItemStack(Material.BROWN_MUSHROOM,1));
-        other.add(new ItemStack(Material.RED_MUSHROOM,1));
-        other.add(new ItemStack(Material.FLINT,1));
-        other.add(new ItemStack(Material.STICK,1));
-        other.add(new ItemStack(Material.FEATHER,1));
-        other.add(new ItemStack(Material.ARROW,1));
-        other.add(new ItemStack(Material.LEATHER,1));
-        other.add(new ItemStack(Material.GOLD_INGOT,1));
-        other.add(new ItemStack(Material.IRON_INGOT,1));
-    }
-    void fillEOther(){
-        eother.add(new ItemStack(Material.STICK,1));
-        eother.add(new ItemStack(Material.ARROW,1));
-        eother.add(new ItemStack(Material.IRON_INGOT,1));
-        eother.add(new ItemStack(Material.DIAMOND,1));
-        eother.add(new ItemStack(Material.FLINT_AND_STEEL,1));
-        eother.add(new ItemStack(Material.EXPERIENCE_BOTTLE,1));
-    }
-    Map<Location, Inventory> chests = new HashMap<>();
-    public void createRandomChest(Inventory chest) {
-        int randInt;
-        int randItemInt;
-        for(int i = 0; i<chest.getSize(); i++){
-            Random r = new Random();
-            randInt = r.nextInt(101);
-            if (randInt < 4) {
-                randItemInt = r.nextInt(food.size());
-                chest.setItem(i, food.get(randItemInt));
-            }
-            else if (randInt == 4) {
-                randItemInt = r.nextInt(efood.size());
-                chest.setItem(i, efood.get(randItemInt));
-            }
-            else if (randInt < 9) {
-                randItemInt = r.nextInt(weapons.size());
-                chest.setItem(i, weapons.get(randItemInt));
-            }
-            else if (randInt == 9) {
-                randItemInt = r.nextInt(eweapons.size());
-                chest.setItem(i, eweapons.get(randItemInt));
-            }
-            else if (randInt < 14) {
-                randItemInt = r.nextInt(armor.size());
-                chest.setItem(i, armor.get(randItemInt));
-            }
-            else if (randInt == 14) {
-                randItemInt = r.nextInt(earmor.size());
-                chest.setItem(i, earmor.get(randItemInt));
-            }
-            else if (randInt < 21) {
-                randItemInt = r.nextInt(other.size());
-                chest.setItem(i, other.get(randItemInt));
-            }
-            else if (randInt == 21) {
-                randItemInt = r.nextInt(eother.size());
-                chest.setItem(i, eother.get(randItemInt));
-            }
-            else chest.setItem(i, new ItemStack(Material.AIR, 1));
+
+    @EventHandler
+    public void doNotFillPlayerPlacedChests(BlockPlaceEvent event) {
+        if (event.getBlockPlaced().getState() instanceof Chest) {
+            playerPlacedChests.put(event.getBlockPlaced(), true);
         }
     }
-    public Inventory getChestContents(Location loc) {
-        return chests.getOrDefault(loc,null);
+
+    @EventHandler
+    public void lootChestListener(PlayerInteractEvent event) {
+        if (!lootChestsEnabled) return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+
+        if (event.getClickedBlock().getType() == Material.CHEST) {
+            if (playerPlacedChests.getOrDefault(event.getClickedBlock(), false)) return;
+
+            Chest chest = (Chest) event.getClickedBlock().getState();
+
+            if (openedChests.contains(chest.getLocation())) return;
+
+            Inventory inv = chest.getInventory();
+
+            // Clear the loot chest before filling it with predefined loot table
+            if (gm.getArenaGamemap().getClearLootOnStart()) {
+                inv.clear();
+            }
+
+            Integer numberOfItemStacks = rand.nextInt(gm.getArenaGamemap().getMinSlotsFilled(), gm.getArenaGamemap().getMaxSlotsFilled()+1);
+            List<ItemStack> items = new ArrayList<>();
+            if (chest.getCustomName() != null && chest.equals("Rare Chest")) {
+                for (int i = 0; i < numberOfItemStacks; i++) {
+                    items.add(nextRareItem());
+                }
+            } else {
+                for (int i = 0; i < numberOfItemStacks; i++) {
+                    items.add(nextItem());
+                }
+            }
+
+            for (ItemStack i : items) {
+                inv.addItem(i);
+            }
+
+            shuffleChest(inv);
+
+            openedChests.add(chest.getLocation());
+        }
     }
-    public void storeChestContents(Location loc, Inventory inv) {
-        chests.put(loc, inv);
+
+    @EventHandler
+    public void refillLootChestListener(PlayerInteractEvent event) {
+        if (!refillLootChestsEnabled) return;
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+
+        if (event.getClickedBlock().getType() == Material.CHEST) {
+            if (playerPlacedChests.getOrDefault(event.getClickedBlock(), false)) return;
+
+            Chest chest = (Chest) event.getClickedBlock().getState();
+
+            if (refillOpenedChests.contains(chest.getLocation())) return;
+
+            Inventory inv = chest.getInventory();
+
+            Integer numberOfItemStacks = rand.nextInt(gm.getArenaGamemap().getMinSlotsFilled(), gm.getArenaGamemap().getMaxSlotsFilled()+1);
+            List<ItemStack> items = new ArrayList<>();
+            if (chest.getCustomName() != null && chest.equals("Rare Chest")) {
+                for (int i = 0; i < numberOfItemStacks; i++) {
+                    items.add(nextRefillRareItem());
+                }
+            } else {
+                for (int i = 0; i < numberOfItemStacks; i++) {
+                    items.add(nextRefillItem());
+                }
+            }
+
+            for (ItemStack i : items) {
+                inv.addItem(i);
+            }
+
+            shuffleChest(inv);
+
+            refillOpenedChests.add(chest.getLocation());
+        }
     }
-    public void refillAllChests() { chests.clear(); }
+
+    private Integer sumOfWeights(Map<LootEntry, Integer> map) {
+        return map.values().stream().reduce(0, Integer::sum);
+    }
+
+    private Double meanOfWeights(Map<LootEntry, Integer> map) {
+        return map.values().stream().mapToDouble(Integer::doubleValue).average().orElse(0);
+    }
+
+    private TreeMap<Integer, LootEntry> weightingsToCumulative(Map<LootEntry, Integer> map, double rarityMultiplier) {
+        Double meanOfWeights = meanOfWeights(map);
+        int cum = 0;
+        TreeMap<Integer, LootEntry> cumMap = new TreeMap<>();
+
+        for (Map.Entry<LootEntry, Integer> i : map.entrySet()) {
+            cum += i.getValue() + (int) (meanOfWeights * (rarityMultiplier - 1));
+            cumMap.put(cum, i.getKey());
+        }
+
+        return cumMap;
+    }
+
+    private ItemStack nextItem() {
+        TreeMap<Integer, LootEntry> cumMap = weightingsToCumulative(lootWeightings, 1);
+        var randInt = rand.nextInt(sumOfWeights(lootWeightings)+1);
+        LootEntry lootEntry = cumMap.ceilingEntry(randInt).getValue();
+        return new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1));
+    }
+
+    private ItemStack nextRareItem() {
+        TreeMap<Integer, LootEntry> cumMap = weightingsToCumulative(lootWeightings, gm.getArenaGamemap().getRareLootMultiplier());
+        var randInt = rand.nextInt(sumOfWeights(lootWeightings)+1);
+        LootEntry lootEntry = cumMap.ceilingEntry(randInt).getValue();
+        return new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1));
+    }
+
+    private ItemStack nextRefillItem() {
+        TreeMap<Integer, LootEntry> cumMap = weightingsToCumulative(lootWeightings, gm.getArenaGamemap().getRefillLootMultiplier());
+        var randInt = rand.nextInt(sumOfWeights(lootWeightings)+1);
+        LootEntry lootEntry = cumMap.ceilingEntry(randInt).getValue();
+        return new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1));
+    }
+
+    private ItemStack nextRefillRareItem() {
+        TreeMap<Integer, LootEntry> cumMap = weightingsToCumulative(lootWeightings, gm.getArenaGamemap().getRefillRareLootMultiplier());
+        var randInt = rand.nextInt(sumOfWeights(lootWeightings)+1);
+        LootEntry lootEntry = cumMap.ceilingEntry(randInt).getValue();
+        return new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1));
+    }
+
+    private void shuffleChest(Inventory inv) {
+        var items = inv.getContents();
+        inv.clear();
+        for (ItemStack i : items) {
+            do {
+                var index = rand.nextInt(inv.getSize());
+
+                if (inv.getItem(index) == null) {
+                    inv.setItem(index, i);
+                    break;
+                }
+            } while (inv.firstEmpty() != -1); // avoid infinite loop
+        }
+    }
 }
 

@@ -1,5 +1,6 @@
 package com.au.lachysh.mchg.managers;
 
+import com.au.lachysh.mchg.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -33,7 +34,7 @@ public class SettingsManager {
                     Float.parseFloat(coords[3]),
                     Float.parseFloat(coords[4]));
         } catch (NumberFormatException e) {
-            Bukkit.getLogger().severe("Lobby coordinates are not set up or set up incorrectly in the plugin config! Please set up the coordinates and restart the server! Related stack trace below:");
+            Main.getInstance().getLogger().severe("Lobby coordinates are not set up or set up incorrectly in the plugin config! Please set up the coordinates and restart the server! Related stack trace below:");
             return null;
         }
     }

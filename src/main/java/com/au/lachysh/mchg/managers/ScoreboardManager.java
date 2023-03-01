@@ -1,5 +1,6 @@
 package com.au.lachysh.mchg.managers;
 
+import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.gamemap.Gamemap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -36,7 +37,7 @@ public class ScoreboardManager {
                 Score score = objective.getScore(entry.getKey().getTitle());
                 score.setScore(entry.getValue());
             } catch (NullPointerException e) {
-                Bukkit.getLogger().warning("Something went wrong updating map vote board!");
+                Main.getInstance().getLogger().warning("Something went wrong updating map vote board!");
             }
         }
     }

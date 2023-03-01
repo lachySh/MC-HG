@@ -25,7 +25,7 @@ public class EndVoteCommand implements CommandExecutor {
         else {
             if (pm.getCurrentPhase() instanceof Lobby && !endVoteCalled) {
                 ((Lobby) pm.getCurrentPhase()).startVoteCountdown();
-                Bukkit.getLogger().info("Vote countdown has begun!");
+                Main.getInstance().getLogger().info("Vote countdown has begun!");
                 endVoteCalled = true;
             } else {
                 sender.sendMessage(cm.getPrefix() + cm.getAlreadyStarted());

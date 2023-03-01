@@ -164,7 +164,7 @@ public class ChatManager {
 
     private String refillcommencing;
 
-    public String getRefillcommencing() {
+    public String getRefillCommencing() {
         return refillcommencing;
     }
 

@@ -40,7 +40,7 @@ public class Lobby extends Phase {
         plm = Main.getPlm();
         spl = Main.getSpl();
         voteTimer = 15;
-        Bukkit.getLogger().info("Lobby phase has started successfully!");
+        Main.getInstance().getLogger().info("Lobby phase has started successfully!");
     }
     @Override
     public void onDisable() {

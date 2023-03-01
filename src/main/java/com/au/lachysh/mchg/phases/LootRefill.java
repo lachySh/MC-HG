@@ -6,7 +6,6 @@ import com.au.lachysh.mchg.managers.ChatManager;
 import com.au.lachysh.mchg.managers.GamemapManager;
 import com.au.lachysh.mchg.managers.LootManager;
 import com.au.lachysh.mchg.managers.PlayerManager;
-import com.au.lachysh.mchg.tribute.Tribute;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -19,7 +18,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 
-public class CompassHandout extends Phase {
+public class LootRefill extends Phase {
     private int timer;
     private ChatManager cm;
     private LootManager lm;
@@ -31,33 +30,17 @@ public class CompassHandout extends Phase {
     //region Phase Methods
     @Override
     public void onEnable() {
+        timer = 300;
         cm = Main.getCm();
         lm = new LootManager();
         pm = Main.getPlm();
         gm = Main.getGm();
         spl = Main.getSpl();
-
-        if (gm.getArenaGamemap().getLootEnabled()) {
-            timer = 480;
-        } else {
-            timer = 780;
-        }
-
         startTimer();
-        Main.getInstance().getLogger().info("CompassHandout phase has started successfully! Next phase: " + (gm.getArenaGamemap().getLootEnabled() ? "LootRefill" : "Deathmatch"));
-        for (Tribute t : pm.getRemainingTributesList()) {
-            t.getPlayerObject().playSound(t.getPlayerObject().getLocation(), Sound.ITEM_BUNDLE_DROP_CONTENTS, 1, 1);
-            t.addIntrinsicAbility(new CompassTrack());
-            givePlayerCompass(t.getPlayerObject());
-        }
-        Bukkit.broadcastMessage(cm.getPrefix() + cm.getCompassTime());
-    }
+        lm.enableRefillLootChestListener();
+        Main.getInstance().getLogger().info("LootRefill phase has started successfully!");
 
-    private void givePlayerCompass(Player player) {
-        HashMap unstored = player.getInventory().addItem(CompassTrack.getTrackingCompass());
-        if (unstored.size() > 0) {
-            gm.getArenaWorld().dropItemNaturally(player.getLocation(), CompassTrack.getTrackingCompass());
-        }
+        Bukkit.broadcastMessage(cm.getPrefix() + cm.getRefillCommencing());
     }
 
     @Override
@@ -67,11 +50,7 @@ public class CompassHandout extends Phase {
 
     @Override
     public Phase next() {
-        if (gm.getArenaGamemap().getLootEnabled()) {
-            return new LootRefill();
-        } else {
-            return new Deathmatch();
-        }
+        return new Deathmatch();
     }
 
     //endregion
@@ -109,11 +88,6 @@ public class CompassHandout extends Phase {
         e.setCancelled(true);
     }
 
-    private String timerMessage(int timeLeft) {
-        if (gm.getArenaGamemap().getLootEnabled()) return cm.getPrefix() + cm.getRefill(timeLeft);
-        else return cm.getPrefix() + cm.getDeathmatch(timeLeft);
-    }
-
     //endregion
     //region Runnables
     void startTimer() {
@@ -121,7 +95,6 @@ public class CompassHandout extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    // Refill phase OR deathmatch phase, depending on whether loot is enabled
                     if (timer == 300 || timer == 180 || timer == 120 || timer == 60)
                         Bukkit.broadcastMessage(cm.getPrefix() + cm.getDeathmatch(timer));
                     if (timer == 30 || timer == 15 || timer == 10)

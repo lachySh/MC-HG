@@ -41,7 +41,7 @@ public class InvincibilityPeriod extends Phase {
         }
         startCountdown();
         gm.getArenaWorld().setAutoSave(false);
-        Bukkit.getLogger().info("InvincibilityPeriod phase has started successfully!");
+        Main.getInstance().getLogger().info("InvincibilityPeriod phase has started successfully!");
     }
 
     @Override

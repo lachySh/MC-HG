@@ -1,5 +1,6 @@
 package com.au.lachysh.mchg.managers;
 
+import com.au.lachysh.mchg.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.HumanEntity;
@@ -61,7 +62,7 @@ public class PlayerManager {
                 tributes.remove(t);
             }
         }
-        Bukkit.getLogger().info("Tributes list after refresh: " + tributes.toString());
+        Main.getInstance().getLogger().info("Tributes list after refresh: " + tributes.toString());
     }
 
     public void addTribute(Player player) {
@@ -79,7 +80,7 @@ public class PlayerManager {
     public void giveIntrinsicAbilitiesToAllTributes() {
         tributes.stream()
                 .forEach(tribute -> {
-                    Bukkit.getLogger().info("Giving " + tribute.getPlayerObject().getDisplayName() + " intrinsic abilities...");
+                    Main.getInstance().getLogger().info("Giving " + tribute.getPlayerObject().getDisplayName() + " intrinsic abilities...");
                     tribute.giveStartingIntrinsicAbilities();
                 });
     }

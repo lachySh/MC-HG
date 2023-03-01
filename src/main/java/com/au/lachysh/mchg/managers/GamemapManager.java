@@ -3,7 +3,7 @@ package com.au.lachysh.mchg.managers;
 import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.gamemap.Coordinates;
 import com.au.lachysh.mchg.gamemap.Gamemap;
-import com.au.lachysh.mchg.gamemap.RandomGamemap;
+import com.au.lachysh.mchg.loot.LootEntry;
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -13,10 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,7 +21,7 @@ public class GamemapManager {
     private ChatManager cm;
     private SettingsManager sm;
     private static final List<Gamemap> CUSTOM_GAMEMAP_OPTIONS = new ArrayList<>();
-    private static RandomGamemap randomWorld;
+    private static Gamemap randomWorld;
     private static boolean mapLoaded = false;
     private static String gamemapFolder = "";
     private World arenaWorld;
@@ -35,16 +32,16 @@ public class GamemapManager {
         this.sm = Main.getSm();
     }
 
-    public void getCustomGamemaps() {
+    public void getGamemaps() {
         Set<File> arenaConfigs = Stream.of(new File(Main.getInstance().getDataFolder() + "/arenas").listFiles())
                 .filter(file -> !file.isDirectory())
                 .filter(file -> Files.getFileExtension(file.getName()).equals("yml"))
                 .collect(Collectors.toSet());
 
-        Bukkit.getLogger().info("Loaded " + arenaConfigs.size() + " maps: " + arenaConfigs.toString());
+        Main.getInstance().getLogger().info("Loaded " + arenaConfigs.size() + " maps: " + arenaConfigs.toString());
 
         if (arenaConfigs.size() == 0) {
-            Bukkit.getLogger().severe("NO MAPS FOUND IN /arenas FOLDER! This plugin will most certainly not work without maps... (at the very least needs a random.yml configuration)");
+            Main.getInstance().getLogger().severe("NO MAPS FOUND IN /arenas FOLDER! This plugin will most certainly not work without maps... (at the very least needs a random.yml configuration)");
         }
 
         for (File f : arenaConfigs) {
@@ -52,38 +49,66 @@ public class GamemapManager {
             try {
                 arenaConfig.load(f);
                 Gamemap option;
+                option = new Gamemap(
+                        FilenameUtils.removeExtension(f.getName()),
+                        ChatColor.GOLD + arenaConfig.getString( "details.name"),
+                        arenaConfig.getString("details.description"),
+                        Material.valueOf(arenaConfig.getString("details.display-item")),
+                        arenaConfig.getString("settings.world-centre"),
+                        arenaConfig.getInt("settings.world-border-radius"),
+                        arenaConfig.getInt("settings.deathmatch-border-radius"),
+                        arenaConfig.getBoolean("settings.allow-world-breaking")
+                );
+
+                // Spawn settings
                 if (arenaConfig.getBoolean("settings.spawn.randomize-spawn-locations")) {
-                    option = new Gamemap(
-                            FilenameUtils.removeExtension(f.getName()),
-                            ChatColor.GOLD + arenaConfig.getString( "details.name"),
-                            arenaConfig.getString("details.description"),
-                            Material.valueOf(arenaConfig.getString("details.display-item")),
-                            arenaConfig.getString("settings.world-centre"),
-                            arenaConfig.getInt("settings.world-border-radius"),
-                            arenaConfig.getInt("settings.deathmatch-border-radius"),
-                            arenaConfig.getBoolean("settings.allow-world-breaking"),
-                            arenaConfig.getBoolean("settings.spawn.randomize-spawn-locations"),
-                            arenaConfig.getInt("settings.spawn.randomize-spread")
-                    );
+                    option.setRandomizeSpawnLocations(true);
+                    option.setRandomizeSpread(arenaConfig.getInt("settings.spawn.randomize-spread"));
                 } else {
-                    option = new Gamemap(
-                            FilenameUtils.removeExtension(f.getName()),
-                            ChatColor.GOLD + arenaConfig.getString("details.name"),
-                            arenaConfig.getString("details.description"),
-                            Material.valueOf(arenaConfig.getString("details.display-item")),
-                            arenaConfig.getString("settings.world-centre"),
-                            arenaConfig.getInt("settings.world-border-radius"),
-                            arenaConfig.getInt("settings.deathmatch-border-radius"),
-                            arenaConfig.getBoolean("settings.allow-world-breaking"),
-                            arenaConfig.getBoolean("settings.spawn.randomize-spawn-locations"),
-                            arenaConfig.getStringList("settings.spawn.spawn-locations")
-                    );
+                    option.setRandomizeSpawnLocations(false);
+                    option.setSpawnLocations(arenaConfig.getStringList("settings.spawn.spawn-locations"));
                 }
+
+                // Loot settings
+                if (arenaConfig.getBoolean("settings.loot.loot-chests-enabled")) {
+                    option.setLootEnabled(true);
+                    option.setClearLootOnStart(arenaConfig.getBoolean("settings.loot.clear-chests-on-game-start"));
+                    option.setMinSlotsFilled(arenaConfig.getInt("settings.loot.min-slots-filled"));
+                    option.setMaxSlotsFilled(arenaConfig.getInt("settings.loot.max-slots-filled"));
+                    option.setRareLootMultiplier(arenaConfig.getDouble("settings.loot.rare-loot-multiplier"));
+                    option.setRefillLootMultiplier(arenaConfig.getDouble("settings.loot.refill-loot-multiplier"));
+                    option.setRefillRareLootMultiplier(arenaConfig.getDouble("settings.loot.refill-rare-loot-multiplier"));
+                    HashMap<LootEntry, Integer> lootTable = new HashMap<>();
+                    LootEntry curLootEntry;
+                    try {
+                        for (String material : arenaConfig.getConfigurationSection("settings.loot.loot-table").getKeys(false)) {
+                            try {
+                                curLootEntry = new LootEntry(
+                                        Material.matchMaterial(material),
+                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".min"),
+                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".max")
+                                );
+                                lootTable.put(
+                                        curLootEntry,
+                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".commonness")
+                                );
+                            } catch (Exception e) {
+                                Main.getInstance().getLogger().warning("Could not parse loot table entry: {" + material + "}. Exception: " + e.getMessage());
+                            }
+                        }
+                        option.setLootTable(lootTable);
+                    } catch (Exception e) {
+                        Main.getInstance().getLogger().warning("Something went wrong parsing gamemap file " + f.getName() + "! Exception: " + e.getMessage());
+                    }
+                } else {
+                    option.setLootEnabled(false);
+                }
+
+                // Random gamemap handling
                 if (option.getFilename().equals("random")) {
-                    Bukkit.getLogger().info("Loaded random world option");
+                    Main.getInstance().getLogger().info("Loaded random world option");
                     option.setTitle(option.getTitle().replace("§6","§a"));
-                    RandomGamemap randomOption = option.toRandomGamemap();
-                    randomWorld = randomOption;
+                    randomWorld = option;
                 } else {
                     CUSTOM_GAMEMAP_OPTIONS.add(option);
                 }
@@ -102,19 +127,19 @@ public class GamemapManager {
     }
 
     public void loadGamemap(Gamemap map) {
-        if (map instanceof RandomGamemap randMap) {
+        if (randomWorld.getFilename().equals(map.getFilename())) {
             gamemapFolder = "random";
             Bukkit.createWorld(WorldCreator.name(gamemapFolder));
             retryRandomWorldUntilNoOceanAtSpawn();
         } else {
             gamemapFolder = "customarena";
-            Bukkit.getLogger().info("Copying map: " + Main.getInstance().getDataFolder() + "/arenas/" + map.getFilename());
+            Main.getInstance().getLogger().info("Copying map: " + Main.getInstance().getDataFolder() + "/arenas/" + map.getFilename());
             File mapFolder = new File(Main.getInstance().getDataFolder() + "/arenas/" + map.getFilename());
             File destFolder = new File("./" + gamemapFolder);
             try {
                 FileUtils.copyDirectory(mapFolder, destFolder);
             } catch (IOException e) {
-                Bukkit.getLogger().severe("Something went wrong copying arena to server directory!");
+                Main.getInstance().getLogger().severe("Something went wrong copying arena to server directory!");
                 e.printStackTrace();
             }
             Bukkit.createWorld(WorldCreator.name(gamemapFolder));
@@ -135,14 +160,14 @@ public class GamemapManager {
         Location potentialWater = generateLocation(deserializeCoordinate(getRandomWorld().getWorldCentre()), w);
         potentialWater.setY(62);
         if (potentialWater.getBlock().getBlockData().getMaterial() == Material.WATER) {
-            Bukkit.getLogger().warning("Random world generated water at spawn! Regenerating...");
+            Main.getInstance().getLogger().warning("Random world generated water at spawn! Regenerating...");
             Bukkit.unloadWorld(gamemapFolder, false);
             File deleteFolder = new File("./" + gamemapFolder);
             Main.deleteWorld(deleteFolder);
             Bukkit.createWorld(WorldCreator.name(gamemapFolder));
             retryRandomWorldUntilNoOceanAtSpawn();
         }
-        Bukkit.getLogger().info("World did not have water at spawn!");
+        Main.getInstance().getLogger().info("World did not have water at spawn!");
     }
 
     private void setGameOptions(World arena, Gamemap map) {
@@ -159,20 +184,16 @@ public class GamemapManager {
         return mapLoaded;
     }
 
-    public String getGamemapFolder() {
-        return gamemapFolder;
-    }
-
     public World getArenaWorld() {
         if (gamemapFolder.equals("") || !mapLoaded) {
-            Bukkit.getLogger().severe("Tried to get arena World object when arena isn't loaded!");
+            Main.getInstance().getLogger().severe("Tried to get arena World object when arena isn't loaded!");
         }
         return arenaWorld;
     }
 
     public Gamemap getArenaGamemap() {
         if (gamemapFolder.equals("") || !mapLoaded) {
-            Bukkit.getLogger().severe("Tried to get arena Gamemap object when arena isn't loaded!");
+            Main.getInstance().getLogger().severe("Tried to get arena Gamemap object when arena isn't loaded!");
         }
         return arenaGamemap;
     }
@@ -197,14 +218,14 @@ public class GamemapManager {
                     Float.parseFloat(coords[4])
             );
         } catch (NumberFormatException e) {
-            Bukkit.getLogger().severe("Cannot deserialize location!");
+            Main.getInstance().getLogger().severe("Cannot deserialize location!");
             return null;
         }
     }
 
     public List<Location> getSpawnLocations(int playerCount) {
         if (gamemapFolder.equals("") || !mapLoaded) {
-            Bukkit.getLogger().severe("Tried to get arena spawn locations when arena isn't loaded!");
+            Main.getInstance().getLogger().severe("Tried to get arena spawn locations when arena isn't loaded!");
             return null;
         }
 
@@ -225,7 +246,7 @@ public class GamemapManager {
                     );
                 }
             } catch (Exception e) {
-                Bukkit.getLogger().severe("Could not generate random spawn locations for players!");
+                Main.getInstance().getLogger().severe("Could not generate random spawn locations for players! Exception: " + e.getMessage());
                 return null;
             }
         } else {
@@ -235,14 +256,19 @@ public class GamemapManager {
                     coords.add(deserializeCoordinate(s));
                 }
 
+                if (coords.isEmpty()) {
+                    Main.getInstance().getLogger().severe("Spawn locations list was null!");
+                    throw new Exception("Spawn locations expected, but none were found for " + getArenaGamemap().getFilename());
+                }
+
                 int listPos = 0;
                 for (int i = 0; i < playerCount; i++) {
-                    if (listPos > coords.size()-1) listPos = 0;
+                    if (listPos >= coords.size()) listPos = 0;
                     locations.add(generateLocation(coords.get(listPos), arenaWorld));
                     listPos++;
                 }
             } catch (Exception e) {
-                Bukkit.getLogger().severe("Could not generate custom spawn locations for players!");
+                Main.getInstance().getLogger().severe("Could not generate custom spawn locations for players! Exception: " + e.getMessage());
                 return null;
             }
         }
@@ -252,7 +278,7 @@ public class GamemapManager {
 
     public List<Location> getDeathmatchLocations(int playerCount) {
         if (gamemapFolder.equals("") || !mapLoaded) {
-            Bukkit.getLogger().severe("Tried to get arena deathmatch locations when arena isn't loaded!");
+            Main.getInstance().getLogger().severe("Tried to get arena deathmatch locations when arena isn't loaded!");
             return null;
         }
 
@@ -272,7 +298,7 @@ public class GamemapManager {
                 );
             }
         } catch (Exception e) {
-            Bukkit.getLogger().severe("Could not generate random deathmatch locations for players!");
+            Main.getInstance().getLogger().severe("Could not generate random deathmatch locations for players!");
             return null;
         }
 

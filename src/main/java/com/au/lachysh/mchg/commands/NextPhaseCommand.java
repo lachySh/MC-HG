@@ -25,9 +25,9 @@ public class NextPhaseCommand implements CommandExecutor {
         else {
             if (gm.isMapLoaded()) {
                 pm.nextPhase();
-                Bukkit.getLogger().info("Next phase forced!");
+                Main.getInstance().getLogger().info("Next phase forced!");
             } else {
-                Bukkit.getLogger().info("Tried to go next phase, but the arena has not yet loaded!");
+                Main.getInstance().getLogger().info("Tried to go next phase, but the arena has not yet loaded!");
             }
             return true;
         }

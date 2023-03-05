@@ -68,16 +68,6 @@ public class FightPeriodStart extends Phase {
         spl.onWorldDeath(e);
     }
 
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-        e.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e){
-        e.setCancelled(true);
-    }
-
     //endregion
     //region Runnables
     void startTimer() {

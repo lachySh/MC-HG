@@ -23,6 +23,7 @@ public class KitManager {
         kits.add(new Switcher());
         kits.add(new Endermage());
         kits.add(new Chameleon());
+        kits.add(new Spy());
 
         Collections.sort(kits);
 

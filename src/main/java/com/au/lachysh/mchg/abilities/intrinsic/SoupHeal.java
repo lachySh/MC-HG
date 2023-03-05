@@ -4,9 +4,12 @@ import com.au.lachysh.mchg.abilities.Ability;
 import com.au.lachysh.mchg.abilities.AbilityCallable;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class SoupHeal extends Ability<PlayerInteractEvent> {
 
@@ -25,8 +28,11 @@ public class SoupHeal extends Ability<PlayerInteractEvent> {
         return event -> {
             Player player = event.getPlayer();
             player.setHealth(Math.min((player.getHealth() + 7.0), 20));
-            event.getItem().setType(Material.BOWL);
-            event.getItem().getItemMeta().setDisplayName(ChatColor.RESET + "Bowl");
+            ItemStack item = event.getItem();
+            item.setType(Material.BOWL);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.RESET + "Bowl");
+            item.setItemMeta(meta);
             player.updateInventory();
             cooldown();
         };

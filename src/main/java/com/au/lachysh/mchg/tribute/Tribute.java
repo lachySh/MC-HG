@@ -27,10 +27,14 @@ public class Tribute {
         intrinsicAbilities = AbilityManager.startingIntrinsicAbilities();
     }
 
+    /**
+     * Will return kit abilities before intrinsic ones, so intrinsic abilities with the same preconds as kit abilities are overwritten by kit abilities
+     * @return List of abilities known to tribute
+     */
     public List<Ability> getAbilities() {
         List<Ability> abilities = new ArrayList<>();
-        abilities.addAll(intrinsicAbilities);
         if (kit != null) abilities.addAll(kit.getKitAbilities());
+        abilities.addAll(intrinsicAbilities);
         return abilities;
     }
 

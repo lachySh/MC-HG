@@ -4,13 +4,12 @@ import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.loot.LootEntry;
 import lombok.Data;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public class Gamemap {
@@ -84,5 +83,21 @@ public class Gamemap {
         if (o == null) {
             Main.getInstance().getLogger().severe("Could not load map! " + fieldName + " is null for map " + filename);
         }
+    }
+
+    public List<String> getFormattedLore() {
+        var descList = Arrays.asList(description.split("\n"));
+        var newList = new ArrayList<String>();
+
+        for (String s : descList) {
+            newList.add(ChatColor.GRAY + s);
+        }
+
+        newList.add("");
+        newList.add(ChatColor.WHITE + " ▶ Building and Breaking: " + (allowWorldBreaking ? (ChatColor.GREEN + "Allowed") : (ChatColor.RED + "Disallowed")));
+        newList.add(ChatColor.WHITE + " ▶ Loot Chests: " + (lootEnabled ? (ChatColor.GREEN + "Enabled") : (ChatColor.RED + "Disabled")));
+        newList.add(ChatColor.WHITE + " ▶ World Size: " + ((Integer.valueOf(borderRadius*2).toString()) + " x " + (Integer.valueOf(borderRadius*2).toString())));
+
+        return newList;
     }
 }

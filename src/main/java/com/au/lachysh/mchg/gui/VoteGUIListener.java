@@ -1,5 +1,6 @@
 package com.au.lachysh.mchg.gui;
 
+import com.au.lachysh.mchg.shared.ItemStackSorter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,6 +22,7 @@ import com.au.lachysh.mchg.phases.Lobby;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class VoteGUIListener implements Listener {
@@ -100,16 +102,20 @@ public class VoteGUIListener implements Listener {
                 (gm.getCustomGamemapOptions().size()+1) + (9 - (gm.getCustomGamemapOptions().size()+1) % 9),
                 cm.getVoteCustomMapTitle());
 
+        List<ItemStack> items = new ArrayList<>();
         for (Gamemap g : gm.getCustomGamemapOptions()) {
             ItemStack newItem = new ItemStack(g.getDisplayMaterial());
             ItemMeta newItemMeta = newItem.getItemMeta();
             newItemMeta.setDisplayName(g.getTitle());
-            ArrayList<String> newItemLore = new ArrayList<>();
-            newItemLore.addAll(formatLore(new ArrayList<String>(Arrays.asList(g.getDescription().split("\n")))));
-            newItemMeta.setLore(newItemLore);
+            newItemMeta.setLore(g.getFormattedLore());
             newItem.setItemMeta(newItemMeta);
 
-            gui.addItem(newItem);
+            items.add(newItem);
+        }
+
+        Collections.sort(items, new ItemStackSorter());
+        for (ItemStack i : items) {
+            gui.addItem(i);
         }
 
         ItemStack backButton = new ItemStack(Material.RED_STAINED_GLASS_PANE);
@@ -120,13 +126,5 @@ public class VoteGUIListener implements Listener {
         gui.setItem(gui.getSize()-1, backButton);
 
         return gui;
-    }
-
-    private List<String> formatLore(List<String> lore) {
-        var newList = new ArrayList<String>();
-        for (String s : lore) {
-            newList.add(ChatColor.GRAY + s);
-        }
-        return newList;
     }
 }

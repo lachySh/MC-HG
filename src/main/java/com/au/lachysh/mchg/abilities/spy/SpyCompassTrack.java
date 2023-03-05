@@ -1,8 +1,9 @@
-package com.au.lachysh.mchg.abilities.intrinsic;
+package com.au.lachysh.mchg.abilities.spy;
 
 import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.abilities.Ability;
 import com.au.lachysh.mchg.abilities.AbilityCallable;
+import com.au.lachysh.mchg.kits.Spy;
 import com.au.lachysh.mchg.managers.PlayerManager;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -11,57 +12,45 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.AbstractMap;
 import java.util.Comparator;
 
-public class CompassTrack extends Ability<PlayerInteractEvent> {
-
-    private static final int RANGE = Main.getSm().getCompassTrackRange();
-    private static final String NO_NEAREST_PLAYER_TEXT = ChatColor.RED + "No player found within " + RANGE + " blocks!";
-    private static final String NEAREST_PLAYER_TEXT = ChatColor.YELLOW + "Compass pointing to nearest player: {name}";
+public class SpyCompassTrack extends Ability<PlayerInteractEvent> {
+    private static Integer RANGE;
+    private static final String NO_NEAREST_PLAYER_TEXT = ChatColor.RED + "No player found within {range} blocks!";
+    private static final String NEAREST_PLAYER_TEXT = ChatColor.YELLOW + "{name} is {dist} blocks away at Y = {yval}";
     private static PlayerManager pm;
-    private static ItemStack trackingCompassItem;
 
-    public CompassTrack() {
-        super("Compass tracking", PlayerInteractEvent.class, 1, false);
+    public SpyCompassTrack() {
+        super("Spy compass tracking", PlayerInteractEvent.class, 1, false);
         if (pm == null) pm = Main.getPlm();
     }
 
     @Override
     public boolean precondition(PlayerInteractEvent event) {
         return event.getItem() != null && event.getItem().getType() == Material.COMPASS &&
-                (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK);
+                (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
+                && Spy.itemName.contains(event.getItem().getItemMeta().getDisplayName());
     }
 
     @Override
     public AbilityCallable<PlayerInteractEvent> getCallable() {
         return event -> {
+            if (RANGE == null) {
+                RANGE = Main.getGm().getArenaGamemap().getBorderRadius() * 2;
+            }
             Player player = event.getPlayer();
             AbstractMap.SimpleEntry<Player, Double> nearestPlayer = getNearestTributePlayer(RANGE, player);
             if (nearestPlayer == null) {
-                sendActionbar(player, NO_NEAREST_PLAYER_TEXT);
+                sendActionbar(player, formatFailText(RANGE));
             } else {
-                sendActionbar(player, formatText(nearestPlayer.getKey().getName()));
+                sendActionbar(player, formatText(nearestPlayer.getKey().getName(), Math.sqrt(nearestPlayer.getValue()), nearestPlayer.getKey().getLocation().getBlockY()));
                 player.setCompassTarget(nearestPlayer.getKey().getLocation());
             }
             player.updateInventory();
             cooldown();
         };
-    }
-
-    public static ItemStack getTrackingCompass() {
-        if (trackingCompassItem != null) return trackingCompassItem;
-
-        ItemStack item = new ItemStack(Material.COMPASS);
-        ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Tracking Compass");
-        item.setItemMeta(itemMeta);
-
-        trackingCompassItem = item;
-        return trackingCompassItem;
     }
 
     private static AbstractMap.SimpleEntry<Player, Double> getNearestTributePlayer(int range, Player player) {
@@ -74,8 +63,15 @@ public class CompassTrack extends Ability<PlayerInteractEvent> {
                 .orElse(null);
     }
 
-    private static String formatText(String playerName) {
-        return NEAREST_PLAYER_TEXT.replace("{name}", playerName);
+    private static String formatText(String playerName, Double distance, Integer yVal) {
+        Integer intDist = distance.intValue();
+        return NEAREST_PLAYER_TEXT.replace("{name}", playerName)
+                .replace("{dist}", intDist.toString())
+                .replace("{yval}", yVal.toString());
+    }
+
+    private static String formatFailText(Integer range) {
+        return NO_NEAREST_PLAYER_TEXT.replace("{range}", range.toString());
     }
 
     private static void sendActionbar(Player player, String message) {

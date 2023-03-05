@@ -54,6 +54,7 @@ messages:
   kits-too-late: "&fIt's too late to choose a kit!"
   kits-menu-title: "&8Select a kit"
   kits-selection: "&fYou have selected {kit}!"
+  kit-not-recommended: "&cYour kit is not recommended for this map as world breaking / placing is disabled! Choosing another kit is advised (use /kits)."
   summary:
     - "Game summary is coming soon!"
     - "It will be broadcasted once the game is over"

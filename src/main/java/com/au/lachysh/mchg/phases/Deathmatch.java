@@ -77,15 +77,6 @@ public class Deathmatch extends Phase {
         checkForLastPlayer();
     }
 
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-        e.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e){
-        e.setCancelled(true);
-    }
     //endregion
     //region Runnables
     void startTimer() {

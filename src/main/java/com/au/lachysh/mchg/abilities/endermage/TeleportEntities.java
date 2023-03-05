@@ -58,7 +58,7 @@ public class TeleportEntities extends Ability<BlockPlaceEvent> {
                             ((LivingEntity) e).addPotionEffect(invincible3Seconds);
                             ((LivingEntity) e).addPotionEffect(weakness3Seconds);
                             if (e instanceof Player) {
-                                e.sendMessage(cm.getPrefix() + "You have been teleported by an Endermage! You are invincible, but can't hurt others for 3 seconds.");
+                                e.sendMessage(cm.getPrefix() + ChatColor.RED + "You have been teleported by an Endermage! You are invincible, but can't hurt others for 3 seconds.");
                                 world.playSound(eventLoc, Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
                             }
                         }

@@ -270,6 +270,12 @@ public class ChatManager {
         return formatEmbeddedString(kitsSelection, "kit", kitName);
     }
 
+    private String kitNotRecommended;
+
+    public String getKitNotRecommended() {
+        return kitNotRecommended;
+    }
+
     private void setUpEntries() {
         prefix = format(config.getString("messages.prefix"));
         perm = format(config.getString("messages.no-permission"));
@@ -310,5 +316,6 @@ public class ChatManager {
         kitsTooLate = format(config.getString("messages.kits-too-late"));
         kitsMenuTitle = format(config.getString("messages.kits-menu-title"));
         kitsSelection = format(config.getString("messages.kits-selection"));
+        kitNotRecommended = format(config.getString("messages.kit-not-recommended"));
     }
 }

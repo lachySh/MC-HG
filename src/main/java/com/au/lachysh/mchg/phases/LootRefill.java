@@ -32,7 +32,7 @@ public class LootRefill extends Phase {
     public void onEnable() {
         timer = 300;
         cm = Main.getCm();
-        lm = new LootManager();
+        lm = Main.getLm();
         pm = Main.getPlm();
         gm = Main.getGm();
         spl = Main.getSpl();
@@ -76,16 +76,6 @@ public class LootRefill extends Phase {
     public void onWorldDeath(EntityDamageEvent e) {
         spl.onWorldDeath(e);
         timer = spl.setTimerBasedOnPlayerCount(timer);
-    }
-
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-        e.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e){
-        e.setCancelled(true);
     }
 
     //endregion

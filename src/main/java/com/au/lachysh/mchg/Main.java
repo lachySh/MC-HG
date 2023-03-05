@@ -57,7 +57,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("vote").setExecutor(new VoteGUICommand());
         this.getCommand("endvote").setExecutor(new EndVoteCommand());
         this.getCommand("nextphase").setExecutor(new NextPhaseCommand());
-        this.getCommand("kits").setExecutor(new KitGUICommand());
+        this.getCommand("kits").setExecutor(new KitsGUICommand());
 
         // TODO
 //        int pluginId = 17670;

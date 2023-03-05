@@ -3,6 +3,7 @@ package com.au.lachysh.mchg.managers;
 import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.gamemap.Coordinates;
 import com.au.lachysh.mchg.gamemap.Gamemap;
+import com.au.lachysh.mchg.loot.EnchantmentEntry;
 import com.au.lachysh.mchg.loot.LootEntry;
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
@@ -10,6 +11,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.bukkit.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentWrapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +54,7 @@ public class GamemapManager {
                 Gamemap option;
                 option = new Gamemap(
                         FilenameUtils.removeExtension(f.getName()),
-                        ChatColor.GOLD + arenaConfig.getString( "details.name"),
+                        ChatColor.GOLD + arenaConfig.getString("details.name"),
                         arenaConfig.getString("details.description"),
                         Material.valueOf(arenaConfig.getString("details.display-item")),
                         arenaConfig.getString("settings.world-centre"),
@@ -79,14 +82,29 @@ public class GamemapManager {
                     option.setRefillLootMultiplier(arenaConfig.getDouble("settings.loot.refill-loot-multiplier"));
                     option.setRefillRareLootMultiplier(arenaConfig.getDouble("settings.loot.refill-rare-loot-multiplier"));
                     HashMap<LootEntry, Integer> lootTable = new HashMap<>();
-                    LootEntry curLootEntry;
+                    LootEntry curLootEntry = null;
+                    EnchantmentEntry curEnchEntry = null;
                     try {
                         for (String material : arenaConfig.getConfigurationSection("settings.loot.loot-table").getKeys(false)) {
                             try {
+                                List<EnchantmentEntry> enchantmentEntries = new ArrayList<>();
+                                if (arenaConfig.contains("settings.loot.loot-table." + material + ".enchantments", false)) {
+                                    for (Map<?, ?> enchantmentEntry : arenaConfig.getMapList("settings.loot.loot-table." + material + ".enchantments")) {
+                                        curEnchEntry = new EnchantmentEntry(
+                                                EnchantmentWrapper.getByKey(NamespacedKey.minecraft(((String) enchantmentEntry.get("type")).toLowerCase())),
+                                                (Integer) enchantmentEntry.get("level"),
+                                                enchantmentEntry.get("chance") instanceof Integer ?
+                                                        (Double) ((Integer) enchantmentEntry.get("chance")).doubleValue()
+                                                        : (Double) enchantmentEntry.get("chance")
+                                        );
+                                        enchantmentEntries.add(curEnchEntry);
+                                    }
+                                }
                                 curLootEntry = new LootEntry(
                                         Material.matchMaterial(material),
                                         arenaConfig.getInt("settings.loot.loot-table." + material + ".min"),
-                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".max")
+                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".max"),
+                                        enchantmentEntries
                                 );
                                 lootTable.put(
                                         curLootEntry,
@@ -107,7 +125,7 @@ public class GamemapManager {
                 // Random gamemap handling
                 if (option.getFilename().equals("random")) {
                     Main.getInstance().getLogger().info("Loaded random world option");
-                    option.setTitle(option.getTitle().replace("§6","§a"));
+                    option.setTitle(option.getTitle().replace("§6", "§a"));
                     randomWorld = option;
                 } else {
                     CUSTOM_GAMEMAP_OPTIONS.add(option);
@@ -176,7 +194,7 @@ public class GamemapManager {
         arena.setTime(500);
         arena.setDifficulty(Difficulty.NORMAL);
         arena.getWorldBorder().setCenter(generateLocation(deserializeCoordinate(map.getWorldCentre()), arena));
-        arena.getWorldBorder().setSize(map.getBorderRadius()*2);
+        arena.getWorldBorder().setSize(map.getBorderRadius() * 2);
         arena.setAutoSave(false);
     }
 
@@ -288,8 +306,8 @@ public class GamemapManager {
         try {
             Coordinates coords = deserializeCoordinate(arenaGamemap.getWorldCentre());
             for (int i = 0; i < playerCount; i++) {
-                int x = (int) (random.nextInt((arenaGamemap.getDeathmatchBorderRadius()-1) * 2) - (arenaGamemap.getDeathmatchBorderRadius()-1) + coords.getX());
-                int z = (int) (random.nextInt((arenaGamemap.getDeathmatchBorderRadius()-1) * 2) - (arenaGamemap.getDeathmatchBorderRadius()-1) + coords.getZ());
+                int x = (int) (random.nextInt((arenaGamemap.getDeathmatchBorderRadius() - 1) * 2) - (arenaGamemap.getDeathmatchBorderRadius() - 1) + coords.getX());
+                int z = (int) (random.nextInt((arenaGamemap.getDeathmatchBorderRadius() - 1) * 2) - (arenaGamemap.getDeathmatchBorderRadius() - 1) + coords.getZ());
                 locations.add(new Location(arenaWorld,
                                 x,
                                 arenaWorld.getHighestBlockYAt(x, z) + 1,

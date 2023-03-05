@@ -14,6 +14,7 @@ public class Apparition extends Kit {
                 "apparition",
                 "Apparition",
                 "Become a ghost...\nYou will be given a 'Invisibility Orb' upon the game starting.\nWhenever you use this, you will become invisible for 3 seconds.",
+                true,
                 KitType.DEFENSIVE,
                 Material.FIREWORK_STAR,
                 List.of(invisibilityCharge()),

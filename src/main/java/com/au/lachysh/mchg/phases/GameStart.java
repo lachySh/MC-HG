@@ -7,9 +7,11 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -71,15 +73,15 @@ public class GameStart extends Phase {
         spl.inGameOnLeave(e);
     }
     @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e){
-        e.setCancelled(true);
-    }
-    @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         e.setCancelled(true);
     }
     @EventHandler
     public void onWorldDamage(EntityDamageEvent e) {
+        e.setCancelled(true);
+    }
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerInteract(PlayerInteractEvent e) {
         e.setCancelled(true);
     }
     @EventHandler

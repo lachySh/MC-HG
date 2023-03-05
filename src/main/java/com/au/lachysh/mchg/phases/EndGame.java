@@ -71,11 +71,6 @@ public class EndGame extends Phase {
         Main.getPlm().removeOnDC(e.getPlayer());
     }
 
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-        e.setCancelled(true);
-    }
-
     //endregion
     //region Runnables
     void startTimer() {

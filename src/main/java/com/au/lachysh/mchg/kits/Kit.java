@@ -15,6 +15,7 @@ public abstract class Kit implements Comparable<Kit> {
     private String id;
     private String title;
     private String description;
+    private Boolean goodForWorldUnbreakable;
     private KitType kitType;
     private List<ItemStack> kitItems;
     private List<Ability> kitAbilities;
@@ -23,12 +24,14 @@ public abstract class Kit implements Comparable<Kit> {
     public Kit(String id,
                String title,
                String description,
+               Boolean goodForWorldUnbreakable,
                KitType kitType,
                Material displayMaterial,
                List<ItemStack> kitItems,
                List<Ability> kitAbilities) {
         this.id = id;
         this.description = description;
+        this.goodForWorldUnbreakable = goodForWorldUnbreakable;
         this.kitType = kitType;
         this.kitItems = kitItems;
         this.kitAbilities = kitAbilities;
@@ -51,12 +54,14 @@ public abstract class Kit implements Comparable<Kit> {
     public Kit(String id,
                String title,
                String description,
+               Boolean goodForWorldUnbreakable,
                KitType kitType,
                ItemStack displayItem,
                List<ItemStack> kitItems,
                List<Ability> kitAbilities) {
         this.id = id;
         this.description = description;
+        this.goodForWorldUnbreakable = goodForWorldUnbreakable;
         this.kitType = kitType;
         this.kitItems = kitItems;
         this.kitAbilities = kitAbilities;
@@ -103,9 +108,7 @@ public abstract class Kit implements Comparable<Kit> {
         ItemMeta newItemMeta = newItem.getItemMeta();
         newItemMeta.setDisplayName(title);
         newItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
-        ArrayList<String> newItemLore = new ArrayList<>();
-        newItemLore.addAll(formatLore(new ArrayList<String>(Arrays.asList(description.split("\n")))));
-        newItemMeta.setLore(newItemLore);
+        newItemMeta.setLore(getFormattedLore());
         newItem.setItemMeta(newItemMeta);
 
         kitDisplayItem = newItem;
@@ -118,9 +121,7 @@ public abstract class Kit implements Comparable<Kit> {
         ItemMeta newItemMeta = itemStack.getItemMeta();
         newItemMeta.setDisplayName(title);
         newItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
-        ArrayList<String> newItemLore = new ArrayList<>();
-        newItemLore.addAll(formatLore(new ArrayList<String>(Arrays.asList(description.split("\n")))));
-        newItemMeta.setLore(newItemLore);
+        newItemMeta.setLore(getFormattedLore());
         itemStack.setItemMeta(newItemMeta);
 
         kitDisplayItem = itemStack;
@@ -131,15 +132,26 @@ public abstract class Kit implements Comparable<Kit> {
         return id;
     }
 
-    private static List<String> formatLore(List<String> lore) {
+    private List<String> getFormattedLore() {
+        var descList = Arrays.asList(description.split("\n"));
         var newList = new ArrayList<String>();
-        for (String s : lore) {
+        for (String s : descList) {
             newList.add(ChatColor.GRAY + s);
+        }
+
+        if (!goodForWorldUnbreakable) {
+            newList.add("");
+            newList.add(ChatColor.RED + " ▶ " + ChatColor.ITALIC + "This kit is not recommended for maps");
+            newList.add(ChatColor.RED + "   " + ChatColor.ITALIC + "where building / breaking is disabled!");
         }
         return newList;
     }
 
     public int compareTo(Kit b) {
         return this.getKitName().compareTo(b.getKitName());
+    }
+
+    public Boolean isGoodForWorkUnbreakable() {
+        return goodForWorldUnbreakable;
     }
 }

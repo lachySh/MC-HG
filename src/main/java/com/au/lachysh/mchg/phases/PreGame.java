@@ -48,6 +48,10 @@ public class PreGame extends Phase {
         startCountdown();
         for (Tribute tribute : plm.getRemainingTributesList()) {
             tribute.getPlayerObject().setGameMode(GameMode.SPECTATOR);
+            // Recommend player choose another kit if world breaking disabled and kit not good for that
+            if (tribute.getKit() != null && !tribute.getKit().isGoodForWorkUnbreakable() && !gm.getArenaGamemap().getAllowWorldBreaking()) {
+                tribute.getPlayerObject().sendMessage(cm.getPrefix() + cm.getKitNotRecommended());
+            }
         }
         Main.registerAbilityListener();
 
@@ -95,11 +99,6 @@ public class PreGame extends Phase {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         spl.inGameOnLeave(e);
-    }
-
-    @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e) {
-        e.setCancelled(true);
     }
 
     @EventHandler

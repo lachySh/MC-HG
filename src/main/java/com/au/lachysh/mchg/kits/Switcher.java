@@ -12,6 +12,7 @@ public class Switcher extends Kit {
                 "switcher",
                 "Switcher",
                 "Magic snowballs??\nHitting a player or mob with a snowball will cause you\nto switch places with it.\nStart the game with 5 snowballs.",
+                true,
                 KitType.FIGHTER,
                 Material.SNOWBALL,
                 List.of(fiveSnowballs()),

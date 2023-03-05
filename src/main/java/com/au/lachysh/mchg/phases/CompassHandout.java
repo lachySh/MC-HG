@@ -2,6 +2,7 @@ package com.au.lachysh.mchg.phases;
 
 import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.abilities.intrinsic.CompassTrack;
+import com.au.lachysh.mchg.kits.Spy;
 import com.au.lachysh.mchg.managers.ChatManager;
 import com.au.lachysh.mchg.managers.GamemapManager;
 import com.au.lachysh.mchg.managers.LootManager;
@@ -46,6 +47,7 @@ public class CompassHandout extends Phase {
         startTimer();
         Main.getInstance().getLogger().info("CompassHandout phase has started successfully! Next phase: " + (gm.getArenaGamemap().getLootEnabled() ? "LootRefill" : "Deathmatch"));
         for (Tribute t : pm.getRemainingTributesList()) {
+            if (t.getKit() instanceof Spy) return;
             t.getPlayerObject().playSound(t.getPlayerObject().getLocation(), Sound.ITEM_BUNDLE_DROP_CONTENTS, 1, 1);
             t.addIntrinsicAbility(new CompassTrack());
             givePlayerCompass(t.getPlayerObject());
@@ -97,16 +99,6 @@ public class CompassHandout extends Phase {
     public void onWorldDeath(EntityDamageEvent e) {
         spl.onWorldDeath(e);
         timer = spl.setTimerBasedOnPlayerCount(timer);
-    }
-
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-        e.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e){
-        e.setCancelled(true);
     }
 
     private String timerMessage(int timeLeft) {

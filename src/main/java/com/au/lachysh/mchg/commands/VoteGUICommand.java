@@ -72,9 +72,7 @@ public class VoteGUICommand implements CommandExecutor {
             ItemMeta randomMapMeta = randomMap.getItemMeta();
             randomMapMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE);
             randomMapMeta.setDisplayName(gm.getRandomWorld().getTitle());
-            ArrayList<String> randomMapLore = new ArrayList<>();
-            randomMapLore.addAll(formatLore(new ArrayList<>(Arrays.asList(gm.getRandomWorld().getDescription().split("\n")))));
-            randomMapMeta.setLore(randomMapLore);
+            randomMapMeta.setLore(gm.getRandomWorld().getFormattedLore());
             randomMap.setItemMeta(randomMapMeta);
 
             menuItems = new ItemStack[]{randomMap, customMap};

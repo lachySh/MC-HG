@@ -14,12 +14,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-public class KitGUICommand implements CommandExecutor {
+public class KitsGUICommand implements CommandExecutor {
     private static ChatManager cm;
     private static PhaseManager pm;
     private static KitManager km;
 
-    public KitGUICommand() {
+    public KitsGUICommand() {
         cm = Main.getCm();
         pm = Main.getPm();
         km = Main.getKm();

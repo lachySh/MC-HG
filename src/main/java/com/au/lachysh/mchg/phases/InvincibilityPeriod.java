@@ -67,20 +67,10 @@ public class InvincibilityPeriod extends Phase {
     }
 
     @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-        e.setCancelled(true);
-    }
-
-    @EventHandler
     public void onWorldDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             e.setCancelled(true);
         }
-    }
-
-    @EventHandler
-    public void onLeafDecay(LeavesDecayEvent e) {
-        e.setCancelled(true);
     }
 
     //endregion

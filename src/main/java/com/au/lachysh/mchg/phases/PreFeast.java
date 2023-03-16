@@ -1,26 +1,26 @@
 package com.au.lachysh.mchg.phases;
 
 import com.au.lachysh.mchg.Main;
-import com.au.lachysh.mchg.abilities.intrinsic.CompassTrack;
-import com.au.lachysh.mchg.kits.Spy;
 import com.au.lachysh.mchg.managers.ChatManager;
 import com.au.lachysh.mchg.managers.GamemapManager;
 import com.au.lachysh.mchg.managers.LootManager;
 import com.au.lachysh.mchg.managers.PlayerManager;
-import com.au.lachysh.mchg.tribute.Tribute;
-import org.bukkit.*;
-import org.bukkit.entity.*;
+import com.au.lachysh.mchg.structure.FeastStructure;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.LeavesDecayEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashMap;
+import java.util.Random;
 
-public class CompassHandout extends Phase {
+public class PreFeast extends Phase {
     private int timer;
     private ChatManager cm;
     private LootManager lm;
@@ -28,6 +28,8 @@ public class CompassHandout extends Phase {
     private GamemapManager gm;
     private SharedPhaseLogic spl;
     private BukkitTask gameTimer;
+    private FeastStructure feast;
+    private Location feastLocation;
 
     //region Phase Methods
     @Override
@@ -37,32 +39,15 @@ public class CompassHandout extends Phase {
         pm = Main.getPlm();
         gm = Main.getGm();
         spl = Main.getSpl();
+        timer = 180;
 
-        if (gm.getArenaGamemap().getLootEnabled() || gm.getArenaGamemap().getFeastEnabled()) {
-            timer = 480;
-        } else {
-            timer = 780;
-        }
+        feast = new FeastStructure();
+        feastLocation = spl.calculateFeastLocation(feast);
 
         startTimer();
-        Main.getInstance().getLogger().info("CompassHandout phase has started successfully! Next phase: " +
-                (gm.getArenaGamemap().getLootEnabled() ? "LootRefill" :
-                        gm.getArenaGamemap().getFeastEnabled() ? "PreFeast" : "Deathmatch"));
-        for (Tribute t : pm.getRemainingTributesList()) {
-            if (t.getKit() instanceof Spy) return;
-            t.getPlayerObject().playSound(t.getPlayerObject().getLocation(), Sound.ITEM_BUNDLE_DROP_CONTENTS, 1, 1);
-            t.addIntrinsicAbility(new CompassTrack());
-            givePlayerCompass(t.getPlayerObject());
-        }
-        Bukkit.broadcastMessage(cm.getPrefix() + cm.getCompassTime());
+        Main.getInstance().getLogger().info("PreFeast phase has started successfully! Next phase: Feast");
     }
 
-    private void givePlayerCompass(Player player) {
-        HashMap unstored = player.getInventory().addItem(CompassTrack.getTrackingCompass());
-        if (unstored.size() > 0) {
-            gm.getArenaWorld().dropItemNaturally(player.getLocation(), CompassTrack.getTrackingCompass());
-        }
-    }
 
     @Override
     public void onDisable() {
@@ -71,13 +56,7 @@ public class CompassHandout extends Phase {
 
     @Override
     public Phase next() {
-        if (gm.getArenaGamemap().getLootEnabled()) {
-            return new LootRefill();
-        } else if (gm.getArenaGamemap().getFeastEnabled()) {
-            return new PreFeast();
-        } else {
-            return new Deathmatch();
-        }
+        return new Feast(feast, feastLocation);
     }
 
     //endregion
@@ -112,11 +91,7 @@ public class CompassHandout extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    if (!gm.getArenaGamemap().getFeastEnabled()) {
-                        spl.playTimerAnnouncement(timer, cm.getPrefix() +
-                                (gm.getArenaGamemap().getLootEnabled() ?
-                                        cm.getDeathmatch(timer) : cm.getRefill(timer)));
-                    }
+                    spl.playTimerAnnouncement(timer, cm.getPrefix() + cm.getFeastTimerNotification(spl.formatLocation(feastLocation), timer));
                     timer--;
                 } else {
                     Main.getPm().nextPhase();

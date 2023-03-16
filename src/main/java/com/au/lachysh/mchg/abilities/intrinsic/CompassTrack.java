@@ -4,6 +4,7 @@ import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.abilities.Ability;
 import com.au.lachysh.mchg.abilities.AbilityCallable;
 import com.au.lachysh.mchg.managers.PlayerManager;
+import com.au.lachysh.mchg.shared.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -16,6 +17,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.AbstractMap;
 import java.util.Comparator;
+
+import static com.au.lachysh.mchg.shared.ChatUtils.sendActionbar;
 
 public class CompassTrack extends Ability<PlayerInteractEvent> {
 
@@ -67,7 +70,7 @@ public class CompassTrack extends Ability<PlayerInteractEvent> {
     private static AbstractMap.SimpleEntry<Player, Double> getNearestTributePlayer(int range, Player player) {
         int radius = range * range;
         return player.getWorld().getPlayers().stream()
-                .filter(p -> !p.equals(player) && pm.findTribute(p).isPresent())
+                .filter(p -> !p.equals(player) && pm.findTribute(p).isPresent() && !(p.getLocation().distance(player.getLocation()) < 10))
                 .min(Comparator.comparingDouble((p) -> p.getLocation().distanceSquared(player.getLocation())))
                 .filter(p -> p.getLocation().distanceSquared(player.getLocation()) < radius)
                 .map(p -> new AbstractMap.SimpleEntry<>(p, p.getLocation().distanceSquared(player.getLocation())))
@@ -76,9 +79,5 @@ public class CompassTrack extends Ability<PlayerInteractEvent> {
 
     private static String formatText(String playerName) {
         return NEAREST_PLAYER_TEXT.replace("{name}", playerName);
-    }
-
-    private static void sendActionbar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
     }
 }

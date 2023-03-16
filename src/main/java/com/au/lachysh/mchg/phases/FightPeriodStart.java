@@ -76,12 +76,7 @@ public class FightPeriodStart extends Phase {
             public void run() {
                 if (timer > 0) {
                     // Compasses
-                    if (timer == 120 || timer == 60) {
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getCompassTimerNotification(timer));
-                    }
-                    if (timer == 30 || timer == 15 || timer == 5) {
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getCompassTimerNotification(timer));
-                    }
+                    spl.playTimerAnnouncement(timer, cm.getPrefix() + cm.getCompassTimerNotification(timer));
                     timer--;
                 } else {
                     Main.getPm().nextPhase();

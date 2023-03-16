@@ -26,7 +26,7 @@ public class SwapEntityLocations extends Ability<ProjectileHitEvent> {
     public AbilityCallable<ProjectileHitEvent> getCallable() {
         return event -> {
             event.setCancelled(true);
-            // Set max health loss to 2 hearts
+
             Player shooter = (Player) event.getEntity().getShooter();
             Entity receiver = event.getHitEntity();
 
@@ -36,7 +36,6 @@ public class SwapEntityLocations extends Ability<ProjectileHitEvent> {
             shooter.teleport(receiverLocation);
             receiver.teleport(shooterLocation);
 
-            // Transfer damage to nearby entities
             shooter.playSound(shooter.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             receiver.getWorld().playSound(receiver.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
             cooldown();

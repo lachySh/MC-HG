@@ -19,7 +19,7 @@ public class Endermage extends Kit {
         super(
                 "endermage",
                 "Endermage",
-                "You can run, but you can't hide.\nTeleport players (and animals) above and below you to your placed portal.\nVictims gain 3 seconds of invincibility to prepare.\nThey can't hurt you for 3 seconds.\nNote: The portal is placeable even when block placing is disabled for map",
+                "Teleport players (and animals) above and\nbelow you to your placed portal.\nVictims gain 3 seconds of invincibility to prepare.\nThey can't hurt you for 3 seconds.\nNote: The portal is placeable even when\nblock placing is disabled for map.",
                 true,
                 KitType.UTILITY,
                 Material.ENDER_EYE,

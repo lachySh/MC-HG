@@ -24,6 +24,8 @@ public class KitManager {
         kits.add(new Endermage());
         kits.add(new Chameleon());
         kits.add(new Spy());
+        kits.add(new Fisherman());
+        kits.add(new Worm());
 
         Collections.sort(kits);
 

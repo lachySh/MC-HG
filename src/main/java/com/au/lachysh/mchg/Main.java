@@ -1,7 +1,7 @@
 package com.au.lachysh.mchg;
 
 import com.au.lachysh.mchg.abilities.AbilityListener;
-import com.au.lachysh.mchg.biome.WorldInitEventListener;
+import com.au.lachysh.mchg.terrain.WorldInitEventListener;
 import com.au.lachysh.mchg.commands.*;
 import com.au.lachysh.mchg.gui.VoteGUIListener;
 import com.au.lachysh.mchg.managers.*;
@@ -58,6 +58,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("endvote").setExecutor(new EndVoteCommand());
         this.getCommand("nextphase").setExecutor(new NextPhaseCommand());
         this.getCommand("kits").setExecutor(new KitsGUICommand());
+        this.getCommand("writeitem").setExecutor(new ItemToYamlCommand());
 
         // TODO
 //        int pluginId = 17670;

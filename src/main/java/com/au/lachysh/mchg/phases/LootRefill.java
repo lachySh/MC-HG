@@ -6,6 +6,9 @@ import com.au.lachysh.mchg.managers.ChatManager;
 import com.au.lachysh.mchg.managers.GamemapManager;
 import com.au.lachysh.mchg.managers.LootManager;
 import com.au.lachysh.mchg.managers.PlayerManager;
+import com.au.lachysh.mchg.structure.FeastStructure;
+import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.session.ClipboardHolder;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -17,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class LootRefill extends Phase {
     private int timer;
@@ -26,11 +30,17 @@ public class LootRefill extends Phase {
     private GamemapManager gm;
     private SharedPhaseLogic spl;
     private BukkitTask gameTimer;
+    private FeastStructure feast;
+    private Location feastLocation;
 
     //region Phase Methods
     @Override
     public void onEnable() {
-        timer = 300;
+        if (gm.getArenaGamemap().getFeastEnabled()) {
+            timer = 180;
+        } else {
+            timer = 300;
+        }
         cm = Main.getCm();
         lm = Main.getLm();
         pm = Main.getPlm();
@@ -38,9 +48,12 @@ public class LootRefill extends Phase {
         spl = Main.getSpl();
         startTimer();
         lm.enableRefillLootChestListener();
-        Main.getInstance().getLogger().info("LootRefill phase has started successfully!");
+        Main.getInstance().getLogger().info("LootRefill phase has started successfully! Next phase: " + (gm.getArenaGamemap().getFeastEnabled() ? "Feast" : "Deathmatch"));
 
         Bukkit.broadcastMessage(cm.getPrefix() + cm.getRefillCommencing());
+
+        feast = new FeastStructure();
+        feastLocation = spl.calculateFeastLocation(feast);
     }
 
     @Override
@@ -50,7 +63,11 @@ public class LootRefill extends Phase {
 
     @Override
     public Phase next() {
-        return new Deathmatch();
+        if (gm.getArenaGamemap().getLootEnabled()) {
+            return new Feast(feast, feastLocation);
+        } else {
+            return new Deathmatch();
+        }
     }
 
     //endregion
@@ -85,15 +102,8 @@ public class LootRefill extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    if (timer == 300 || timer == 180 || timer == 120 || timer == 60)
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getDeathmatch(timer));
-                    if (timer == 30 || timer == 15 || timer == 10)
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getDeathmatch(timer));
-                    if (timer <= 5) {
-                        for (Player p : Bukkit.getOnlinePlayers())
-                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getDeathmatch(timer));
-                    }
+                    spl.playTimerAnnouncement(timer, cm.getPrefix() +
+                            ((gm.getArenaGamemap().getLootEnabled()) ? cm.getFeastTimerNotification(spl.formatLocation(feastLocation), timer) : cm.getDeathmatch(timer)));
                     timer--;
                 } else {
                     Main.getPm().nextPhase();

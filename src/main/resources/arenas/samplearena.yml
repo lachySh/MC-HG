@@ -15,9 +15,31 @@ settings:
       - "1.0:64.0:1.0:0.0f:0.0f"
       - "2.0:64.0:2.0:0.0f:0.0f"
       - "3.0:64.0:3.0:0.0f:0.0f"
+  # If you'd like to give map-specific starting items, add them here. (if not, exclude 'starting-items' from your config)
+  # These follow spigot ItemStack yaml conventions: https://www.spigotmc.org/wiki/itemstack-serialization/
+  starting-items:
+    bow:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1.19.3-R0.1-SNAPSHOT
+      type: BOW
+      amount: 1
+      meta:
+        ==: ItemMeta
+        display-name: "§6AWP"
+        enchants:
+          POWER: 10
+    some-arrows:
+      ==: org.bukkit.inventory.ItemStack
+      v: 1.19.3-R0.1-SNAPSHOT
+      type: ARROW
+      amount: 10
   loot:
-    # If this is true, chests will be pre-filled with loot according to the following loot table
-    loot-chests-enabled: true # Note: the entire 'loot' part of this yaml file can be omitted if you wish to disable loot chests
+    feast-enabled: true # If this is true, the feast will spawn late into the game with the loot table of loot
+    # The feast spawned is the schematic in /plugins/MC-HG/schemas/feast.schem
+    # IF THE ABOVE IS ENABLED: only feast-loot-multiplier, min-slots-filled, max-slots-filled and loot-table are required
+    feast-loot-multiplier: 3 # Loot rarity multiplier for chests which are named "Feast Chest" (in the feast)
+    loot-chests-enabled: true # If this is true, chests will be pre-filled with loot according to the following loot table
+    # IF THE ABOVE IS ENABLED: all fields below this comment are required
     clear-chests-on-game-start: true # Use this if your hunger games map has pre-filled chests already, and you don't want that
     min-slots-filled: 3 # Minimum amount of loot slots filled per chest
     max-slots-filled: 6 # Maximum amount of loot slots filled per chest

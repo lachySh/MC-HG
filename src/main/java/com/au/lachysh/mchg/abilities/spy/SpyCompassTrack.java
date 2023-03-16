@@ -56,7 +56,7 @@ public class SpyCompassTrack extends Ability<PlayerInteractEvent> {
     private static AbstractMap.SimpleEntry<Player, Double> getNearestTributePlayer(int range, Player player) {
         int radius = range * range;
         return player.getWorld().getPlayers().stream()
-                .filter(p -> !p.equals(player) && pm.findTribute(p).isPresent())
+                .filter(p -> !p.equals(player) && pm.findTribute(p).isPresent() && !(p.getLocation().distance(player.getLocation()) < 10))
                 .min(Comparator.comparingDouble((p) -> p.getLocation().distanceSquared(player.getLocation())))
                 .filter(p -> p.getLocation().distanceSquared(player.getLocation()) < radius)
                 .map(p -> new AbstractMap.SimpleEntry<>(p, p.getLocation().distanceSquared(player.getLocation())))

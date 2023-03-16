@@ -1,4 +1,4 @@
-package com.au.lachysh.mchg.biome;
+package com.au.lachysh.mchg.terrain;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

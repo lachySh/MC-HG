@@ -48,11 +48,18 @@ public class GameStart extends Phase {
         startCountdown();
         for (Tribute tribute : pm.getRemainingTributesList()) {
             tribute.getPlayerObject().setGameMode(GameMode.ADVENTURE);
-            for (ItemStack startingItem : tribute.getStartingItems()) {
-                tribute.getPlayerObject().getInventory().addItem(startingItem);
+            // Kit specific starting items
+            for (ItemStack kitStartingItem : tribute.getStartingItems()) {
+                tribute.getPlayerObject().getInventory().addItem(kitStartingItem);
+            }
+            // Gamemap specific starting items
+            if (gm.getArenaGamemap().getStartingItems() != null && !gm.getArenaGamemap().getStartingItems().isEmpty()) {
+                for (ItemStack gamemapStartingItem : gm.getArenaGamemap().getStartingItems()) {
+                    tribute.getPlayerObject().getInventory().addItem(gamemapStartingItem);
+                }
             }
         }
-        Main.getInstance().getLogger().info("PreGame phase has started successfully!");
+        Main.getInstance().getLogger().info("GameStart phase has started successfully!");
     }
     @Override
     public void onDisable() {
@@ -97,12 +104,7 @@ public class GameStart extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    if (timer == 10) Bukkit.broadcastMessage(cm.getPrefix() + cm.getMovementTimeNotification(timer));
-                    if (timer <= 5) {
-                        for(Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getMovementTimeNotification(timer));
-                    }
-
+                    spl.playTimerAnnouncement(timer, cm.getPrefix() + cm.getMovementTimeNotification(timer));
                     timer--;
                 } else {
                     for(Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1, 1);

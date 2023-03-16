@@ -123,14 +123,7 @@ public class PreGame extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    if (timer == 30 || timer == 15 || timer == 10)
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getStartTimer(timer));
-                    if (timer <= 5) {
-                        for (Player p : Bukkit.getOnlinePlayers())
-                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getStartTimer(timer));
-                    }
-
+                    spl.playTimerAnnouncement(timer, cm.getPrefix() + cm.getStartTimer(timer));
                     timer--;
                 } else {
                     for (Player p : Bukkit.getOnlinePlayers())

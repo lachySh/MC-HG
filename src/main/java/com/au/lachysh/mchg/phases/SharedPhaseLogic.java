@@ -1,8 +1,10 @@
 package com.au.lachysh.mchg.phases;
 
+import com.au.lachysh.mchg.managers.GamemapManager;
 import com.au.lachysh.mchg.managers.PlayerManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import com.au.lachysh.mchg.structure.FeastStructure;
+import com.sk89q.worldedit.math.BlockVector3;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
@@ -17,14 +19,17 @@ import com.au.lachysh.mchg.managers.ChatManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SharedPhaseLogic {
     private PlayerManager plm;
     private ChatManager cm;
+    private GamemapManager gm;
 
     public SharedPhaseLogic() {
         this.plm = Main.getPlm();
         this.cm = Main.getCm();
+        this.gm = Main.getGm();
     }
 
     public void inGameOnJoin(PlayerJoinEvent e) {
@@ -40,13 +45,13 @@ public class SharedPhaseLogic {
     // TODO: Fix these when not testing
     public int setTimerBasedOnPlayerCount(int currentTimer) {
         if (plm.getRemainingTributesList().size() == 1) {
-            return 60;
+            return 120; // Should be 0
         }
-        if (plm.getRemainingTributesList().size() <= 3 && currentTimer >= 60) {
-            return 60;
-        }
-        if (plm.getRemainingTributesList().size() <= 7 && currentTimer >= 120) {
+        if (plm.getRemainingTributesList().size() <= 3 && currentTimer >= 120) {
             return 120;
+        }
+        if (plm.getRemainingTributesList().size() <= 7 && currentTimer >= 300) {
+            return 300;
         }
         return currentTimer;
     }
@@ -95,4 +100,69 @@ public class SharedPhaseLogic {
         Bukkit.broadcastMessage(cm.getGlobalkill().replace("{players}", String.valueOf(plm.getRemainingTributesList().size())));
     }
 
+    public void playTimerAnnouncement(int timer, String message) {
+        if (timer >= 600) {
+            if (timer % 300 == 0) {
+                Bukkit.broadcastMessage(message);
+            }
+            return;
+        }
+        if (timer >= 300) {
+            if (timer % 300 == 0) {
+                Bukkit.broadcastMessage(message);
+            }
+            return;
+        }
+        if (timer >= 60) {
+            if (timer % 60 == 0) {
+                Bukkit.broadcastMessage(message);
+            }
+            return;
+        }
+        if (timer >= 30) {
+            if (timer % 30 == 0) {
+                Bukkit.broadcastMessage(message);
+            }
+            return;
+        }
+        if (timer >= 15) {
+            if (timer % 15 == 0) {
+                Bukkit.broadcastMessage(message);
+            }
+            return;
+        }
+        if (timer >= 10) {
+            if (timer % 10 == 0) {
+                Bukkit.broadcastMessage(message);
+            }
+            return;
+        }
+        if (timer >= 5) {
+            if (timer % 5 == 0) {
+                for(Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+                Bukkit.broadcastMessage(message);
+            }
+            return;
+        }
+        for(Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+        Bukkit.broadcastMessage(message);
+    }
+
+    public Location calculateFeastLocation(FeastStructure feast) {
+        Random rand = new Random();
+        World arena = gm.getArenaWorld();
+        int radius = gm.getArenaGamemap().getBorderRadius();
+        Location centre = gm.getArenaCentre();
+
+        BlockVector3 dimensions = feast.getClipboard().getDimensions();
+
+        int x = rand.nextInt(centre.getBlockX()-radius+dimensions.getBlockX(), centre.getBlockX()+radius-dimensions.getBlockX());
+        int z = rand.nextInt(centre.getBlockZ()-radius+dimensions.getBlockZ(), centre.getBlockZ()+radius-dimensions.getBlockZ());
+
+        return new Location(arena, x, arena.getHighestBlockYAt(x, z), z);
+    }
+
+    public String formatLocation(Location feastLocation) {
+        return "x: " + feastLocation.getBlockX() + ", y: " + feastLocation.getBlockY() + ", z: " + feastLocation.getBlockZ();
+    }
 }

@@ -27,6 +27,8 @@ public class Gamemap {
     private Integer randomizeSpread;
     private List<String> spawnLocations;
 
+    private List<ItemStack> startingItems;
+
     private Boolean lootEnabled;
     private Boolean clearLootOnStart;
     private Integer minSlotsFilled;
@@ -35,6 +37,9 @@ public class Gamemap {
     private Double rareLootMultiplier;
     private Double refillLootMultiplier;
     private Double refillRareLootMultiplier;
+
+    private Boolean feastEnabled;
+    private Double feastLootMultiplier;
 
     public Gamemap(String filename,
                    String title,

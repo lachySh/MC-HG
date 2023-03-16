@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -169,6 +170,7 @@ public class AbilityListener implements Listener {
 
     @EventHandler
     public void onProjectileHitShooter(ProjectileHitEvent event) {
+        if (!(event.getEntity().getShooter() instanceof Player)) return;
         pm.findTribute((Player) event.getEntity().getShooter()).ifPresent(
                 (t) -> {
                     try {
@@ -203,6 +205,27 @@ public class AbilityListener implements Listener {
                             notifyOnDisabled(((Player) event.getDamager()), selectedAbility);
                         } else if (selectedAbility.isOnCooldown()) {
                             notifyOnCooldown(((Player) event.getDamager()), selectedAbility);
+                        }
+                    } catch (NoSuchElementException ignored) {
+                    }
+                }
+        );
+    }
+
+    @EventHandler
+    public void onPlayerFish(PlayerFishEvent event) {
+        pm.findTribute(event.getPlayer()).ifPresent(
+                (t) -> {
+                    try {
+                        Ability selectedAbility = t.getAbilities().stream()
+                                .filter(ability -> tryPreconditionSafely(ability, event))
+                                .findFirst().get();
+                        if (!selectedAbility.isDisabled() && !selectedAbility.isOnCooldown()) {
+                            selectedAbility.getCallable().execute(event);
+                        } else if (selectedAbility.isDisabled()) {
+                            notifyOnDisabled(event.getPlayer(), selectedAbility);
+                        } else if (selectedAbility.isOnCooldown()) {
+                            notifyOnCooldown(event.getPlayer(), selectedAbility);
                         }
                     } catch (NoSuchElementException ignored) {
                     }

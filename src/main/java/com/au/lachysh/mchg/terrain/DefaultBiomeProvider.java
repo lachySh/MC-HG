@@ -1,4 +1,4 @@
-package com.au.lachysh.mchg.biome;
+package com.au.lachysh.mchg.terrain;
 
 import com.au.lachysh.mchg.Main;
 import net.minecraft.core.Holder;

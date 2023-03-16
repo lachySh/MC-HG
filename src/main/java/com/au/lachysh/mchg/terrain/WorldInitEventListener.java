@@ -1,4 +1,4 @@
-package com.au.lachysh.mchg.biome;
+package com.au.lachysh.mchg.terrain;
 
 import net.minecraft.world.level.biome.BiomeSource;
 import org.bukkit.World;

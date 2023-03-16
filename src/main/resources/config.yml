@@ -55,6 +55,8 @@ messages:
   kits-menu-title: "&8Select a kit"
   kits-selection: "&fYou have selected {kit}!"
   kit-not-recommended: "&cYour kit is not recommended for this map as world breaking / placing is disabled! Choosing another kit is advised (use /kits)."
+  feast-timer-notifications: "&fThe feast will take place at {coords} in {timer} {m}!"
+  feast-time: "&fThe feast has begun at {coords}! Get the loot before anyone else does!"
   summary:
     - "Game summary is coming soon!"
     - "It will be broadcasted once the game is over"

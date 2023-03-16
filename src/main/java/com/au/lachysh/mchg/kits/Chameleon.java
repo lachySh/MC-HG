@@ -11,7 +11,7 @@ public class Chameleon extends Kit {
         super(
                 "chameleon",
                 "Chameleon",
-                "Is it a bat? Is it a plane?\nHitting mobs will disguise you as them.\nTaking damage will remove your disguise.",
+                "Hitting mobs will disguise you as them.\nTaking damage will remove your disguise.",
                 true,
                 KitType.DEFENSIVE,
                 Material.CREEPER_SPAWN_EGG,

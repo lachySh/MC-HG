@@ -84,11 +84,7 @@ public class Deathmatch extends Phase {
             @Override
             public void run() {
                 if (timer > 0) {
-                    if (timer == 10) Bukkit.broadcastMessage(cm.getPrefix() + (cm.getDeathmatchprep(timer)));
-                    if (timer <= 5) {
-                        for(Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
-                        Bukkit.broadcastMessage(cm.getPrefix() + cm.getDeathmatchprep(timer));
-                    }
+                    spl.playTimerAnnouncement(timer, cm.getPrefix() + cm.getDeathmatchprep(timer));
                     timer--;
                 } else {
                     for(Player p : Bukkit.getOnlinePlayers()) p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1, 1);

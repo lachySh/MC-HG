@@ -276,6 +276,18 @@ public class ChatManager {
         return kitNotRecommended;
     }
 
+    private String feastTimerNotification;
+
+    public String getFeastTimerNotification(String coords, int timer) {
+        return formatTime(formatEmbeddedString(feastTimerNotification, "coords", coords), timer);
+    }
+
+    private String feastTime;
+
+    public String getFeastTime(String coords) {
+        return formatEmbeddedString(feastTime, "coords", coords);
+    }
+
     private void setUpEntries() {
         prefix = format(config.getString("messages.prefix"));
         perm = format(config.getString("messages.no-permission"));
@@ -317,5 +329,7 @@ public class ChatManager {
         kitsMenuTitle = format(config.getString("messages.kits-menu-title"));
         kitsSelection = format(config.getString("messages.kits-selection"));
         kitNotRecommended = format(config.getString("messages.kit-not-recommended"));
+        feastTimerNotification = format(config.getString("messages.feast-timer-notifications"));
+        feastTime = format(config.getString("messages.feast-time"));
     }
 }

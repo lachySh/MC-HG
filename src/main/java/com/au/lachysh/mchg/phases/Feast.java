@@ -63,6 +63,8 @@ public class Feast extends Phase {
 
             EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld, -1);
 
+            // Air selection only works if schematic was saved from player standing at ground level, at the
+            //
             CuboidRegion airSelection = new CuboidRegion(adaptedWorld,
                     BlockVector3.at(feastLocation.getBlockX(), feastLocation.getBlockY()+30, feastLocation.getBlockZ()),
                     BlockVector3.at(feastLocation.getBlockX() + feast.getClipboard().getDimensions().getBlockX() - 1,

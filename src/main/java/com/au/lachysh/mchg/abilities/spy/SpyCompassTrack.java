@@ -8,6 +8,7 @@ import com.au.lachysh.mchg.managers.PlayerManager;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -16,11 +17,18 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.util.AbstractMap;
 import java.util.Comparator;
 
+import static com.au.lachysh.mchg.shared.ChatUtils.sendActionbar;
+
 public class SpyCompassTrack extends Ability<PlayerInteractEvent> {
     private static Integer RANGE;
     private static final String NO_NEAREST_PLAYER_TEXT = ChatColor.RED + "No player found within {range} blocks!";
     private static final String NEAREST_PLAYER_TEXT = ChatColor.YELLOW + "{name} is {dist} blocks away at Y = {yval}";
+
+    private static final String FEAST_TEXT = ChatColor.YELLOW + "Compass pointing to the feast!";
     private static PlayerManager pm;
+
+    private static boolean feastEnabled = false;
+    private static Location feastLocation;
 
     public SpyCompassTrack() {
         super("Spy compass tracking", PlayerInteractEvent.class, 1, false);
@@ -30,25 +38,31 @@ public class SpyCompassTrack extends Ability<PlayerInteractEvent> {
     @Override
     public boolean precondition(PlayerInteractEvent event) {
         return event.getItem() != null && event.getItem().getType() == Material.COMPASS &&
-                (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)
-                && Spy.itemName.contains(event.getItem().getItemMeta().getDisplayName());
+                Spy.itemName.contains(event.getItem().getItemMeta().getDisplayName());
     }
 
     @Override
     public AbilityCallable<PlayerInteractEvent> getCallable() {
         return event -> {
-            if (RANGE == null) {
-                RANGE = Main.getGm().getArenaGamemap().getBorderRadius() * 2;
-            }
             Player player = event.getPlayer();
-            AbstractMap.SimpleEntry<Player, Double> nearestPlayer = getNearestTributePlayer(RANGE, player);
-            if (nearestPlayer == null) {
-                sendActionbar(player, formatFailText(RANGE));
-            } else {
-                sendActionbar(player, formatText(nearestPlayer.getKey().getName(), Math.sqrt(nearestPlayer.getValue()), nearestPlayer.getKey().getLocation().getBlockY()));
-                player.setCompassTarget(nearestPlayer.getKey().getLocation());
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (RANGE == null) {
+                    RANGE = Main.getGm().getArenaGamemap().getBorderRadius() * 2;
+                }
+                player = event.getPlayer();
+                AbstractMap.SimpleEntry<Player, Double> nearestPlayer = getNearestTributePlayer(RANGE, player);
+                if (nearestPlayer == null) {
+                    sendActionbar(player, formatFailText(RANGE));
+                } else {
+                    sendActionbar(player, formatText(nearestPlayer.getKey().getName(), Math.sqrt(nearestPlayer.getValue()), nearestPlayer.getKey().getLocation().getBlockY()));
+                    player.setCompassTarget(nearestPlayer.getKey().getLocation());
+                }
+                player.updateInventory();
+            } else if ((event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) && feastEnabled) {
+                sendActionbar(player, FEAST_TEXT);
+                player.setCompassTarget(feastLocation);
+                player.updateInventory();
             }
-            player.updateInventory();
             cooldown();
         };
     }
@@ -74,7 +88,11 @@ public class SpyCompassTrack extends Ability<PlayerInteractEvent> {
         return NO_NEAREST_PLAYER_TEXT.replace("{range}", range.toString());
     }
 
-    private static void sendActionbar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(message));
+    public static void setFeastEnabled(boolean enabled) {
+        feastEnabled = enabled;
+    }
+
+    public static void setFeastLocation(Location location) {
+        feastLocation = location;
     }
 }

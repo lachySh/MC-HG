@@ -10,13 +10,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3784dd68-6b9e-4920-8eca-4aeee6c7ee2c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/cultivator/SeedLimiter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/forger/InstantSmelt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/jumper/ChargedJump.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/jumper/ChargedJumpDetector.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/jumper/LimitFallDamage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/portal/OnDamageCancelSpell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/portal/ReturnToPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/portal/SetReturnPoint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/thor/LightningCall.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/viper/PoisonChance.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Forger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Hearthstone.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Jumper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Thor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Viper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local-maven-repo/de/freesoccerhdx/advancedworldcreatorapi/advancedworldcreatorapi/1.19.3/AdvancedWorldCreatorAPI-1.19.3.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Endermage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Endermage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/AbilityListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/AbilityListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/intrinsic/CompassTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/intrinsic/CompassTrack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/intrinsic/SoupHeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/intrinsic/SoupHeal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/spy/SpyCompassTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/spy/SpyCompassTrack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/worm/InstantMineDirt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/abilities/worm/InstantMineDirt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/Gamemap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/gamemap/Gamemap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Cultivator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Cultivator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Spy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Spy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Worm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Worm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/GamemapManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/GamemapManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/KitManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/KitManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/LootManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/LootManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/PhaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/managers/PhaseManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Feast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/Feast.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/DefaultBiomeProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/DefaultBiomeProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/WorldInitEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/WorldInitEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/InvincibilityPeriod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/InvincibilityPeriod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/LootRefill.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/LootRefill.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/PreFeast.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/PreFeast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/SharedPhaseLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/phases/SharedPhaseLogic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/arenas/random.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/arenas/random.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/arenas/samplearena.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/arenas/samplearena.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,19 +75,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\roden\Documents\YAGHGP\src\main\resources\arenas" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\roden\Documents\YAGHGP\src\main\java\ru\dgrew\yaghgp\worldgen" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.au.lachysh.mchg.kits" />
+      <recent name="com.au.lachysh.mchg.abilities.jumper" />
       <recent name="com.au.lachysh.mchg.commands" />
       <recent name="ru.dgrew.yaghgp.abilities.stomper" />
       <recent name="ru.dgrew.yaghgp.kits" />
-      <recent name="ru.dgrew.yaghgp.voting" />
-      <recent name="ru.dgrew.yaghgp.phases" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\roden\Documents\YAGHGP\src\main\resources\arenas" />
     </key>
   </component>
   <component name="RunAnythingCache">

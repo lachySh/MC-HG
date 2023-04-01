@@ -8,6 +8,7 @@ import com.au.lachysh.mchg.shared.ChatUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -25,8 +26,11 @@ public class CompassTrack extends Ability<PlayerInteractEvent> {
     private static final int RANGE = Main.getSm().getCompassTrackRange();
     private static final String NO_NEAREST_PLAYER_TEXT = ChatColor.RED + "No player found within " + RANGE + " blocks!";
     private static final String NEAREST_PLAYER_TEXT = ChatColor.YELLOW + "Compass pointing to nearest player: {name}";
+
+    private static final String FEAST_TEXT = ChatColor.YELLOW + "Compass pointing to the feast!";
     private static PlayerManager pm;
-    private static ItemStack trackingCompassItem;
+    private static boolean feastEnabled = false;
+    private static Location feastLocation;
 
     public CompassTrack() {
         super("Compass tracking", PlayerInteractEvent.class, 1, false);
@@ -35,36 +39,38 @@ public class CompassTrack extends Ability<PlayerInteractEvent> {
 
     @Override
     public boolean precondition(PlayerInteractEvent event) {
-        return event.getItem() != null && event.getItem().getType() == Material.COMPASS &&
-                (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK);
+        return event.getItem() != null && event.getItem().getType() == Material.COMPASS;
     }
 
     @Override
     public AbilityCallable<PlayerInteractEvent> getCallable() {
         return event -> {
             Player player = event.getPlayer();
-            AbstractMap.SimpleEntry<Player, Double> nearestPlayer = getNearestTributePlayer(RANGE, player);
-            if (nearestPlayer == null) {
-                sendActionbar(player, NO_NEAREST_PLAYER_TEXT);
-            } else {
-                sendActionbar(player, formatText(nearestPlayer.getKey().getName()));
-                player.setCompassTarget(nearestPlayer.getKey().getLocation());
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                AbstractMap.SimpleEntry<Player, Double> nearestPlayer = getNearestTributePlayer(RANGE, player);
+                if (nearestPlayer == null) {
+                    sendActionbar(player, NO_NEAREST_PLAYER_TEXT);
+                } else {
+                    sendActionbar(player, formatText(nearestPlayer.getKey().getName()));
+                    player.setCompassTarget(nearestPlayer.getKey().getLocation());
+                }
+                player.updateInventory();
+            } else if ((event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) && feastEnabled) {
+                sendActionbar(player, FEAST_TEXT);
+                player.setCompassTarget(feastLocation);
+                player.updateInventory();
             }
-            player.updateInventory();
             cooldown();
         };
     }
 
     public static ItemStack getTrackingCompass() {
-        if (trackingCompassItem != null) return trackingCompassItem;
-
         ItemStack item = new ItemStack(Material.COMPASS);
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Tracking Compass");
         item.setItemMeta(itemMeta);
 
-        trackingCompassItem = item;
-        return trackingCompassItem;
+        return item;
     }
 
     private static AbstractMap.SimpleEntry<Player, Double> getNearestTributePlayer(int range, Player player) {
@@ -79,5 +85,13 @@ public class CompassTrack extends Ability<PlayerInteractEvent> {
 
     private static String formatText(String playerName) {
         return NEAREST_PLAYER_TEXT.replace("{name}", playerName);
+    }
+
+    public static void setFeastEnabled(boolean enabled) {
+        feastEnabled = enabled;
+    }
+
+    public static void setFeastLocation(Location location) {
+        feastLocation = location;
     }
 }

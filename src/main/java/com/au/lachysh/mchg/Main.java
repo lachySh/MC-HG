@@ -28,6 +28,8 @@ public class Main extends JavaPlugin implements Listener {
     World lobby;
     World arena;
 
+    private static boolean lootEventsRegistered = false;
+
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
@@ -39,8 +41,8 @@ public class Main extends JavaPlugin implements Listener {
         gm = new GamemapManager();
         lm = new LootManager();
         vm = new VotingManager();
-        spl = new SharedPhaseLogic();
         pm = new PhaseManager();
+        spl = new SharedPhaseLogic();
         km = new KitManager();
         gm.getGamemaps();
 
@@ -60,13 +62,6 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("kits").setExecutor(new KitsGUICommand());
         this.getCommand("writeitem").setExecutor(new ItemToYamlCommand());
 
-        // TODO
-//        int pluginId = 17670;
-//        Metrics metrics = new Metrics(this, pluginId);
-//        if (sm.getUpdateCheck()) {
-//            UpdateChecker uc = new UpdateChecker(getDescription().getVersion());
-//            uc.checkForUpdates();
-//        }
         Bukkit.getPluginManager().registerEvents(new VoteGUIListener(), Main.getInstance());
         Bukkit.getPluginManager().registerEvents(new KitsGUIListener(), Main.getInstance());
         if (sm.getUseCustomWorldGen()) {
@@ -117,7 +112,9 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     public static void registerLootManagerListeners() {
+        if (lootEventsRegistered) return;
         Bukkit.getPluginManager().registerEvents(getLm(), Main.getInstance());
+        lootEventsRegistered = true;
     }
 
     public static Main getInstance() {

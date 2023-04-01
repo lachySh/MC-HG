@@ -12,3 +12,11 @@ settings:
     # If false: Players will be assigned the starting positions which are specified in
     randomize-spawn-locations: true
     randomize-spread: 30 # If randomize-spawn-locations is true, this value is required: Players will be randomly spread around the world centre location this many blocks in diameter
+  loot:
+    feast-enabled: true # If this is true, the feast will spawn late into the game with the loot table of loot
+    # The feast spawned is the schematic in /plugins/MC-HG/schemas/feast.schem
+    # IF THE ABOVE IS ENABLED: only feast-loot-multiplier, min-slots-filled, max-slots-filled and loot-table are required
+    feast-loot-multiplier: 3 # Loot rarity multiplier for chests which are named "Feast Chest" (in the feast)
+    loot-chests-enabled: false # If this is true, chests will be pre-filled with loot according to the following loot table
+    min-slots-filled: 3 # Minimum amount of loot slots filled per chest
+    max-slots-filled: 6 # Maximum amount of loot slots filled per chest

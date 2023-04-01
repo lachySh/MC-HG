@@ -22,10 +22,15 @@ public class KitManager {
         kits.add(new Apparition());
         kits.add(new Switcher());
         kits.add(new Endermage());
-        kits.add(new Chameleon());
+//        kits.add(new Chameleon()); Temp disabled waiting on LibsDisguises update
         kits.add(new Spy());
         kits.add(new Fisherman());
         kits.add(new Worm());
+        kits.add(new Forger());
+        kits.add(new Jumper());
+        kits.add(new Thor());
+        kits.add(new Viper());
+        kits.add(new Hearthstone());
 
         Collections.sort(kits);
 

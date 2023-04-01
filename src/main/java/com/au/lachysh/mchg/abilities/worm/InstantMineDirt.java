@@ -79,14 +79,14 @@ public class InstantMineDirt extends Ability<PlayerInteractEvent> {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (counter >= 7) {
+                    if (counter >= 5) {
                         counter = 0;
                         ChatUtils.sendActionbar(p, END_MINING_TEXT);
                         activated = false;
                         cooldown();
                         cancel();
                     }
-                    if (counter >= 4) {
+                    if (counter >= 2) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.5f, 2);
                     }
                     counter++;

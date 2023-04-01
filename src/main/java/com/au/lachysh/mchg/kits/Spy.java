@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Spy extends Kit {
     // NOTE: See CompassHandout for cancellation of normal compass handout
-    private static ItemStack trackingCompassItem;
     public static final String itemName = ChatColor.RESET + "" + ChatColor.YELLOW + "Spy's Tracking Compass";
 
     public Spy() {
@@ -27,14 +26,11 @@ public class Spy extends Kit {
     }
 
     public static ItemStack spyTrackingCompass() {
-        if (trackingCompassItem != null) return trackingCompassItem;
-
         ItemStack item = new ItemStack(Material.COMPASS);
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.YELLOW + "Spy's Tracking Compass");
         item.setItemMeta(itemMeta);
 
-        trackingCompassItem = item;
-        return trackingCompassItem;
+        return item;
     }
 }

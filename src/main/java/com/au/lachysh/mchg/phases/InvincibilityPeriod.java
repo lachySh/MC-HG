@@ -10,6 +10,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import com.au.lachysh.mchg.Main;
@@ -38,6 +40,7 @@ public class InvincibilityPeriod extends Phase {
         timer = 120;
         for (Tribute tribute : pm.getRemainingTributesList()) {
             tribute.getPlayerObject().setGameMode(gm.getArenaGamemap().getGamemode());
+            tribute.getPlayerObject().addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 2400, 2, false, false));
         }
         startCountdown();
         gm.getArenaWorld().setAutoSave(false);

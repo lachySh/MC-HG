@@ -30,9 +30,7 @@ public class SoupHeal extends Ability<PlayerInteractEvent> {
             player.setHealth(Math.min((player.getHealth() + 7.0), 20));
             ItemStack item = event.getItem();
             item.setType(Material.BOWL);
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(ChatColor.RESET + "Bowl");
-            item.setItemMeta(meta);
+            item.setItemMeta(null);
             player.updateInventory();
             cooldown();
         };

@@ -1,5 +1,6 @@
 package com.au.lachysh.mchg.kits;
 
+import com.au.lachysh.mchg.abilities.cultivator.SeedLimiter;
 import org.bukkit.Material;
 import com.au.lachysh.mchg.abilities.cultivator.InstantGrow;
 
@@ -15,7 +16,7 @@ public class Cultivator extends Kit {
                 KitType.UTILITY,
                 Material.OAK_SAPLING,
                 List.of(),
-                List.of(new InstantGrow())
+                List.of(new InstantGrow(), new SeedLimiter())
         );
     }
 }

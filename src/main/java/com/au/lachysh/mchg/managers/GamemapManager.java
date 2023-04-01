@@ -87,56 +87,23 @@ public class GamemapManager {
                     option.setStartingItems(startingItems);
                 }
 
-                // LootTable
-                HashMap<LootEntry, Integer> lootTable = new HashMap<>();
-                LootEntry curLootEntry = null;
-                EnchantmentEntry curEnchEntry = null;
-                try {
-                    for (String material : arenaConfig.getConfigurationSection("settings.loot.loot-table").getKeys(false)) {
-                        try {
-                            List<EnchantmentEntry> enchantmentEntries = new ArrayList<>();
-                            if (arenaConfig.contains("settings.loot.loot-table." + material + ".enchantments", false)) {
-                                for (Map<?, ?> enchantmentEntry : arenaConfig.getMapList("settings.loot.loot-table." + material + ".enchantments")) {
-                                    curEnchEntry = new EnchantmentEntry(
-                                            EnchantmentWrapper.getByKey(NamespacedKey.minecraft(((String) enchantmentEntry.get("type")).toLowerCase())),
-                                            (Integer) enchantmentEntry.get("level"),
-                                            enchantmentEntry.get("chance") instanceof Integer ?
-                                                    (Double) ((Integer) enchantmentEntry.get("chance")).doubleValue()
-                                                    : (Double) enchantmentEntry.get("chance")
-                                    );
-                                    enchantmentEntries.add(curEnchEntry);
-                                }
-                            }
-                            curLootEntry = new LootEntry(
-                                    Material.matchMaterial(material),
-                                    arenaConfig.getInt("settings.loot.loot-table." + material + ".min"),
-                                    arenaConfig.getInt("settings.loot.loot-table." + material + ".max"),
-                                    enchantmentEntries
-                            );
-                            lootTable.put(
-                                    curLootEntry,
-                                    arenaConfig.getInt("settings.loot.loot-table." + material + ".commonness")
-                            );
-                        } catch (Exception e) {
-                            Main.getInstance().getLogger().warning("Could not parse loot table entry: {" + material + "}. Exception: " + e.getMessage());
-                        }
-                    }
-                    option.setLootTable(lootTable);
-                } catch (Exception e) {
-                    Main.getInstance().getLogger().warning("Something went wrong parsing gamemap file " + f.getName() + "! Exception: " + e.getMessage());
-                }
-
                 // Loot settings
-                if (arenaConfig.getBoolean("settings.loot.loot-chests-enabled")) {
-                    option.setLootEnabled(true);
-                    option.setClearLootOnStart(arenaConfig.getBoolean("settings.loot.clear-chests-on-game-start"));
+                if (arenaConfig.getBoolean("settings.loot.loot-chests-enabled") || arenaConfig.getBoolean("settings.loot.feast-enabled")) {
                     option.setMinSlotsFilled(arenaConfig.getInt("settings.loot.min-slots-filled"));
                     option.setMaxSlotsFilled(arenaConfig.getInt("settings.loot.max-slots-filled"));
-                    option.setRareLootMultiplier(arenaConfig.getDouble("settings.loot.rare-loot-multiplier"));
-                    option.setRefillLootMultiplier(arenaConfig.getDouble("settings.loot.refill-loot-multiplier"));
-                    option.setRefillRareLootMultiplier(arenaConfig.getDouble("settings.loot.refill-rare-loot-multiplier"));
-                    if (arenaConfig.contains("settings.loot.loot-table", false)) {
-                        Main.getInstance().getLogger().warning("Loot was enabled for map " + f.getName() + " but no loot table was found!");
+                }
+                if (arenaConfig.getBoolean("settings.loot.loot-chests-enabled")) {
+                        option.setLootEnabled(true);
+                        option.setRareLootMultiplier(arenaConfig.getDouble("settings.loot.rare-loot-multiplier"));
+                        option.setRefillLootMultiplier(arenaConfig.getDouble("settings.loot.refill-loot-multiplier"));
+                        option.setRefillRareLootMultiplier(arenaConfig.getDouble("settings.loot.refill-rare-loot-multiplier"));
+                        option.setClearLootOnStart(arenaConfig.getBoolean("settings.loot.clear-chests-on-game-start"));
+                    try {
+                        if (arenaConfig.getConfigurationSection("settings.loot.loot-table").getKeys(false).isEmpty()) {
+                            Main.getInstance().getLogger().warning("Loot chests are enabled for map " + f.getName() + " but loot table was empty! Please fill in a loot table for this to work properly!");
+                        }
+                    } catch (NullPointerException e) {
+                        Main.getInstance().getLogger().warning("Loot chests are enabled for map " + f.getName() + " but loot table was not found! Please fill in a loot table for this to work properly!");
                     }
                 } else {
                     option.setLootEnabled(false);
@@ -146,11 +113,59 @@ public class GamemapManager {
                 if (arenaConfig.getBoolean("settings.loot.feast-enabled")) {
                     option.setFeastEnabled(true);
                     option.setFeastLootMultiplier(arenaConfig.getDouble("settings.loot.feast-loot-multiplier"));
-                    if (arenaConfig.contains("settings.loot.loot-table", false)) {
-                        Main.getInstance().getLogger().warning("Loot was enabled for map " + f.getName() + " but no loot table was found!");
+                    if (arenaConfig.isInt("settings.loot.feast-y-coord")) {
+                        option.setFeastYCoord(arenaConfig.getInt("settings.loot.feast-y-coord"));
+                    }
+                    try {
+                        if (arenaConfig.getConfigurationSection("settings.loot.loot-table").getKeys(false).isEmpty()) {
+                            Main.getInstance().getLogger().warning("Loot chests are enabled for map " + f.getName() + " but loot table was empty! Please fill in a loot table for this to work properly!");
+                        }
+                    } catch (NullPointerException e) {
+                        Main.getInstance().getLogger().warning("Feast is enabled for map " + f.getName() + " but loot table was not found! Please fill in a loot table for this to work properly!");
                     }
                 } else {
                     option.setFeastEnabled(false);
+                }
+
+                // LootTable
+                if (arenaConfig.isConfigurationSection("settings.loot.loot-table")) {
+                    HashMap<LootEntry, Integer> lootTable = new HashMap<>();
+                    LootEntry curLootEntry = null;
+                    EnchantmentEntry curEnchEntry = null;
+                    try {
+                        for (String material : arenaConfig.getConfigurationSection("settings.loot.loot-table").getKeys(false)) {
+                            try {
+                                List<EnchantmentEntry> enchantmentEntries = new ArrayList<>();
+                                if (arenaConfig.contains("settings.loot.loot-table." + material + ".enchantments", false)) {
+                                    for (Map<?, ?> enchantmentEntry : arenaConfig.getMapList("settings.loot.loot-table." + material + ".enchantments")) {
+                                        curEnchEntry = new EnchantmentEntry(
+                                                EnchantmentWrapper.getByKey(NamespacedKey.minecraft(((String) enchantmentEntry.get("type")).toLowerCase())),
+                                                (Integer) enchantmentEntry.get("level"),
+                                                enchantmentEntry.get("chance") instanceof Integer ?
+                                                        (Double) ((Integer) enchantmentEntry.get("chance")).doubleValue()
+                                                        : (Double) enchantmentEntry.get("chance")
+                                        );
+                                        enchantmentEntries.add(curEnchEntry);
+                                    }
+                                }
+                                curLootEntry = new LootEntry(
+                                        Material.matchMaterial(material),
+                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".min"),
+                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".max"),
+                                        enchantmentEntries
+                                );
+                                lootTable.put(
+                                        curLootEntry,
+                                        arenaConfig.getInt("settings.loot.loot-table." + material + ".commonness")
+                                );
+                            } catch (Exception e) {
+                                Main.getInstance().getLogger().warning("Could not parse loot table entry: {" + material + "}. Exception: " + e.getMessage());
+                            }
+                        }
+                        option.setLootTable(lootTable);
+                    } catch (Exception e) {
+                        Main.getInstance().getLogger().warning("Something went wrong parsing gamemap file " + f.getName() + "'s loot table! Exception: " + e.getMessage());
+                    }
                 }
 
                 // Random gamemap handling

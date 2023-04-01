@@ -1,6 +1,7 @@
 package com.au.lachysh.mchg.phases;
 
 import com.au.lachysh.mchg.managers.GamemapManager;
+import com.au.lachysh.mchg.managers.PhaseManager;
 import com.au.lachysh.mchg.managers.PlayerManager;
 import com.au.lachysh.mchg.structure.FeastStructure;
 import com.sk89q.worldedit.math.BlockVector3;
@@ -25,11 +26,13 @@ public class SharedPhaseLogic {
     private PlayerManager plm;
     private ChatManager cm;
     private GamemapManager gm;
+    private PhaseManager pm;
 
     public SharedPhaseLogic() {
         this.plm = Main.getPlm();
         this.cm = Main.getCm();
         this.gm = Main.getGm();
+        this.pm = Main.getPm();
     }
 
     public void inGameOnJoin(PlayerJoinEvent e) {
@@ -45,7 +48,7 @@ public class SharedPhaseLogic {
     // TODO: Fix these when not testing
     public int setTimerBasedOnPlayerCount(int currentTimer) {
         if (plm.getRemainingTributesList().size() == 1) {
-            return 120; // Should be 0
+            return 1000; // Should be 0
         }
         if (plm.getRemainingTributesList().size() <= 3 && currentTimer >= 120) {
             return 120;
@@ -98,6 +101,9 @@ public class SharedPhaseLogic {
         killed.getWorld().strikeLightningEffect(killed.getLocation());
         plm.transferToSpectators(killed);
         Bukkit.broadcastMessage(cm.getGlobalkill().replace("{players}", String.valueOf(plm.getRemainingTributesList().size())));
+        if (plm.getRemainingTributesList().size() <= 1) {
+            pm.setPhase(new EndGame());
+        }
     }
 
     public void playTimerAnnouncement(int timer, String message) {
@@ -159,7 +165,11 @@ public class SharedPhaseLogic {
         int x = rand.nextInt(centre.getBlockX()-radius+dimensions.getBlockX(), centre.getBlockX()+radius-dimensions.getBlockX());
         int z = rand.nextInt(centre.getBlockZ()-radius+dimensions.getBlockZ(), centre.getBlockZ()+radius-dimensions.getBlockZ());
 
-        return new Location(arena, x, arena.getHighestBlockYAt(x, z), z);
+        if (gm.getArenaGamemap().getFeastYCoord() != null) {
+            return new Location(arena, x, gm.getArenaGamemap().getFeastYCoord(), z);
+        } else {
+            return new Location(arena, x, arena.getHighestBlockYAt(x, z), z);
+        }
     }
 
     public String formatLocation(Location feastLocation) {

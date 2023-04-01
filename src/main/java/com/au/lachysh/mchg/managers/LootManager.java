@@ -29,9 +29,11 @@ public class LootManager implements Listener {
     private List<Location> openedChests;
     private List<Location> refillOpenedChests;
     private List<Location> clearedChests;
+    private List<Location> feastOpenedChests;
 
     private Boolean lootChestsEnabled;
     private Boolean refillLootChestsEnabled;
+    private Boolean feastLootChestsEnabled;
 
     public LootManager() {
         rand = new Random();
@@ -39,9 +41,11 @@ public class LootManager implements Listener {
         playerPlacedChests = new HashMap<>();
         openedChests = new ArrayList<>();
         refillOpenedChests = new ArrayList<>();
+        feastOpenedChests = new ArrayList<>();
         clearedChests = new ArrayList<>();
         lootChestsEnabled = false;
         refillLootChestsEnabled = false;
+        feastLootChestsEnabled = false;
     }
 
     public void enableLootChestListener() {
@@ -57,6 +61,15 @@ public class LootManager implements Listener {
         Main.getInstance().getLogger().info("Enabling refill loot chests...");
         lootChestsEnabled = false;
         refillLootChestsEnabled = true;
+    }
+
+    public void enableFeastLootChestListener() {
+        if (lootWeightings == null) {
+            lootWeightings = Main.getGm().getArenaGamemap().getLootTable();
+            Main.getInstance().getLogger().info("Loot table loaded: " + lootWeightings);
+        }
+        Main.getInstance().getLogger().info("Enabling feast loot chests...");
+        feastLootChestsEnabled = true;
     }
 
     @EventHandler
@@ -81,7 +94,8 @@ public class LootManager implements Listener {
         Location chestLocation = chest.getLocation();
 
         if (openedChests.contains(chestLocation) ||
-                (chest.getCustomName() != null && chest.getCustomName().equalsIgnoreCase("custom chest"))) {
+                (chest.getCustomName() != null && (chest.getCustomName().equalsIgnoreCase("custom chest")
+                        || chest.getCustomName().equalsIgnoreCase("feast chest")))) {
             return;
         }
 
@@ -150,7 +164,8 @@ public class LootManager implements Listener {
         Location chestLocation = chest.getLocation();
 
         if (refillOpenedChests.contains(chestLocation) ||
-                (chest.getCustomName() != null && chest.getCustomName().equalsIgnoreCase("custom chest"))) {
+                (chest.getCustomName() != null && (chest.getCustomName().equalsIgnoreCase("custom chest")
+                        || chest.getCustomName().equalsIgnoreCase("feast chest")))) {
             return;
         }
 
@@ -219,6 +234,65 @@ public class LootManager implements Listener {
         }
     }
 
+    @EventHandler
+    public void feastLootChestListener(PlayerInteractEvent event) {
+        if (!feastLootChestsEnabled || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+
+        Block block = event.getClickedBlock();
+        if (block.getType() != Material.CHEST || playerPlacedChests.getOrDefault(block, false)) {
+            return;
+        }
+
+        Chest chest = (Chest) block.getState();
+        Location chestLocation = chest.getLocation();
+
+        if (feastOpenedChests.contains(chestLocation) ||
+                (chest.getCustomName() != null && chest.getCustomName().equalsIgnoreCase("custom chest"))) {
+            return;
+        }
+
+        if (chest.getCustomName() != null && chest.getCustomName().toLowerCase().equals("feast chest")) {
+            Inventory inv = chest.getInventory();
+            if (inv instanceof DoubleChestInventory) {
+                DoubleChest doubleChest = (DoubleChest) inv.getHolder();
+                inv = doubleChest.getInventory();
+            }
+
+            int minSlotsFilled = gm.getArenaGamemap().getMinSlotsFilled();
+            int maxSlotsFilled = gm.getArenaGamemap().getMaxSlotsFilled();
+            int numberOfItemStacks = inv instanceof DoubleChestInventory ?
+                    rand.nextInt(minSlotsFilled * 2, (maxSlotsFilled * 2) + 1) :
+                    rand.nextInt(minSlotsFilled, maxSlotsFilled + 1);
+
+            List<ItemStack> items = new ArrayList<>();
+            for (int i = 0; i < numberOfItemStacks; i++) {
+                items.add(nextFeastItem());
+            }
+
+            for (ItemStack i : items) {
+                inv.addItem(i);
+            }
+
+            shuffleChest(inv);
+
+            feastOpenedChests.add(chest.getLocation());
+
+            if (inv instanceof DoubleChestInventory) {
+                List<Location> possibleLocations = List.of(chest.getLocation().add(-1, 0, 0),
+                        chest.getLocation().add(+1, 0, 0),
+                        chest.getLocation().add(0, 0, -1),
+                        chest.getLocation().add(0, 0, +1));
+
+                possibleLocations.stream()
+                        .filter((loc) -> loc.getBlock().getType() == Material.CHEST)
+                        .findFirst()
+                        .ifPresent((loc) -> feastOpenedChests.add(loc));
+            }
+        }
+    }
+
     private Integer sumOfWeights(Map<LootEntry, Integer> map) {
         return map.values().stream().reduce(0, Integer::sum);
     }
@@ -242,7 +316,7 @@ public class LootManager implements Listener {
     private TreeMap<Double, LootEntry> weightingsToCumulative(Map<LootEntry, Integer> map, double rarityMultiplier) {
         int min = minOfWeights(map);
         int max = maxOfWeights(map);
-        double a = 1/rarityMultiplier;
+        double a = 1 / rarityMultiplier;
         double b = rarityMultiplier;
 
         double cum = 0;
@@ -260,28 +334,35 @@ public class LootManager implements Listener {
         TreeMap<Double, LootEntry> cumMap = weightingsToCumulative(lootWeightings, 1);
         double randDouble = rand.nextDouble(cumMap.lastEntry().getKey());
         LootEntry lootEntry = cumMap.ceilingEntry(randDouble).getValue();
-        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1)), lootEntry.getEnchantments());
+        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax() + 1)), lootEntry.getEnchantments());
     }
 
     private ItemStack nextRareItem() {
         TreeMap<Double, LootEntry> cumMap = weightingsToCumulative(lootWeightings, gm.getArenaGamemap().getRareLootMultiplier());
         double randDouble = rand.nextDouble(cumMap.lastEntry().getKey());
         LootEntry lootEntry = cumMap.ceilingEntry(randDouble).getValue();
-        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1)), lootEntry.getEnchantments());
+        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax() + 1)), lootEntry.getEnchantments());
     }
 
     private ItemStack nextRefillItem() {
         TreeMap<Double, LootEntry> cumMap = weightingsToCumulative(lootWeightings, gm.getArenaGamemap().getRefillLootMultiplier());
         double randDouble = rand.nextDouble(cumMap.lastEntry().getKey());
         LootEntry lootEntry = cumMap.ceilingEntry(randDouble).getValue();
-        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1)), lootEntry.getEnchantments());
+        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax() + 1)), lootEntry.getEnchantments());
     }
 
     private ItemStack nextRefillRareItem() {
         TreeMap<Double, LootEntry> cumMap = weightingsToCumulative(lootWeightings, gm.getArenaGamemap().getRefillRareLootMultiplier());
         double randDouble = rand.nextDouble(cumMap.lastEntry().getKey());
         LootEntry lootEntry = cumMap.ceilingEntry(randDouble).getValue();
-        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax()+1)), lootEntry.getEnchantments());
+        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax() + 1)), lootEntry.getEnchantments());
+    }
+
+    private ItemStack nextFeastItem() {
+        TreeMap<Double, LootEntry> cumMap = weightingsToCumulative(lootWeightings, gm.getArenaGamemap().getFeastLootMultiplier());
+        double randDouble = rand.nextDouble(cumMap.lastEntry().getKey());
+        LootEntry lootEntry = cumMap.ceilingEntry(randDouble).getValue();
+        return applyEnchantmentTable(new ItemStack(lootEntry.getMaterial(), rand.nextInt(lootEntry.getMin(), lootEntry.getMax() + 1)), lootEntry.getEnchantments());
     }
 
     private ItemStack applyEnchantmentTable(ItemStack itemStack, List<EnchantmentEntry> enchantmentEntries) {

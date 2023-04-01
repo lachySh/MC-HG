@@ -36,6 +36,7 @@ public class LootRefill extends Phase {
     //region Phase Methods
     @Override
     public void onEnable() {
+        gm = Main.getGm();
         if (gm.getArenaGamemap().getFeastEnabled()) {
             timer = 180;
         } else {
@@ -44,7 +45,6 @@ public class LootRefill extends Phase {
         cm = Main.getCm();
         lm = Main.getLm();
         pm = Main.getPlm();
-        gm = Main.getGm();
         spl = Main.getSpl();
         startTimer();
         lm.enableRefillLootChestListener();
@@ -52,8 +52,11 @@ public class LootRefill extends Phase {
 
         Bukkit.broadcastMessage(cm.getPrefix() + cm.getRefillCommencing());
 
-        feast = new FeastStructure();
-        feastLocation = spl.calculateFeastLocation(feast);
+        if (gm.getArenaGamemap().getFeastEnabled()) {
+            feast = new FeastStructure();
+            feastLocation = spl.calculateFeastLocation(feast);
+            PreFeast.setFeastEnabledForCompasses(feastLocation);
+        }
     }
 
     @Override

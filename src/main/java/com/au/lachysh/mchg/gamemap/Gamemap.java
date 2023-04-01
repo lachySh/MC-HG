@@ -40,6 +40,7 @@ public class Gamemap {
 
     private Boolean feastEnabled;
     private Double feastLootMultiplier;
+    private Integer feastYCoord;
 
     public Gamemap(String filename,
                    String title,

@@ -10,7 +10,7 @@ public class Worm extends Kit {
         super(
                 "worm",
                 "Worm",
-                "Burrow beneath the ground quickly.\nLeft clicking dirt will activate\ndirt insta-mine for 7 seconds.\nThis has a 10 second cooldown.\nAlso works for sand and gravel!",
+                "Burrow beneath the ground quickly.\nLeft clicking dirt will activate\ndirt insta-mine for 5 seconds.\nThis has a 10 second cooldown.\nAlso works for sand and gravel!",
                 false,
                 KitType.DEFENSIVE,
                 Material.DIRT,

@@ -1,6 +1,8 @@
 package com.au.lachysh.mchg.phases;
 
 import com.au.lachysh.mchg.Main;
+import com.au.lachysh.mchg.abilities.intrinsic.CompassTrack;
+import com.au.lachysh.mchg.abilities.spy.SpyCompassTrack;
 import com.au.lachysh.mchg.managers.ChatManager;
 import com.au.lachysh.mchg.managers.GamemapManager;
 import com.au.lachysh.mchg.managers.LootManager;
@@ -44,10 +46,18 @@ public class PreFeast extends Phase {
         feast = new FeastStructure();
         feastLocation = spl.calculateFeastLocation(feast);
 
+        setFeastEnabledForCompasses(feastLocation);
+
         startTimer();
         Main.getInstance().getLogger().info("PreFeast phase has started successfully! Next phase: Feast");
     }
 
+    public static void setFeastEnabledForCompasses(Location location) {
+        CompassTrack.setFeastEnabled(true);
+        CompassTrack.setFeastLocation(location);
+        SpyCompassTrack.setFeastEnabled(true);
+        SpyCompassTrack.setFeastLocation(location);
+    }
 
     @Override
     public void onDisable() {

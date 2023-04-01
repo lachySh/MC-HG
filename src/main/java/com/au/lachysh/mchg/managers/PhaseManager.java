@@ -17,7 +17,7 @@ public class PhaseManager {
         setPhase(currentPhase.next());
     }
 
-    private void setPhase(Phase phase) {
+    public void setPhase(Phase phase) {
         if (currentPhase != null) {
             currentPhase.onDisable();
             HandlerList.unregisterAll(currentPhase);

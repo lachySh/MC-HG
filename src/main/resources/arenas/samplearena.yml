@@ -38,6 +38,7 @@ settings:
     # The feast spawned is the schematic in /plugins/MC-HG/schemas/feast.schem
     # IF THE ABOVE IS ENABLED: only feast-loot-multiplier, min-slots-filled, max-slots-filled and loot-table are required
     feast-loot-multiplier: 3 # Loot rarity multiplier for chests which are named "Feast Chest" (in the feast)
+    feast-y-coord: 20 # Good for flatter custom maps where the feast wont spawn at the right height
     loot-chests-enabled: true # If this is true, chests will be pre-filled with loot according to the following loot table
     # IF THE ABOVE IS ENABLED: all fields below this comment are required
     clear-chests-on-game-start: true # Use this if your hunger games map has pre-filled chests already, and you don't want that

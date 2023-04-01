@@ -68,7 +68,7 @@ public class Feast extends Phase {
             CuboidRegion airSelection = new CuboidRegion(adaptedWorld,
                     BlockVector3.at(feastLocation.getBlockX(), feastLocation.getBlockY()+30, feastLocation.getBlockZ()),
                     BlockVector3.at(feastLocation.getBlockX() + feast.getClipboard().getDimensions().getBlockX() - 1,
-                            feastLocation.getBlockY(),
+                            feastLocation.getBlockY()+1,
                             feastLocation.getBlockZ() + feast.getClipboard().getDimensions().getBlockZ() - 1)); // make a selection with two points
             BlockState air = BukkitAdapter.adapt(Material.AIR.createBlockData());
             editSession.setBlocks(airSelection, air);
@@ -77,7 +77,7 @@ public class Feast extends Phase {
             Operation operation = feast.createPaste(editSession)
                     .to(BlockVector3.at(
                             feastLocation.getBlockX(),
-                            feastLocation.getBlockY(),
+                            feastLocation.getBlockY()+1,
                             feastLocation.getBlockZ()
                     )).ignoreAirBlocks(true).build();
 
@@ -92,6 +92,9 @@ public class Feast extends Phase {
         } catch (Exception e) {
             Main.getInstance().getLogger().warning("Warning! Something went wrong when generating feast");
         }
+
+        lm.enableFeastLootChestListener();
+        Main.registerLootManagerListeners();
 
         Main.getInstance().getLogger().info("Feast phase has started successfully!");
 

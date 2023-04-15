@@ -2,11 +2,20 @@ Note: This is a fork of Spigot plugin YAGHGP, which I am using as the basis of a
 
 # MC-HG - Golden Era Hunger Games
 
-This plugin hosts a randomly generated world as a hunger games game (WIP)
+This plugin hosts the hunger games in a highly customisable way, with many features:
+
+- Wide range of selectable kits
+  - Add your own kits if you know a bit of Java!
+- The Feast
+- Random map option / premade map option
+- Option to enable / disable loot chests, with 'Rare' loot chest functionality
+  - Loot is also entirely customisable per map
+- Deathmatch phase
 
 ## Dependencies
 
 - Lib's Disguises (& ProtocolLib) for Kit Chameleon
+- WorldEdit for feasts
 
 ## What is MC-HG?
 MC-HG was a gamemode hosted by MCPVP which peaked in popularity back in 2011-2013. Back then, 120 player servers would be filled up in a matter of minutes to play this gamemode.

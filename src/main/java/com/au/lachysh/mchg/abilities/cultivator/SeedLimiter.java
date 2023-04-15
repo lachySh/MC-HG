@@ -2,7 +2,6 @@ package com.au.lachysh.mchg.abilities.cultivator;
 
 import com.au.lachysh.mchg.abilities.Ability;
 import com.au.lachysh.mchg.abilities.AbilityCallable;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Item;

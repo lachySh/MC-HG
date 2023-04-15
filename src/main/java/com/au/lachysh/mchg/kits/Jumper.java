@@ -13,7 +13,7 @@ public class Jumper extends Kit {
         super(
                 "jumper",
                 "Jumper",
-                "Hold shift to charge a mega jump.\nHold for up to 5 seconds to increase the jump height.\nFall damage is limited to 3 hearts.",
+                "Hold shift to charge a mega jump.\nHold for up to 5 seconds to increase the jump height.\nFall damage is limited to 2 hearts.",
                 true,
                 KitType.UTILITY,
                 Material.RABBIT_FOOT,

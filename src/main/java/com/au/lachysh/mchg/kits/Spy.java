@@ -16,7 +16,7 @@ public class Spy extends Kit {
         super(
             "spy",
             "Spy",
-            "You will be given the 'Spy's Tracking Compass' upon game start.\nIt's an upgraded version of the standard tracking compass.\nUse it to see opponent's exact distance away from you, with unlimited range.",
+            "You will be given the 'Spy's Tracking Compass'\nupon game start. It's an upgraded version of the\nstandard tracking compass. Use it to see opponent's\nexact distance away from you, with unlimited range.",
             true,
             KitType.UTILITY,
             Material.COMPASS,

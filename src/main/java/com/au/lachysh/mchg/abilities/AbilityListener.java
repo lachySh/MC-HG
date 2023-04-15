@@ -9,6 +9,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
@@ -150,7 +151,7 @@ public class AbilityListener implements Listener {
         );
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerTakesDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         pm.findTribute((Player) event.getEntity()).ifPresent(

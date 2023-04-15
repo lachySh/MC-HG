@@ -82,13 +82,13 @@ public class PreFeast extends Phase {
         timer = spl.setTimerBasedOnPlayerCount(timer);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onDeath(EntityDamageByEntityEvent e) {
         spl.onDeath(e);
         timer = spl.setTimerBasedOnPlayerCount(timer);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onWorldDeath(EntityDamageEvent e) {
         spl.onWorldDeath(e);
         timer = spl.setTimerBasedOnPlayerCount(timer);

@@ -5,6 +5,7 @@ import com.au.lachysh.mchg.gamemap.Coordinates;
 import com.au.lachysh.mchg.gamemap.Gamemap;
 import com.au.lachysh.mchg.loot.EnchantmentEntry;
 import com.au.lachysh.mchg.loot.LootEntry;
+import com.au.lachysh.mchg.terrain.FlatWorldGenerator;
 import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;

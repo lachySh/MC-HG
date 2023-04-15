@@ -58,12 +58,12 @@ public class FightPeriodStart extends Phase {
         spl.inGameOnLeave(e);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onDeath(EntityDamageByEntityEvent e) {
         spl.onDeath(e);
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onWorldDeath(EntityDamageEvent e) {
         spl.onWorldDeath(e);
     }

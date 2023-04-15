@@ -65,13 +65,13 @@ public class Deathmatch extends Phase {
         checkForLastPlayer();
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onDeath(EntityDamageByEntityEvent e) {
         spl.onDeath(e);
         checkForLastPlayer();
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true)
     public void onWorldDeath(EntityDamageEvent e) {
         spl.onWorldDeath(e);
         checkForLastPlayer();

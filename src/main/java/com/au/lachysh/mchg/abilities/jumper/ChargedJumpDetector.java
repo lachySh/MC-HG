@@ -3,6 +3,7 @@ package com.au.lachysh.mchg.abilities.jumper;
 import com.au.lachysh.mchg.Main;
 import com.au.lachysh.mchg.abilities.Ability;
 import com.au.lachysh.mchg.abilities.AbilityCallable;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -27,6 +28,9 @@ public class ChargedJumpDetector extends Ability<PlayerMoveEvent> {
             Player p = event.getPlayer();
             if (p.getPotionEffect(PotionEffectType.JUMP) != null) {
                 p.removePotionEffect(PotionEffectType.JUMP);
+                p.setVelocity(p.getVelocity().setX(p.getVelocity().getX()*5).setZ(p.getVelocity().getZ()*5));
+                p.spawnParticle(Particle.EXPLOSION_NORMAL, p.getLocation(), 50);
+                p.playSound(p, Sound.ENTITY_GENERIC_EXPLODE, 0.5f, 1);
             }
             cooldown();
         };

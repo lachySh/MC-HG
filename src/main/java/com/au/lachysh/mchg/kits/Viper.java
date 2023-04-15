@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Viper extends Kit {
-    private static List<String> allItems;
-    private static NBTTagList nbtTagList;
 
     public Viper() {
         super(

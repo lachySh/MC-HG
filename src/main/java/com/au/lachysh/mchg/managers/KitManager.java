@@ -31,6 +31,8 @@ public class KitManager {
         kits.add(new Thor());
         kits.add(new Viper());
         kits.add(new Hearthstone());
+        kits.add(new Poseidon());
+        kits.add(new Kangaroo());
 
         Collections.sort(kits);
 

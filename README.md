@@ -18,10 +18,10 @@ There's not much of this scene left, but I look back fondly on this era of Minec
  * [x] Soup custom crafting recipes
  * [x] Better UI for lobby
  * [x] Lobby voting between random map and pre-made map selections
- * [ ] Random world generation modification
+ * [x] Random world generation modification
  * [x] Kits
- * [ ] Loot management for custom maps
- * [ ] Feasts
+ * [x] Loot management for custom maps
+ * [x] Feasts
  * [ ] Allow users to join during a game in progress and be sent to lobby, with option to spectate
  * [ ] Better UI for in-game (?)
 

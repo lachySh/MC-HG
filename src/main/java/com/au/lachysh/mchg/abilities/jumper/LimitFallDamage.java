@@ -26,9 +26,9 @@ public class LimitFallDamage extends Ability<EntityDamageEvent> {
     public AbilityCallable<EntityDamageEvent> getCallable() {
         return event -> {
             event.setCancelled(true);
-            // Set max health loss to 3 hearts
+            // Set max health loss to 2 hearts
             Player p = (Player) event.getEntity();
-            p.damage(Math.min(event.getFinalDamage(), 6));
+            p.damage(Math.min(event.getFinalDamage(), 4));
             cooldown();
         };
     }

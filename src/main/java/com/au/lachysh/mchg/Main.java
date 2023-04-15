@@ -1,6 +1,7 @@
 package com.au.lachysh.mchg;
 
 import com.au.lachysh.mchg.abilities.AbilityListener;
+import com.au.lachysh.mchg.terrain.FlatWorldGenerator;
 import com.au.lachysh.mchg.terrain.WorldInitEventListener;
 import com.au.lachysh.mchg.commands.*;
 import com.au.lachysh.mchg.gui.VoteGUIListener;
@@ -8,6 +9,7 @@ import com.au.lachysh.mchg.managers.*;
 import com.au.lachysh.mchg.phases.SharedPhaseLogic;
 import org.bukkit.*;
 import org.bukkit.event.Listener;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.au.lachysh.mchg.gui.KitsGUIListener;
 

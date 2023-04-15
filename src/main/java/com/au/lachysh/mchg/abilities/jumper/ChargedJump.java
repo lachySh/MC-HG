@@ -17,7 +17,7 @@ public class ChargedJump extends Ability<PlayerToggleSneakEvent> {
 
     private int level;
 
-    private static final int JUMP_MULTIPLIER = 3;
+    private static final int JUMP_MULTIPLIER = 4;
     private BukkitTask runnable;
 
     public ChargedJump() {
@@ -27,7 +27,7 @@ public class ChargedJump extends Ability<PlayerToggleSneakEvent> {
 
     @Override
     public boolean precondition(PlayerToggleSneakEvent event) {
-        return event.isSneaking();
+        return event.isSneaking() && Math.abs(event.getPlayer().getVelocity().getY() - (-0.0784)) < 0.001;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class ChargedJump extends Ability<PlayerToggleSneakEvent> {
             runnable = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (p.isSneaking()) {
+                    if (p.isSneaking() && Math.abs(p.getVelocity().getY() - (-0.0784)) < 0.001) {
                         if (level < 6) {
                             if (level > 0) {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20, level * JUMP_MULTIPLIER, false, false));

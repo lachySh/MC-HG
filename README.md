@@ -31,6 +31,7 @@ There's not much of this scene left, but I look back fondly on this era of Minec
  * [x] Kits
  * [x] Loot management for custom maps
  * [x] Feasts
+ * [ ] Automate game start and restart
  * [ ] Allow users to join during a game in progress and be sent to lobby, with option to spectate
  * [ ] Better UI for in-game (?)
 

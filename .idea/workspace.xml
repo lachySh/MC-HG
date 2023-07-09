@@ -10,7 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3784dd68-6b9e-4920-8eca-4aeee6c7ee2c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Endermage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Endermage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Viper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/kits/Viper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/DefaultBiomeProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/DefaultBiomeProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/WorldInitEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/au/lachysh/mchg/terrain/WorldInitEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

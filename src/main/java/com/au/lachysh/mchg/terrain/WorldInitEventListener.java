@@ -2,8 +2,8 @@ package com.au.lachysh.mchg.terrain;
 
 import net.minecraft.world.level.biome.BiomeSource;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R3.generator.CustomChunkGenerator;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.generator.CustomChunkGenerator;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
